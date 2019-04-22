@@ -1,5 +1,6 @@
 package com.example.niit.Student.fragment.News.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -19,15 +20,28 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niit.R;
+import com.example.niit.Share.SharePrefer;
+import com.example.niit.Share.StringFinal;
+import com.example.niit.Student.fragment.News.dialog.entities.News;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,12 +61,23 @@ public class AddNewsDialog extends DialogFragment {
     TextView label_choose_image;
     @BindView(R.id.layout_image_news)
     RelativeLayout layout_image_news;
+    @BindView(R.id.txt_content_news_dialog)
+    EditText txt_content_news_dialog;
+
+    private String imageNews = "";
+
+    SimpleDateFormat simpleDateFormat;
+
+    Bitmap bitmap;
 
     private ArrayList<String> permissions = new ArrayList<>();
     private final static int IMAGE_RESULT = 200;
     private ArrayList<String> permissionsToRequest;
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
+
+    FirebaseStorage storage;
+    StorageReference storageRef;
 
 
     @Override
@@ -66,10 +91,17 @@ public class AddNewsDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_add_news, container, false);
         ButterKnife.bind(this, view);
+        init();
 
         askPermissions();
 
         return view;
+    }
+
+    private void init() {
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference("gs://niit-c3bc4.appspot.com");
+
     }
 
     @OnClick(R.id.btn_back_add_news)
@@ -86,6 +118,62 @@ public class AddNewsDialog extends DialogFragment {
     @OnClick(R.id.layout_add_image_dialog)
     public void onClickAddImage() {
         startActivityForResult(getPickImageChooserIntent(), IMAGE_RESULT);
+    }
+
+    @OnClick(R.id.btn_confirm_news_dialog)
+    public void onClickConfirmAddNews() {
+//        String content = txt_content_news_dialog.getText().toString().trim();
+//
+//        News news = new News();
+//        news.setUserName(SharePrefer.getInstance().get(StringFinal.USER_NAME, String.class)) ;
+//        news.setId(SharePrefer.getInstance().get(StringFinal.ID, String.class));
+//        news.setAvatarUsername(SharePrefer.getInstance().get(StringFinal.IMAGE, String.class));
+//        news.setContentNews(content);
+//        news.setImageNews(imageNews);
+//        news.setCreateTime(getTime());
+
+        getImage();
+
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private String getTime() {
+        Calendar now = Calendar.getInstance();
+        String strDateFormat = "dd/MM/yyyy";
+        String strTimeFormat = "HH:mm:ss";
+        simpleDateFormat = new SimpleDateFormat(strDateFormat);
+        String date = simpleDateFormat.format(now.getTime());
+        simpleDateFormat = new SimpleDateFormat(strTimeFormat);
+        String time = simpleDateFormat.format(now.getTime());
+
+        return date + "T" + time + "Z";
+    }
+
+    private void getImage() {
+        Calendar calendar = Calendar.getInstance();
+        StorageReference mountainsRef = storageRef.child("image" + calendar.getTimeInMillis() + ".jpg");
+        if (bitmap == null) {
+
+        } else {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] data = byteArrayOutputStream.toByteArray();
+
+            UploadTask uploadTask = mountainsRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), "Lỗi", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri getURL = taskSnapshot.getUploadSessionUri();
+                    Toast.makeText(getActivity(), getURL + "", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     public Intent getPickImageChooserIntent() {
@@ -180,7 +268,7 @@ public class AddNewsDialog extends DialogFragment {
                 String filePath = getImageFilePath(data);
 
                 if (filePath != null) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                    bitmap = BitmapFactory.decodeFile(filePath);
                     img_add_news.setImageBitmap(bitmap);
                     layout_image_news.setVisibility(View.VISIBLE);
                     label_choose_image.setText("Thay Ảnh Khác");
