@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:id="@+id/tr_Ky"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_Ky"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:gravity="center"
+                    android:paddingRight="10dp"
+                    android:text="Kỳ"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_sotien"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="Số Tiền"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_thoigian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="Thời gian cần nộp"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_tinhtrang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="Tình trạng"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_item_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_product_item_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingRight="10dp"
+                    android:text="kỳ 1" />
+
+                <TextView
+                    android:id="@+id/tv_author_item_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="18.000.000đ" />
+
+                <TextView
+                    android:id="@+id/tv_quantity_item_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="10/2016" />
+
+                <ImageView
+                    android:id="@+id/image_quantity_item_1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/tick" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_item_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_product_item_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingRight="10dp"
+                    android:text="Kỳ 2 (Lần 1)" />
+
+                <TextView
+                    android:id="@+id/tv_author_item_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="6.000.000đ" />
+
+                <TextView
+                    android:id="@+id/tv_quantity_item_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="5/2017" />
+
+                <ImageView
+                    android:id="@+id/image_quantity_item_2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/tick" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_item_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_product_item_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingRight="10dp"
+                    android:text="Kỳ 2 (Lần 2)" />
+
+                <TextView
+                    android:id="@+id/tv_author_item_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="6.000.000đ" />
+
+                <TextView
+                    android:id="@+id/tv_quantity_item_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="9/2017" />
+
+                <ImageView
+                    android:id="@+id/image_quantity_item_3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/tick" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_item_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_product_item_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingRight="10dp"
+                    android:text="Kỳ 3 (Lần 1)" />
+
+                <TextView
+                    android:id="@+id/tv_author_item_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="6.000.000đ" />
+
+                <TextView
+                    android:id="@+id/tv_quantity_item_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="12/2017" />
+
+                <ImageView
+                    android:id="@+id/image_quantity_item_4"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/tick" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_item_5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_product_item_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingRight="10dp"
+                    android:text="Kỳ 3 (Lần 2)" />
+
+                <TextView
+                    android:id="@+id/tv_author_item_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="6.000.000đ" />
+
+                <TextView
+                    android:id="@+id/tv_quantity_item_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="3/2018" />
+
+                <ImageView
+                    android:id="@+id/image_quantity_item_5"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/tick" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_item_6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_product_item_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingRight="10dp"
+                    android:text="Kỳ 4 (Lần 1)" />
+
+                <TextView
+                    android:id="@+id/tv_author_item_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="6.000.000đ" />
+
+                <TextView
+                    android:id="@+id/tv_quantity_item_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="6/2018" />
+
+                <ImageView
+                    android:id="@+id/image_quantity_item_6"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/tick" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_item_7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/table_row_last_bg"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_product_item_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingRight="10dp"
+                    android:text="Kỳ 4 (Lần 2)" />
+
+                <TextView
+                    android:id="@+id/tv_author_item_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="6.000.000đ" />
+
+                <TextView
+                    android:id="@+id/tv_quantity_item_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/table_cell_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="9/2019" />
+
+                <ImageView
+                    android:id="@+id/image_quantity_item_7"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/tick" />
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorBottomNavigation">#1561AD</color>
+
+    <color name="color_black_opacity">#b1000000</color>
+    <color name="color_gray_opacity">#656F6C6C</color>
+
+
+    <color name="color_title_icon_fragment_bet">#a3a3a3</color>
+    <color name="color_tool_bar">#262626</color>
+    <color name="color_black">#000000</color>
+    <color name="color_white">#ffff</color>
+    <color name="color_Toolbar">#262626</color>
+    <color name="color_White">#ffffff</color>
+    <color name="color_Black">#000000</color>
+    <color name="color_History">#e1e6ea</color>
+    <color name="bg_button_steam">#ff9910</color>
+    <color name="color_checkbox_checked">#394959</color>
+    <color name="color_text_default">#808080</color>
+
+    <color name="color_button">#363636</color>
+    <color name="color_backgroup_arcade">#1c1c1c</color>
+
+    <color name="color_gray">#515151</color>
+    <color name="color_red">#a82200</color>
+    <color name="color_orange">#d3a000</color>
+
+    <color name="color_green">#90b526</color>
+
+    <!--color cicler seekbar-->
+    <color name="color_red_circular_seekbar">#F85D57</color>
+    <color name="color_green_circular_seekbar">#0BE27B</color>
+</resources>
