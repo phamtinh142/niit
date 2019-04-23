@@ -8,6 +8,16 @@ public class News {
     private String imageNews;
     private String contentNews;
 
+    private String idNews;
+
+    public String getIdNews() {
+        return idNews;
+    }
+
+    public void setIdNews(String idNews) {
+        this.idNews = idNews;
+    }
+
     public News(String userName, String avatarUsername, String id, String createTime, String imageNews, String contentNews) {
         this.userName = userName;
         this.avatarUsername = avatarUsername;
@@ -18,6 +28,7 @@ public class News {
     }
 
     public News() {
+
     }
 
     public String getUserName() {

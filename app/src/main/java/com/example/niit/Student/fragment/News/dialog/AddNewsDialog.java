@@ -17,22 +17,27 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niit.R;
+import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.fragment.News.dialog.entities.News;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -66,8 +71,6 @@ public class AddNewsDialog extends DialogFragment {
 
     private String imageNews = "";
 
-    SimpleDateFormat simpleDateFormat;
-
     Bitmap bitmap;
 
     private ArrayList<String> permissions = new ArrayList<>();
@@ -77,7 +80,8 @@ public class AddNewsDialog extends DialogFragment {
     private ArrayList<String> permissionsRejected = new ArrayList<>();
 
     FirebaseStorage storage;
-    StorageReference storageRef;
+    StorageReference storageReference;
+    DatabaseReference databaseReference;
 
 
     @Override
@@ -100,8 +104,8 @@ public class AddNewsDialog extends DialogFragment {
 
     private void init() {
         storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference("gs://niit-c3bc4.appspot.com");
-
+        storageReference = storage.getReferenceFromUrl("gs://niit-c3bc4.appspot.com/News/");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     @OnClick(R.id.btn_back_add_news)
@@ -113,6 +117,7 @@ public class AddNewsDialog extends DialogFragment {
     public void onClickCloseChooseImage() {
         layout_image_news.setVisibility(View.GONE);
         label_choose_image.setText("Thêm Ảnh");
+        imageNews = "";
     }
 
     @OnClick(R.id.layout_add_image_dialog)
@@ -122,58 +127,64 @@ public class AddNewsDialog extends DialogFragment {
 
     @OnClick(R.id.btn_confirm_news_dialog)
     public void onClickConfirmAddNews() {
-//        String content = txt_content_news_dialog.getText().toString().trim();
-//
-//        News news = new News();
-//        news.setUserName(SharePrefer.getInstance().get(StringFinal.USER_NAME, String.class)) ;
-//        news.setId(SharePrefer.getInstance().get(StringFinal.ID, String.class));
-//        news.setAvatarUsername(SharePrefer.getInstance().get(StringFinal.IMAGE, String.class));
-//        news.setContentNews(content);
-//        news.setImageNews(imageNews);
-//        news.setCreateTime(getTime());
-
         getImage();
-
-
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private String getTime() {
-        Calendar now = Calendar.getInstance();
-        String strDateFormat = "dd/MM/yyyy";
-        String strTimeFormat = "HH:mm:ss";
-        simpleDateFormat = new SimpleDateFormat(strDateFormat);
-        String date = simpleDateFormat.format(now.getTime());
-        simpleDateFormat = new SimpleDateFormat(strTimeFormat);
-        String time = simpleDateFormat.format(now.getTime());
-
-        return date + "T" + time + "Z";
     }
 
     private void getImage() {
         Calendar calendar = Calendar.getInstance();
-        StorageReference mountainsRef = storageRef.child("image" + calendar.getTimeInMillis() + ".jpg");
-        if (bitmap == null) {
-
-        } else {
+        final StorageReference mountainsRef = storageReference.child("image" + calendar.getTimeInMillis() + ".jpg");
+        if (bitmap != null) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] data = byteArrayOutputStream.toByteArray();
 
-            UploadTask uploadTask = mountainsRef.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
+            final UploadTask uploadTask = mountainsRef.putBytes(data);
+
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Lỗi", Toast.LENGTH_SHORT).show();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return mountainsRef.getDownloadUrl();
                 }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri getURL = taskSnapshot.getUploadSessionUri();
-                    Toast.makeText(getActivity(), getURL + "", Toast.LENGTH_SHORT).show();
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        Log.d("ktUrl", "onComplete: " + downloadUri);
+                        imageNews = downloadUri.toString();
+                        uploadNews();
+                    }
                 }
             });
+        } else {
+            imageNews = "";
+            uploadNews();
         }
+    }
+
+    private void uploadNews() {
+        News news = new News();
+        news.setUserName(SharePrefer.getInstance().get(StringFinal.USER_NAME, String.class)) ;
+        news.setId(SharePrefer.getInstance().get(StringFinal.ID, String.class));
+        news.setAvatarUsername(SharePrefer.getInstance().get(StringFinal.IMAGE, String.class));
+        news.setContentNews(txt_content_news_dialog.getText().toString().trim());
+        news.setImageNews(imageNews);
+        news.setCreateTime(GetTimeSystem.getTime());
+
+        databaseReference.child("News").push().setValue(news, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError == null) {
+                    Toast.makeText(getActivity(), "Đăng thành công", Toast.LENGTH_SHORT).show();
+                    getDialog().dismiss();
+                } else {
+                    Toast.makeText(getActivity(), "Đăng thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public Intent getPickImageChooserIntent() {

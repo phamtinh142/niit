@@ -28,7 +28,7 @@ public class StartActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        String id = SharePrefer.getInstance().get(StringFinal.ID, String.class);
+        final String id = SharePrefer.getInstance().get(StringFinal.ID, String.class);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -44,7 +44,7 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
-    private void getInforUser(String id) {
+    private void getInforUser(final String id) {
         databaseReference.child("Student").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

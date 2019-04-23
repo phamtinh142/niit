@@ -31,7 +31,7 @@
         </activity>
         <activity android:name=".Login.LoginActivity"/>
         <activity android:name=".Manager.ManagerActivity" />
-        <activity android:name=".Student.activity.NewsDetailActivity" />
+        <activity android:name=".Student.activity.CommentNews.NewsDetailActivity" />
         <activity android:name=".Student.activity.MessageDetailActivity" />
         <activity android:name=".Student.activity.HocphiActivity" />
         <activity android:name=".Student.activity.MainStudent.MainActivity" />

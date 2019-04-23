@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void login(String id, String password) {
+    private void login(final String id, final String password) {
         databaseReference.child("Account").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void getInforUser(String id) {
+    private void getInforUser(final String id) {
 
         databaseReference.child("Student").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
