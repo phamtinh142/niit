@@ -1,6 +1,5 @@
 package com.example.niit.Student.fragment.News.dialog;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
