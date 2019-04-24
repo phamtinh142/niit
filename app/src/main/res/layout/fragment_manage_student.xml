@@ -94,7 +94,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/rtl_my_play_profile_fragment"
+            android:id="@+id/rtl_schelude_manage"
             android:background="@drawable/custom_border_bottom_layout"
             android:orientation="horizontal"
             android:layout_width="match_parent"

@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Manager.activity.StudentManageActivity"></activity>
+        <activity android:name=".Manager.activity.ScheludeManage.ScheludeManageActivity"></activity>
+        <activity android:name=".Manager.activity.StudentManageActivity" />
         <activity android:name=".Manager.activity.CreateStudent.CreatedStudentActivity" />
         <activity android:name=".Login.StartActivity">
             <intent-filter>
