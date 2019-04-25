@@ -10,10 +10,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.niit.Manager.ManagerActivity;
+import com.example.niit.Manager.activity.ManagerActivity;
 import com.example.niit.R;
+import com.example.niit.Share.SharePrefer;
+import com.example.niit.Share.StringFinal;
+import com.example.niit.model.Manager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +45,7 @@ public class ManageLoginFragment extends Fragment implements ManageLoginContract
     }
 
     private void init() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Account");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         manageLoginPresenter = new ManageLoginPresenter(this, databaseReference);
     }
 
@@ -53,8 +59,30 @@ public class ManageLoginFragment extends Fragment implements ManageLoginContract
     }
 
     @Override
-    public void showLoginSuccess() {
-        startActivity(new Intent(getActivity(), ManagerActivity.class));
+    public void showLoginSuccess(final String id) {
+        databaseReference.child("Manage").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Manager manager = dataSnapshot.child(id).getValue(Manager.class);
+
+                SharePrefer.getInstance().put(StringFinal.ADDRESS, manager.getAddress());
+                SharePrefer.getInstance().put(StringFinal.IMAGE, manager.getAvata());
+                SharePrefer.getInstance().put(StringFinal.EMAIL, manager.getEmail());
+                SharePrefer.getInstance().put(StringFinal.ID, manager.getId());
+                SharePrefer.getInstance().put(StringFinal.USER_NAME, manager.getName());
+                SharePrefer.getInstance().put(StringFinal.PHONE, manager.getPhone());
+                SharePrefer.getInstance().put(StringFinal.TYPE, manager.getType_account());
+
+                Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(getActivity(), ManagerActivity.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

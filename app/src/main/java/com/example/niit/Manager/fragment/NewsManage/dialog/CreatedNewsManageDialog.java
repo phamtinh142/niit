@@ -1,7 +1,9 @@
-package com.example.niit.Student.fragment.News.dialog;
+package com.example.niit.Manager.fragment.NewsManage.dialog;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -20,8 +22,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,7 @@ import com.example.niit.R;
 import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
+import com.example.niit.model.News;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,22 +54,27 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class AddNewsDialog extends DialogFragment {
+public class CreatedNewsManageDialog extends DialogFragment {
 
-    @BindView(R.id.img_add_news)
-    ImageView img_add_news;
-    @BindView(R.id.label_choose_image)
-    TextView label_choose_image;
-    @BindView(R.id.layout_image_news)
-    RelativeLayout layout_image_news;
-    @BindView(R.id.txt_content_news_dialog)
-    EditText txt_content_news_dialog;
+    String Class = "CP13";
+
+    @BindView(R.id.img_add_news_manage)
+    ImageView img_add_news_manage;
+    @BindView(R.id.label_choose_image_manage)
+    TextView label_choose_image_manage;
+    @BindView(R.id.layout_image_news_manage)
+    RelativeLayout layout_image_news_manage;
+    @BindView(R.id.txt_content_add_news_manage)
+    EditText txt_content_add_news_manage;
+    @BindView(R.id.layout_progress_bar_add_news_manage)
+    LinearLayout layout_progress_bar;
 
     private String imageNews = "";
 
@@ -76,7 +86,7 @@ public class AddNewsDialog extends DialogFragment {
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
 
-    FirebaseStorage storage;
+    FirebaseStorage firebaseStorage;
     StorageReference storageReference;
     DatabaseReference databaseReference;
 
@@ -90,7 +100,7 @@ public class AddNewsDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_news, container, false);
+        View view = inflater.inflate(R.layout.dialog_add_news_manage, container, false);
         ButterKnife.bind(this, view);
         init();
 
@@ -100,50 +110,68 @@ public class AddNewsDialog extends DialogFragment {
     }
 
     private void init() {
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReferenceFromUrl("gs://niit-c3bc4.appspot.com/News/");
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReferenceFromUrl("gs://niit-c3bc4.appspot.com/News/");
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
-    @OnClick(R.id.btn_back_add_news)
+
+    @OnCheckedChanged({R.id.rdo_cp13_add_news_manage,
+            R.id.rdo_cp14_add_news_manage,
+            R.id.rdo_cp15_add_news_manage})
+    public void onCheckedRdoClass(CompoundButton button, boolean checked) {
+        if (checked) {
+            switch (button.getId()) {
+                case R.id.rdo_cp13_add_news_manage:
+                    Class = "CP13";
+                    break;
+                case R.id.rdo_cp14_add_news_manage:
+                    Class = "CP14";
+                    break;
+                case R.id.rdo_cp15_add_news_manage:
+                    Class = "CP15";
+                    break;
+            }
+        }
+    }
+
+    @OnClick(R.id.btn_back_add_news_manage)
     public void onClickBackAddNews() {
         getDialog().dismiss();
     }
 
-    @OnClick(R.id.btn_close_image)
+    @OnClick(R.id.btn_close_image_manage)
     public void onClickCloseChooseImage() {
-        layout_image_news.setVisibility(View.GONE);
-        label_choose_image.setText("Thêm Ảnh");
+        layout_image_news_manage.setVisibility(View.GONE);
+        label_choose_image_manage.setText("Thêm Ảnh");
         imageNews = "";
     }
 
-    @OnClick(R.id.layout_add_image_dialog)
+    @OnClick(R.id.layout_add_image_manage)
     public void onClickAddImage() {
         startActivityForResult(getPickImageChooserIntent(), IMAGE_RESULT);
     }
 
-    @OnClick(R.id.btn_confirm_news_dialog)
+    @OnClick(R.id.btn_confirm_news_manage)
     public void onClickConfirmAddNews() {
         getImage();
+        layout_progress_bar.setVisibility(View.VISIBLE);
     }
 
     private void getImage() {
         Calendar calendar = Calendar.getInstance();
-        final StorageReference mountainsRef = storageReference.child("image" + calendar.getTimeInMillis() + ".jpg");
+        storageReference.child("image" + calendar.getTimeInMillis() + ".jpg");
         if (bitmap != null) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] data = byteArrayOutputStream.toByteArray();
 
-            final UploadTask uploadTask = mountainsRef.putBytes(data);
+            final UploadTask uploadTask = storageReference.putBytes(data);
 
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return mountainsRef.getDownloadUrl();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    return storageReference.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
@@ -153,6 +181,9 @@ public class AddNewsDialog extends DialogFragment {
                         Log.d("ktUrl", "onComplete: " + downloadUri);
                         imageNews = downloadUri.toString();
                         uploadNews();
+                    } else {
+                        Toast.makeText(getContext(), "Tạo không thành công", Toast.LENGTH_SHORT).show();
+                        layout_progress_bar.setVisibility(View.GONE);
                     }
                 }
             });
@@ -163,25 +194,27 @@ public class AddNewsDialog extends DialogFragment {
     }
 
     private void uploadNews() {
-//        News news = new News();
-//        news.setUserName(SharePrefer.getInstance().get(StringFinal.USER_NAME, String.class)) ;
-//        news.setId(SharePrefer.getInstance().get(StringFinal.ID, String.class));
-//        news.setAvatarUsername(SharePrefer.getInstance().get(StringFinal.IMAGE, String.class));
-//        news.setContentNews(txt_content_news_dialog.getText().toString().trim());
-//        news.setImageNews(imageNews);
-//        news.setCreateTime(GetTimeSystem.getTime());
-//
-//        databaseReference.child("News").push().setValue(news, new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-//                if (databaseError == null) {
-//                    Toast.makeText(getActivity(), "Đăng thành công", Toast.LENGTH_SHORT).show();
-//                    getDialog().dismiss();
-//                } else {
-//                    Toast.makeText(getActivity(), "Đăng thất bại", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+
+        News news = new News();
+        news.setId(SharePrefer.getInstance().get(StringFinal.ID, String.class));
+        news.setContent_news(txt_content_add_news_manage.getText().toString().trim());
+        news.setCreate_time(GetTimeSystem.getTime());
+        news.setImage_news(imageNews);
+        news.setType_account(0);
+
+        databaseReference.child("News").child(Class).push().setValue(news, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError == null) {
+                    Toast.makeText(getActivity(), "Đăng thành công", Toast.LENGTH_SHORT).show();
+                    getDialog().dismiss();
+                    layout_progress_bar.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getActivity(), "Đăng thất bại", Toast.LENGTH_SHORT).show();
+                    layout_progress_bar.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     public Intent getPickImageChooserIntent() {
@@ -277,9 +310,9 @@ public class AddNewsDialog extends DialogFragment {
 
                 if (filePath != null) {
                     bitmap = BitmapFactory.decodeFile(filePath);
-                    img_add_news.setImageBitmap(bitmap);
-                    layout_image_news.setVisibility(View.VISIBLE);
-                    label_choose_image.setText("Thay Ảnh Khác");
+                    img_add_news_manage.setImageBitmap(bitmap);
+                    layout_image_news_manage.setVisibility(View.VISIBLE);
+                    label_choose_image_manage.setText("Thay Ảnh Khác");
                 }
             }
         }
@@ -306,6 +339,43 @@ public class AddNewsDialog extends DialogFragment {
         return outputFileUri;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        if (requestCode == ALL_PERMISSIONS_RESULT) {
+            for (String perms : permissionsToRequest) {
+                if (!hasPermission(perms)) {
+                    permissionsRejected.add(perms);
+                }
+            }
+            if (permissionsRejected.size() > 0
+                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                    && shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+
+                showMessageOKCancel(
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                requestPermissions(permissionsRejected.toArray(
+                                        new String[permissionsRejected.size()]),
+                                        ALL_PERMISSIONS_RESULT);
+                            }
+                        });
+            }
+        }
+
+    }
+
+    private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage("These permissions are mandatory for the application. Please allow access.")
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
     private String getPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Audio.Media.DATA};
         Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null,
@@ -314,5 +384,6 @@ public class AddNewsDialog extends DialogFragment {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.niit.Login.LoginActivity;
 import com.example.niit.Login.entities.Login;
+import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
@@ -68,14 +70,14 @@ public class StudentLoginFragment extends Fragment {
             Toast.makeText(getActivity(), "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show();
             edt_password_login.requestFocus();
         } else {
-            login(id, passWord);
+            login(id, passWord, classStudent);
         }
 
 
     }
 
-    private void login(final String id, final String password) {
-        databaseReference.child("Account").addListenerForSingleValueEvent(new ValueEventListener() {
+    private void login(final String id, final String password, String Class) {
+        databaseReference.child("Account").child(Class).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(id).exists()) {
@@ -101,31 +103,36 @@ public class StudentLoginFragment extends Fragment {
 
     private void getInforUser(final String id) {
 
-        databaseReference.child("Student").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Student").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(id).exists()) {
-                    SharePrefer.getInstance().put(StringFinal.ID, id);
+//                Student student = dataSnapshot.child(id).getValue(Student.class);
+//
+//                Log.d("ktloginStudent", "----------------------------");
+//                Log.d("ktloginStudent", "onDataChange: " + student.getAddress());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getAvatar());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getAge());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getBithday());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getClassUser());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getEmail());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getId());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getName());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getPhone());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getSex());
+//                Log.d("ktloginStudent", "onDataChange: " + student.getType_account());
 
-                    User user = dataSnapshot.child(id).getValue(User.class);
-
-                    SharePrefer.getInstance().put(StringFinal.ADDRESS, user.getAddress());
-                    SharePrefer.getInstance().put(StringFinal.USER_NAME, user.getName());
-                    SharePrefer.getInstance().put(StringFinal.AGE, user.getAge());
-                    SharePrefer.getInstance().put(StringFinal.EMAIL, user.getEmail());
-                    SharePrefer.getInstance().put(StringFinal.IMAGE, user.getImage());
-                    SharePrefer.getInstance().put(StringFinal.PHONE, user.getPhone());
-                    SharePrefer.getInstance().put(StringFinal.SEX, user.getSex());
-
-                    Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-
-                    startActivity(new Intent(getActivity(), MainActivity.class));
-
-                } else {
-                    Toast.makeText(getActivity(),
-                            "Tài khoản chưa có dữu liệu, vui lòng liên lạc với trung tâm để cập nhập",
-                            Toast.LENGTH_SHORT).show();
-                }
+//                SharePrefer.getInstance().put(StringFinal.ID, student.getId());
+//                SharePrefer.getInstance().put(StringFinal.ADDRESS, student.getAddress());
+//                SharePrefer.getInstance().put(StringFinal.USER_NAME, student.getName());
+//                SharePrefer.getInstance().put(StringFinal.AGE, student.getAge());
+//                SharePrefer.getInstance().put(StringFinal.EMAIL, student.getEmail());
+//                SharePrefer.getInstance().put(StringFinal.IMAGE, student.getAvatar());
+//                SharePrefer.getInstance().put(StringFinal.PHONE, student.getPhone());
+//                SharePrefer.getInstance().put(StringFinal.SEX, student.getSex());
+//                SharePrefer.getInstance().put(StringFinal.TYPE, student.getType_account());
+//
+//                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(getActivity(), MainActivity.class));
             }
 
             @Override

@@ -11,6 +11,11 @@ import android.widget.TextView;
 import com.example.niit.R;
 import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.TimestampUtils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,11 +42,63 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        CommentNewsViewHolder holder = (CommentNewsViewHolder) viewHolder;
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        final CommentNewsViewHolder holder = (CommentNewsViewHolder) viewHolder;
 
         SendComment comment = commentList.get(i);
 
-        holder.txtUsername.setText(comment.getUsername());
+        if (comment.getType_account() == 0) {
+            databaseReference.child("Manage").child(comment.getId()).addValueEventListener(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String avatar = dataSnapshot.child("avata").getValue().toString();
+                            String username = dataSnapshot.child("name").getValue().toString();
+
+                            if (avatar.equals("")) {
+                                holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.img_not_found));
+                            } else {
+                                Picasso.get().load(avatar)
+                                        .error(context.getResources().getDrawable(R.drawable.img_not_found))
+                                        .into(holder.imgAvata);
+                            }
+
+                            holder.txtUsername.setText(username);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+        } else {
+            databaseReference.child("Student").child(comment.getId()).addValueEventListener(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String avatar = dataSnapshot.child("avatar").getValue().toString();
+                            String username = dataSnapshot.child("name").getValue().toString();
+
+                            if (avatar.equals("")) {
+                                holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.img_not_found));
+                            } else {
+                                Picasso.get().load(avatar)
+                                        .error(context.getResources().getDrawable(R.drawable.img_not_found))
+                                        .into(holder.imgAvata);
+                            }
+
+                            holder.txtUsername.setText(username);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        }
+
         holder.txtContent.setText(comment.getContent());
 
         String time;
@@ -58,10 +115,6 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             time = "Vừa xong";
         }
         holder.txtCreateAtTime.setText(time);
-
-        Picasso.get().load(comment.getAvatar())
-                .error(context.getResources().getDrawable(R.drawable.img_not_found))
-                .into(holder.imgAvata);
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

@@ -1,17 +1,9 @@
-package com.example.niit.Manager.activity.CreateStudent.entities;
+package com.example.niit.Manager.activity.StudentManage.entites;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CreatedStudent {
-    public int getType_account() {
-        return type_account;
-    }
-
-    public void setType_account(int type_account) {
-        this.type_account = type_account;
-    }
-
+public class Student {
     @SerializedName("type_account")
     @Expose
     private int type_account;
@@ -46,19 +38,7 @@ public class CreatedStudent {
     @Expose
     private String bithday;
 
-    public CreatedStudent() {
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public CreatedStudent(int type_account, String id, String address, String age, String classUser, String email, String avatar, String name, String phone, String sex, String bithday) {
+    public Student(int type_account, String id, String address, String age, String classUser, String email, String avatar, String name, String phone, String sex, String bithday) {
         this.type_account = type_account;
         this.id = id;
         this.address = address;
@@ -72,6 +52,25 @@ public class CreatedStudent {
         this.bithday = bithday;
     }
 
+    public Student() {
+
+    }
+
+    public int getType_account() {
+        return type_account;
+    }
+
+    public void setType_account(int type_account) {
+        this.type_account = type_account;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getAddress() {
         return address;

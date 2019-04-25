@@ -1,4 +1,4 @@
-package com.example.niit.Manager.fragment;
+package com.example.niit.Manager.fragment.MessageManage;
 
 
 import android.os.Bundle;

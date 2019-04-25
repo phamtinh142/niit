@@ -18,13 +18,12 @@ import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.fragment.News.adapter.NewsAdapter;
 import com.example.niit.Student.fragment.News.dialog.AddNewsDialog;
-import com.example.niit.Student.fragment.News.dialog.entities.News;
+import com.example.niit.model.News;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -94,18 +93,18 @@ public class NewsFragment extends Fragment {
         databaseReference.child("News").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                News news = dataSnapshot.getValue(News.class);
-                news.setIdNews(dataSnapshot.getKey());
-
-                if (newsList.size() == 0) {
-                    newsList.add(news);
-                } else {
-                    newsList.add(0, news);
-                }
-
-                newsAdapter.notifyDataSetChanged();
-
-                Log.d("ktIDnews", "onChildAdded: " + news.getIdNews());
+//                News news = dataSnapshot.getValue(News.class);
+//                news.setIdNews(dataSnapshot.getKey());
+//
+//                if (newsList.size() == 0) {
+//                    newsList.add(news);
+//                } else {
+//                    newsList.add(0, news);
+//                }
+//
+//                newsAdapter.notifyDataSetChanged();
+//
+//                Log.d("ktIDnews", "onChildAdded: " + news.getIdNews());
             }
 
             @Override

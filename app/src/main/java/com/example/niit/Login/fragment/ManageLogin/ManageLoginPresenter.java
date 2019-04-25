@@ -25,14 +25,14 @@ public class ManageLoginPresenter implements ManageLoginContract.Presenter{
         } else if (password.isEmpty()) {
             manageLoginView.showToast("Vui lòng nhập mật khẩu");
         } else {
-            databaseReference.child("manager").addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("Account").child("manager").addListenerForSingleValueEvent(
+                    new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.child(id).exists()) {
                         LoginManager loginManager = dataSnapshot.child(id).getValue(LoginManager.class);
                         if (loginManager.getPassword().equals(password)) {
-                            manageLoginView.showToast("Đăng nhập thành công");
-                            manageLoginView.showLoginSuccess();
+                            manageLoginView.showLoginSuccess(id);
                         } else {
                             manageLoginView.showToast("Mật khẩu không đúng");
                         }

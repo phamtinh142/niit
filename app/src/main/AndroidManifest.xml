@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Manager.activity.ScheludeManage.ScheludeManageActivity"></activity>
-        <activity android:name=".Manager.activity.StudentManageActivity" />
+        <activity android:name=".Manager.activity.StudentManage.StudentManageActivity" />
         <activity android:name=".Manager.activity.CreateStudent.CreatedStudentActivity" />
         <activity android:name=".Login.StartActivity">
             <intent-filter>
@@ -32,8 +32,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Manager.ManagerActivity" />
-        <activity android:name=".Student.activity.CommentNews.NewsDetailActivity" />
+        <activity android:name=".Manager.activity.ManagerActivity" />
+        <activity android:name=".Student.activity.CommentNews.CommentNewsActivity" />
         <activity android:name=".Student.activity.MessageDetailActivity" />
         <activity android:name=".Student.activity.HocphiActivity" />
         <activity android:name=".Student.activity.MainStudent.MainActivity" />

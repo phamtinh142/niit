@@ -28,6 +28,11 @@ import android.widget.Toast;
 
 import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -98,6 +103,8 @@ public class CreatedStudentActivity extends AppCompatActivity implements Created
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
 
+    DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +117,7 @@ public class CreatedStudentActivity extends AppCompatActivity implements Created
 
     private void init() {
         createdStudentPresenter = new CreatedStudentPresenter(this);
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     @OnClick(R.id.txt_date_create_student)
@@ -189,17 +196,34 @@ public class CreatedStudentActivity extends AppCompatActivity implements Created
             edt_address_create_student.requestFocus();
         } else {
             layoutProgressBar.setVisibility(View.VISIBLE);
-            if (bitmap != null) {
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] data = byteArrayOutputStream.toByteArray();
-                createdStudentPresenter.uploadAvatar(data);
 
-            } else {
-                imageAvatar = "";
-                createdStudentPresenter.createdAccount(classUser, id, password);
-            }
+            databaseReference.child("Account").child(classUser)
+                    .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(id).exists()) {
+                        Toast.makeText(CreatedStudentActivity.this,
+                                "Tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
+                        layoutProgressBar.setVisibility(View.GONE);
+                    } else {
+                        if (bitmap != null) {
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                            byte[] data = byteArrayOutputStream.toByteArray();
+                            createdStudentPresenter.uploadAvatar(data);
 
+                        } else {
+                            imageAvatar = "";
+                            createdStudentPresenter.createdAccount(classUser, id, password);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
@@ -389,6 +413,7 @@ public class CreatedStudentActivity extends AppCompatActivity implements Created
     @Override
     public void showCreatedAccountSuccess() {
         CreatedStudent createdStudent = new CreatedStudent();
+        createdStudent.setId(id);
         createdStudent.setAddress(address);
         createdStudent.setAge(age);
         createdStudent.setClassUser(classUser);
@@ -398,6 +423,7 @@ public class CreatedStudentActivity extends AppCompatActivity implements Created
         createdStudent.setPhone(phone);
         createdStudent.setSex(sex);
         createdStudent.setBithday(birthDay);
+        createdStudent.setType_account(1);
 
         createdStudentPresenter.createdStudent(classUser, id, createdStudent);
     }

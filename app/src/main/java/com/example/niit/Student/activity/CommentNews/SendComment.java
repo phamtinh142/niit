@@ -1,36 +1,36 @@
 package com.example.niit.Student.activity.CommentNews;
 
 public class SendComment {
-    private String avatar;
-    private String username;
+    private String id;
     private String content;
     private long createAtTime;
+    private int type_account;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getType_account() {
+        return type_account;
+    }
+
+    public void setType_account(int type_account) {
+        this.type_account = type_account;
+    }
 
     public SendComment() {
 
     }
 
-    public SendComment(String avatar, String username, String content, long createAtTime) {
-        this.avatar = avatar;
-        this.username = username;
+    public SendComment(String id, String content, long createAtTime, int type_account) {
+        this.id = id;
         this.content = content;
         this.createAtTime = createAtTime;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        this.type_account = type_account;
     }
 
     public String getContent() {

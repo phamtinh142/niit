@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.niit.R;
@@ -22,14 +21,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewsDetailActivity extends AppCompatActivity {
+public class CommentNewsActivity extends AppCompatActivity {
     @BindView(R.id.edt_comment_news_detail)
     EditText edtCommentNewsDetail;
     @BindView(R.id.recyclerView_comment_news)
@@ -109,16 +107,16 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_send_comment_news_detail)
     public void onClickSendComment() {
+        String id = SharePrefer.getInstance().get(StringFinal.ID, String.class);
         String comment = edtCommentNewsDetail.getText().toString();
-        String avatarUser = SharePrefer.getInstance().get(StringFinal.IMAGE, String.class);
-        String username = SharePrefer.getInstance().get(StringFinal.USER_NAME, String.class);
+        int type_account = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
         long createAtTime = GetTimeSystem.getMili();
 
         if (comment.equals("")) {
             edtCommentNewsDetail.requestFocus();
         } else {
 
-            SendComment sendComment = new SendComment(avatarUser, username, comment, createAtTime);
+            SendComment sendComment = new SendComment(id, comment, createAtTime, type_account);
 
             databaseReference.child("News").child(idNews).child("comment").push().setValue(sendComment, new DatabaseReference.CompletionListener() {
                 @Override
@@ -127,7 +125,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                         edtCommentNewsDetail.setText("");
                         recyclerViewCommentNews.scrollToPosition(commentNewsAdapter.getItemCount() - 1);
                     } else {
-                        Toast.makeText(NewsDetailActivity.this, "Lỗi! vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CommentNewsActivity.this, "Lỗi! vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

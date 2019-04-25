@@ -1,4 +1,4 @@
-package com.example.niit.Manager;
+package com.example.niit.Manager.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;
@@ -9,16 +9,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.example.niit.Manager.fragment.ManageStudentFragment;
-import com.example.niit.Manager.fragment.MessageManageFragment;
-import com.example.niit.Manager.fragment.NewsManagerFragment;
+import com.example.niit.Manager.fragment.ManageStudent.ManageStudentFragment;
+import com.example.niit.Manager.fragment.MessageManage.MessageManageFragment;
+import com.example.niit.Manager.fragment.NewsManage.NewsManagerFragment;
 import com.example.niit.R;
-import com.example.niit.Student.fragment.Message.MessagesFragment;
-import com.example.niit.Student.fragment.News.NewsFragment;
-import com.example.niit.Student.fragment.Profile.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

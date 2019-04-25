@@ -2,7 +2,7 @@ package com.example.niit.Login.fragment.ManageLogin;
 
 public interface ManageLoginContract {
     interface View {
-        void showLoginSuccess();
+        void showLoginSuccess(String id);
         void showToast(String message);
     }
 

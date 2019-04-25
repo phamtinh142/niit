@@ -1,4 +1,4 @@
-package com.example.niit.Manager.fragment;
+package com.example.niit.Manager.fragment.ManageStudent;
 
 
 import android.content.Intent;
@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.niit.Login.LoginActivity;
 import com.example.niit.Manager.activity.CreateStudent.CreatedStudentActivity;
 import com.example.niit.Manager.activity.ScheludeManage.ScheludeManageActivity;
+import com.example.niit.Manager.activity.StudentManage.StudentManageActivity;
 import com.example.niit.R;
+import com.example.niit.Share.SharePrefer;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,6 +31,17 @@ public class ManageStudentFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         return view;
+    }
+
+    @OnClick(R.id.btn_logout_manager)
+    public void onClickLogout() {
+        SharePrefer.getInstance().clear();
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+    }
+
+    @OnClick(R.id.rtl_student_manage)
+    public void onCLickStudentManage() {
+        startActivity(new Intent(getActivity(), StudentManageActivity.class));
     }
 
     @OnClick(R.id.rtl_create_student_account)

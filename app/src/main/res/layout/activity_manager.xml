@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Manager.ManagerActivity">
+    tools:context=".Manager.activity.ManagerActivity">
 
     <FrameLayout
         android:id="@+id/container_manager_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation_main_activity"/>
+        android:layout_above="@+id/bottom_navigation_manager_activity"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation_manager_activity"

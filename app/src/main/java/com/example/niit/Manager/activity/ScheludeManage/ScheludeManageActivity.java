@@ -44,8 +44,6 @@ public class ScheludeManageActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +52,6 @@ public class ScheludeManageActivity extends AppCompatActivity {
         init();
 
         getData();
-
-
 
     }
 
