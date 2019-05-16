@@ -7,18 +7,19 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
 import com.example.niit.Manager.activity.StudentManage.adapter.StudentManageAdapter;
 import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
+import com.example.niit.adapter.ClassAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +28,26 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 
-public class StudentManageActivity extends AppCompatActivity {
+public class StudentManageActivity extends AppCompatActivity implements ClassAdapter.ClassesListener {
 
     @BindView(R.id.recyclerView_student_manage)
     RecyclerView recyclerViewStudentList;
+    @BindView(R.id.btn_choose_classes)
+    CheckBox btn_choose_classes;
+    @BindView(R.id.recyclerView_class)
+    RecyclerView recyclerView_class;
+    @BindView(R.id.layout_classes)
+    LinearLayout layout_classes;
+
+    List<String> stringList;
+    ClassAdapter classAdapter;
 
     private List<Student> studentList;
     private StudentManageAdapter studentManageAdapter;
 
     private DatabaseReference databaseReference;
 
-    String Class = "CP13";
+    String Classes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,42 +55,78 @@ public class StudentManageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_manage);
         ButterKnife.bind(this);
         init();
+
+        getClasses();
+
         getData();
 
     }
 
-    private void init() {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        studentList = new ArrayList<>();
-        recyclerViewStudentList.setHasFixedSize(true);
-        recyclerViewStudentList.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        studentManageAdapter = new StudentManageAdapter(this, studentList);
-        recyclerViewStudentList.setAdapter(studentManageAdapter);
+    private void getClasses() {
+        databaseReference.child("classes").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String classes = dataSnapshot.getValue(String.class);
+
+                if (!classes.equals("ALL")) {
+                    stringList.add(classes);
+                    classAdapter.notifyDataSetChanged();
+                    Classes = classes;
+                    btn_choose_classes.setText(classes);
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
-    @OnCheckedChanged({R.id.rdo_cp13_student_manage, R.id.rdo_cp14_student_manage, R.id.rdo_cp15_student_manage})
-    public void onCheckedRdoClass(CompoundButton button, boolean checked) {
+    private void init() {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        studentList = new ArrayList<>();
+        recyclerViewStudentList.setHasFixedSize(true);
+        recyclerViewStudentList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        studentManageAdapter = new StudentManageAdapter(this, studentList);
+        recyclerViewStudentList.setAdapter(studentManageAdapter);
+
+        stringList = new ArrayList<>();
+        recyclerView_class.setHasFixedSize(true);
+        recyclerView_class.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        classAdapter = new ClassAdapter(this, stringList, this);
+        recyclerView_class.setAdapter(classAdapter);
+    }
+
+    @OnCheckedChanged(R.id.btn_choose_classes)
+    public void onCheckedChooseClass(boolean checked) {
         if (checked) {
-            studentList.clear();
-            studentManageAdapter.notifyDataSetChanged();
-            switch (button.getId()) {
-                case R.id.rdo_cp13_student_manage:
-                    Class = "CP13";
-                    break;
-                case R.id.rdo_cp14_student_manage:
-                    Class = "CP14";
-                    break;
-                case R.id.rdo_cp15_student_manage:
-                    Class = "CP15";
-                    break;
-            }
-            getData();
+            layout_classes.setVisibility(View.VISIBLE);
+        } else {
+            layout_classes.setVisibility(View.GONE);
         }
     }
 
     private void getData() {
-        databaseReference.child("Student").child(Class).addChildEventListener(new ChildEventListener() {
+        databaseReference.child("Student").child(Classes).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d("ktdd", "onDataChange: " + dataSnapshot.child("name").getValue().toString());
@@ -122,5 +168,12 @@ public class StudentManageActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onClickItemClasses(String classes) {
+        btn_choose_classes.setText(classes);
+        layout_classes.setVisibility(View.GONE);
+        btn_choose_classes.setChecked(false);
     }
 }

@@ -37,17 +37,15 @@
             android:orientation="vertical"
             android:paddingTop="30dp">
 
-            <EditText
+            <Button
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_edittext_comment_news"
-                android:text="CP13"
                 android:id="@+id/edt_class_student_login"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
                 android:drawableStart="@drawable/ic_group_black_24dp"
                 android:singleLine="true"
-                android:hint="ID"
-                android:inputType="textEmailAddress" />
+                android:hint="Chọn lớp học" />
 
             <EditText
                 android:layout_marginTop="16dp"
@@ -83,6 +81,22 @@
                 android:textAllCaps="false"
                 android:textColor="#fff"
                 android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layout_classes"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="91dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_class"
+                android:elevation="4dp"
+                android:background="@color/color_white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
         </LinearLayout>
 
     </RelativeLayout>

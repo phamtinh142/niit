@@ -18,11 +18,13 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,10 +36,13 @@ import com.example.niit.R;
 import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
+import com.example.niit.adapter.ClassAdapter;
 import com.example.niit.model.News;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -61,9 +66,9 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class CreatedNewsManageDialog extends DialogFragment {
+public class CreatedNewsManageDialog extends DialogFragment implements ClassAdapter.ClassesListener {
 
-    String Class = "CP13";
+    String news = "ALL";
 
     @BindView(R.id.img_add_news_manage)
     ImageView img_add_news_manage;
@@ -75,6 +80,12 @@ public class CreatedNewsManageDialog extends DialogFragment {
     EditText txt_content_add_news_manage;
     @BindView(R.id.layout_progress_bar_add_news_manage)
     LinearLayout layout_progress_bar;
+    @BindView(R.id.layout_classes)
+    LinearLayout layout_classes;
+    @BindView(R.id.recyclerView_class)
+    RecyclerView recyclerView_class;
+    @BindView(R.id.btn_choose_classes)
+    CheckBox btn_choose_classes;
 
     private String imageNews = "";
 
@@ -90,6 +101,9 @@ public class CreatedNewsManageDialog extends DialogFragment {
     StorageReference storageReference;
     DatabaseReference databaseReference;
 
+    List<String> stringList;
+    ClassAdapter classAdapter;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,35 +118,55 @@ public class CreatedNewsManageDialog extends DialogFragment {
         ButterKnife.bind(this, view);
         init();
 
+        getClasses();
+
         askPermissions();
 
         return view;
+    }
+
+    private void getClasses() {
+        databaseReference.child("classes").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String classes = dataSnapshot.getValue(String.class);
+
+                stringList.add(classes);
+                classAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void init() {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReferenceFromUrl("gs://niit-c3bc4.appspot.com/News/");
         databaseReference = FirebaseDatabase.getInstance().getReference();
-    }
 
-
-    @OnCheckedChanged({R.id.rdo_cp13_add_news_manage,
-            R.id.rdo_cp14_add_news_manage,
-            R.id.rdo_cp15_add_news_manage})
-    public void onCheckedRdoClass(CompoundButton button, boolean checked) {
-        if (checked) {
-            switch (button.getId()) {
-                case R.id.rdo_cp13_add_news_manage:
-                    Class = "CP13";
-                    break;
-                case R.id.rdo_cp14_add_news_manage:
-                    Class = "CP14";
-                    break;
-                case R.id.rdo_cp15_add_news_manage:
-                    Class = "CP15";
-                    break;
-            }
-        }
+        stringList = new ArrayList<>();
+        recyclerView_class.setHasFixedSize(true);
+        recyclerView_class.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        classAdapter = new ClassAdapter(getActivity(), stringList, this);
+        recyclerView_class.setAdapter(classAdapter);
     }
 
     @OnClick(R.id.btn_back_add_news_manage)
@@ -152,7 +186,16 @@ public class CreatedNewsManageDialog extends DialogFragment {
         startActivityForResult(getPickImageChooserIntent(), IMAGE_RESULT);
     }
 
-    @OnClick(R.id.btn_confirm_news_manage)
+    @OnCheckedChanged(R.id.btn_choose_classes)
+    public void onClickChooseClass(boolean checked) {
+        if (checked) {
+            layout_classes.setVisibility(View.VISIBLE);
+        } else {
+            layout_classes.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.btn_confirm)
     public void onClickConfirmAddNews() {
         getImage();
         layout_progress_bar.setVisibility(View.VISIBLE);
@@ -202,7 +245,7 @@ public class CreatedNewsManageDialog extends DialogFragment {
         news.setImage_news(imageNews);
         news.setType_account(0);
 
-        databaseReference.child("News").child(Class).push().setValue(news, new DatabaseReference.CompletionListener() {
+        databaseReference.child("news").child(this.news).push().setValue(news, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 if (databaseError == null) {
@@ -386,4 +429,15 @@ public class CreatedNewsManageDialog extends DialogFragment {
     }
 
 
+    @Override
+    public void onClickItemClasses(String classes) {
+        if (classes.equals("Chung")) {
+            news = "ALL";
+        } else {
+            news = classes;
+        }
+        btn_choose_classes.setText(classes);
+        layout_classes.setVisibility(View.GONE);
+        btn_choose_classes.setChecked(false);
+    }
 }

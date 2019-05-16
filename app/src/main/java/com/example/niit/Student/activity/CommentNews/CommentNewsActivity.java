@@ -41,6 +41,7 @@ public class CommentNewsActivity extends AppCompatActivity {
 
     String idNews = "";
     String idUser = "";
+    String classes = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,10 @@ public class CommentNewsActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        databaseReference.child("News").child(idNews).child("comment").addChildEventListener(new ChildEventListener() {
+        databaseReference.child("news").child(classes).child(idNews).child("comment").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 SendComment comment = dataSnapshot.getValue(SendComment.class);
-
                 commentList.add(comment);
                 commentNewsAdapter.notifyDataSetChanged();
             }
@@ -90,8 +90,7 @@ public class CommentNewsActivity extends AppCompatActivity {
 
         commentList = new ArrayList<>();
         recyclerViewCommentNews.setHasFixedSize(true);
-        recyclerViewCommentNews.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerViewCommentNews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         commentNewsAdapter = new CommentNewsAdapter(this, commentList);
 
@@ -103,6 +102,7 @@ public class CommentNewsActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         idNews = bundle.getString("idNews");
         idUser = bundle.getString("idUser");
+        classes = bundle.getString("classes");
     }
 
     @OnClick(R.id.btn_send_comment_news_detail)
@@ -118,7 +118,7 @@ public class CommentNewsActivity extends AppCompatActivity {
 
             SendComment sendComment = new SendComment(id, comment, createAtTime, type_account);
 
-            databaseReference.child("News").child(idNews).child("comment").push().setValue(sendComment, new DatabaseReference.CompletionListener() {
+            databaseReference.child("news").child(classes).child(idNews).child("comment").push().setValue(sendComment, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                     if (databaseError == null) {

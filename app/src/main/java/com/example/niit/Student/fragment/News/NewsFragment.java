@@ -68,7 +68,7 @@ public class NewsFragment extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
 
-        String image = SharePrefer.getInstance().get(StringFinal.IMAGE, String.class);
+        String image = SharePrefer.getInstance().get(StringFinal.AVATAR, String.class);
 
         Log.d("ktimage", "init: " + image);
 

@@ -28,7 +28,7 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context context;
     private List<SendComment> commentList;
 
-    public CommentNewsAdapter(Context context, List<SendComment> commentList) {
+    CommentNewsAdapter(Context context, List<SendComment> commentList) {
         this.context = context;
         this.commentList = commentList;
     }
@@ -48,11 +48,11 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         SendComment comment = commentList.get(i);
 
         if (comment.getType_account() == 0) {
-            databaseReference.child("Manage").child(comment.getId()).addValueEventListener(
+            databaseReference.child("manager").child(comment.getId()).addValueEventListener(
                     new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String avatar = dataSnapshot.child("avata").getValue().toString();
+                            String avatar = dataSnapshot.child("avatar").getValue().toString();
                             String username = dataSnapshot.child("name").getValue().toString();
 
                             if (avatar.equals("")) {
@@ -74,7 +74,7 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     });
 
         } else {
-            databaseReference.child("Student").child(comment.getId()).addValueEventListener(
+            databaseReference.child("student").child(comment.getId()).addValueEventListener(
                     new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -139,7 +139,7 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView txtContent;
         @BindView(R.id.txt_create_at_time_comment_news)
         TextView txtCreateAtTime;
-        public CommentNewsViewHolder(@NonNull View itemView) {
+        CommentNewsViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

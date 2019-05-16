@@ -56,11 +56,11 @@ public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         final News news = newsList.get(i);
 
         if (news.getType_account() == 0) {
-            databaseReference.child("Manage").child(news.getId()).addValueEventListener(
+            databaseReference.child("manager").child(news.getId()).addValueEventListener(
                     new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String avatar = dataSnapshot.child("avata").getValue().toString();
+                    String avatar = dataSnapshot.child("avatar").getValue().toString();
                     String username = dataSnapshot.child("name").getValue().toString();
 
                     if (avatar.equals("")) {
@@ -82,7 +82,7 @@ public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             });
 
         } else {
-            databaseReference.child("Student").child(news.getId()).addValueEventListener(
+            databaseReference.child("student").child(news.getId()).addValueEventListener(
                     new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -128,6 +128,7 @@ public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             public void onClick(View v) {
                 Intent intent = new Intent(context, CommentNewsActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("classes", news.getClasses());
                 bundle.putString("idNews", news.getIdNews());
                 bundle.putString("idUser", news.getId());
                 intent.putExtras(bundle);

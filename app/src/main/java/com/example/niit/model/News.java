@@ -19,6 +19,8 @@ public class News {
     @SerializedName("type_account")
     @Expose
     private int type_account;
+    @SerializedName("classes")
+    private String classes;
 
     private String idNews;
 
@@ -30,16 +32,25 @@ public class News {
         this.idNews = idNews;
     }
 
-    public News(String id, String content_news, String create_time, String image_news, int type_account) {
+    public News(String id, String content_news, String create_time, String image_news, int type_account, String classes) {
         this.id = id;
         this.content_news = content_news;
         this.create_time = create_time;
         this.image_news = image_news;
         this.type_account = type_account;
+        this.classes = classes;
     }
 
     public News() {
 
+    }
+
+    public String getClasses() {
+        return classes;
+    }
+
+    public void setClasses(String classes) {
+        this.classes = classes;
     }
 
     public String getId() {

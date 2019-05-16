@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
+        android:layout_above="@+id/btn_confirm"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/layout_tool_bar"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -33,77 +34,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
+            <CheckBox
+                android:button="@null"
                 android:gravity="center"
-                android:id="@+id/btn_confirm_news_manage"
+                android:id="@+id/btn_choose_classes"
                 android:layout_marginEnd="7dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:textColorHint="@color/color_white"
                 android:textColor="@android:color/white"
-                android:text="Đăng"
+                android:text="Chung"
+                android:drawableEnd="@drawable/change_icon_arrow_drop"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
         </RelativeLayout>
 
-        <RadioGroup
-            android:weightSum="302"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <RadioButton
-                android:checked="true"
-                android:background="@drawable/change_color_rdo_login"
-                android:id="@+id/rdo_cp13_add_news_manage"
-                android:textColor="@drawable/change_text_rdo_login"
-                android:gravity="center"
-                android:button="@null"
-                android:layout_weight="100"
-                android:text="CP13"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-
-            <View
-                android:layout_gravity="center_vertical"
-                android:background="@color/color_title_icon_fragment_bet"
-                android:layout_weight="1"
-                android:layout_height="30dp"
-                android:layout_width="0.1dp" />
-
-            <RadioButton
-                android:background="@drawable/change_color_rdo_login"
-                android:id="@+id/rdo_cp14_add_news_manage"
-                android:textColor="@drawable/change_text_rdo_login"
-                android:gravity="center"
-                android:button="@null"
-                android:layout_weight="100"
-                android:text="CP14"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-
-            <View
-                android:layout_gravity="center_vertical"
-                android:background="@color/color_title_icon_fragment_bet"
-                android:layout_weight="1"
-                android:layout_height="30dp"
-                android:layout_width="0.1dp" />
-
-            <RadioButton
-                android:background="@drawable/change_color_rdo_login"
-                android:id="@+id/rdo_cp15_add_news_manage"
-                android:textColor="@drawable/change_text_rdo_login"
-                android:gravity="center"
-                android:button="@null"
-                android:layout_weight="100"
-                android:text="CP15"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-        </RadioGroup>
-
         <ScrollView
+            android:layout_below="@+id/layout_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -165,8 +115,6 @@
 
                 </RelativeLayout>
 
-
-
                 <LinearLayout
                     android:background="@color/color_white"
                     android:layout_marginTop="20dp"
@@ -197,7 +145,36 @@
 
         </ScrollView>
 
-    </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:background="@color/color_white"
+            android:visibility="gone"
+            android:id="@+id/layout_classes"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="56dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_class"
+                android:elevation="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:textColor="@color/color_white"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:text="Đăng"
+        android:background="@color/colorBottomNavigation"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
     <LinearLayout
         android:visibility="gone"
