@@ -12,15 +12,9 @@ public class CreatedStudent {
         this.type_account = type_account;
     }
 
-    @SerializedName("type_account")
-    @Expose
-    private int type_account;
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("address")
-    @Expose
-    private String address;
     @SerializedName("age")
     @Expose
     private String age;
@@ -30,6 +24,9 @@ public class CreatedStudent {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("address")
+    @Expose
+    private String address;
     @SerializedName("avatar")
     @Expose
     private String avatar;
@@ -45,6 +42,9 @@ public class CreatedStudent {
     @SerializedName("bithday")
     @Expose
     private String bithday;
+    @SerializedName("type_account")
+    @Expose
+    private int type_account;
 
     public CreatedStudent() {
 

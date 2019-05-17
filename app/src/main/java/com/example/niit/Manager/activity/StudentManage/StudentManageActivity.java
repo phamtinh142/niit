@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
+import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.Manager.activity.StudentManage.adapter.StudentManageAdapter;
 import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
@@ -29,7 +30,6 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 
 public class StudentManageActivity extends AppCompatActivity implements ClassAdapter.ClassesListener {
-
     @BindView(R.id.recyclerView_student_manage)
     RecyclerView recyclerViewStudentList;
     @BindView(R.id.btn_choose_classes)
@@ -42,12 +42,12 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
     List<String> stringList;
     ClassAdapter classAdapter;
 
-    private List<Student> studentList;
+    private List<CreatedStudent> createdStudentList;
     private StudentManageAdapter studentManageAdapter;
 
     private DatabaseReference databaseReference;
 
-    String Classes;
+    String Classes = "CP13";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +71,9 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
                 if (!classes.equals("ALL")) {
                     stringList.add(classes);
                     classAdapter.notifyDataSetChanged();
-                    Classes = classes;
                     btn_choose_classes.setText(classes);
+                    Classes = classes;
                 }
-
 
             }
 
@@ -103,10 +102,10 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
     private void init() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        studentList = new ArrayList<>();
+        createdStudentList = new ArrayList<>();
         recyclerViewStudentList.setHasFixedSize(true);
         recyclerViewStudentList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        studentManageAdapter = new StudentManageAdapter(this, studentList);
+        studentManageAdapter = new StudentManageAdapter(this, createdStudentList);
         recyclerViewStudentList.setAdapter(studentManageAdapter);
 
         stringList = new ArrayList<>();
@@ -126,25 +125,17 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
     }
 
     private void getData() {
-        databaseReference.child("Student").child(Classes).addChildEventListener(new ChildEventListener() {
+
+        databaseReference.child("student").child(Classes).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("ktdd", "onDataChange: " + dataSnapshot.child("name").getValue().toString());
 
-                Student student = new Student();
+                CreatedStudent createdStudent = dataSnapshot.getValue(CreatedStudent.class);
 
-                student.setAddress(dataSnapshot.child("address").getValue().toString());
-                student.setAge(dataSnapshot.child("age").getValue().toString());
-                student.setAvatar(dataSnapshot.child("avatar").getValue().toString());
-                student.setBithday(dataSnapshot.child("bithday").getValue().toString());
-                student.setClassUser(dataSnapshot.child("classUser").getValue().toString());
-                student.setEmail(dataSnapshot.child("email").getValue().toString());
-                student.setPhone(dataSnapshot.child("phone").getValue().toString());
-                student.setName(dataSnapshot.child("name").getValue().toString());
-                student.setSex(dataSnapshot.child("sex").getValue().toString());
+                Log.d("ktmamamam", "onChildAdded: " + createdStudent.getName());
 
-                studentList.add(student);
 
+                createdStudentList.add(createdStudent);
                 studentManageAdapter.notifyDataSetChanged();
             }
 
@@ -172,8 +163,14 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
 
     @Override
     public void onClickItemClasses(String classes) {
+        createdStudentList.clear();
+        studentManageAdapter.notifyDataSetChanged();
+
         btn_choose_classes.setText(classes);
         layout_classes.setVisibility(View.GONE);
         btn_choose_classes.setChecked(false);
+
+        Classes = classes;
+        getData();
     }
 }

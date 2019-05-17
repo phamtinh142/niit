@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
 import com.squareup.picasso.Picasso;
@@ -20,11 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    private List<Student> studentList;
+    private List<CreatedStudent> createdStudentList;
 
-    public StudentManageAdapter(Context context, List<Student> studentList) {
+    public StudentManageAdapter(Context context, List<CreatedStudent> createdStudentList) {
         this.context = context;
-        this.studentList = studentList;
+        this.createdStudentList = createdStudentList;
     }
 
     @NonNull
@@ -38,15 +39,15 @@ public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         StudentManageViewHolder holder = (StudentManageViewHolder) viewHolder;
 
-        Student student = studentList.get(i);
+        CreatedStudent createdStudent = createdStudentList.get(i);
 
         holder.txt_stt_row_student.setText(String.valueOf(i++));
-        holder.txt_name_row_student.setText(String.valueOf(student.getName()));
+        holder.txt_name_row_student.setText(String.valueOf(createdStudent.getName()));
 
-        if (student.getAvatar().equals("")) {
+        if (createdStudent.getAvatar().isEmpty()) {
             holder.img_row_student.setImageDrawable(context.getResources().getDrawable(R.drawable.img_not_found));
         } else {
-            Picasso.get().load(student.getAvatar())
+            Picasso.get().load(createdStudent.getAvatar())
                     .error(context.getResources().getDrawable(R.drawable.img_not_found))
                     .into(holder.img_row_student);
         }
@@ -54,7 +55,7 @@ public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        if (studentList != null) return studentList.size();
+        if (createdStudentList != null) return createdStudentList.size();
         return 0;
     }
 
@@ -66,7 +67,7 @@ public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.View
         @BindView(R.id.txt_name_row_student)
         TextView txt_name_row_student;
 
-        public StudentManageViewHolder(@NonNull View itemView) {
+        StudentManageViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

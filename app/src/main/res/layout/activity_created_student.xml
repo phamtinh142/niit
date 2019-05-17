@@ -50,238 +50,124 @@
 
         </RelativeLayout>
 
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_account"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/img_avata_create_student"
-                        android:src="@drawable/img_not_found"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp" />
-
-                    <LinearLayout
-                        android:background="@color/color_white"
-                        android:id="@+id/layout_add_avata_account"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp">
-
-                        <ImageView
-                            android:clickable="false"
-                            android:src="@drawable/ic_add_image"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp" />
-
-                        <TextView
-                            android:textSize="12sp"
-                            android:id="@+id/label_choose_image"
-                            android:clickable="false"
-                            android:textStyle="bold"
-                            android:layout_marginStart="5dp"
-                            android:text="Thêm Ảnh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edt_id_create_student"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_edittext_comment_news"
-                    android:text=""
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:singleLine="true"
-                    android:hint="ID"
-                    android:inputType="textCapCharacters"/>
-
-                <EditText
-                    android:id="@+id/edt_name_create_student"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_edittext_comment_news"
-                    android:text=""
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:singleLine="true"
-                    android:hint="Họ và tên" />
-
-                <EditText
-                    android:id="@+id/edt_email_create_student"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_edittext_comment_news"
-                    android:text=""
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:singleLine="true"
-                    android:hint="Email" />
-
-                <EditText
-                    android:id="@+id/edt_password_create_student"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_edittext_comment_news"
-                    android:text=""
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:singleLine="true"
-                    android:hint="Mật khẩu" />
-
-                <EditText
-                    android:id="@+id/edt_confirm_create_student"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_edittext_comment_news"
-                    android:text=""
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:singleLine="true"
-                    android:hint="Nhập lại mật khẩu" />
-
-                <LinearLayout
-                    android:layout_marginTop="16dp"
-                    android:weightSum="9"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/edt_age_create_student"
-                        android:layout_weight="3"
+                    <CheckBox
+                        android:button="@null"
+                        android:textSize="17sp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/edt_classes_create_student"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="16dp"
                         android:background="@drawable/bg_edittext_comment_news"
                         android:text=""
                         android:layout_width="fill_parent"
                         android:layout_height="45dp"
                         android:singleLine="true"
-                        android:hint="Tuổi"
-                        android:inputType="number"/>
+                        android:hint="Chọn lớp" />
 
                     <EditText
-                        android:id="@+id/edt_class_create_student"
-                        android:layout_weight="3"
+                        android:id="@+id/edt_id_create_student"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="16dp"
                         android:background="@drawable/bg_edittext_comment_news"
                         android:text=""
                         android:layout_width="fill_parent"
                         android:layout_height="45dp"
                         android:singleLine="true"
-                        android:hint="Lớp"
+                        android:hint="ID"
                         android:inputType="textCapCharacters"/>
 
                     <EditText
-                        android:id="@+id/edt_sex_create_student"
-                        android:layout_weight="3"
+                        android:id="@+id/edt_name_create_student"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="16dp"
                         android:background="@drawable/bg_edittext_comment_news"
                         android:text=""
                         android:layout_width="fill_parent"
                         android:layout_height="45dp"
                         android:singleLine="true"
-                        android:hint="Giới tính" />
+                        android:hint="Họ và tên" />
+
+                    <EditText
+                        android:id="@+id/edt_password_create_student"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_edittext_comment_news"
+                        android:text=""
+                        android:layout_width="fill_parent"
+                        android:layout_height="45dp"
+                        android:singleLine="true"
+                        android:hint="Mật khẩu"
+                        android:inputType="textPassword"/>
+
+                    <EditText
+                        android:id="@+id/edt_confirm_create_student"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_edittext_comment_news"
+                        android:text=""
+                        android:layout_width="fill_parent"
+                        android:layout_height="45dp"
+                        android:singleLine="true"
+                        android:hint="Nhập lại mật khẩu"
+                        android:inputType="textPassword"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center_vertical"
-                    android:weightSum="10"
-                    android:orientation="horizontal"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="gone"
+                    android:id="@+id/layout_classes"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
+                    android:layout_height="200dp"
+                    android:layout_marginTop="81dp">
 
-                    <TextView
-                        android:textSize="18sp"
-                        android:gravity="center_vertical"
-                        android:layout_weight="5"
-                        android:id="@+id/txt_date_create_student"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/bg_edittext_comment_news"
-                        android:text=""
-                        android:layout_width="fill_parent"
-                        android:layout_height="45dp"
-                        android:singleLine="true"
-                        android:hint="Ngày sinh" />
-
-                    <EditText
-                        android:layout_weight="5"
-                        android:id="@+id/edt_phone_create_student"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/bg_edittext_comment_news"
-                        android:text=""
-                        android:layout_width="fill_parent"
-                        android:layout_height="45dp"
-                        android:singleLine="true"
-                        android:hint="Số điện thoại"
-                        android:inputType="number"/>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_class"
+                        android:elevation="4dp"
+                        android:background="@color/color_white"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
 
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/edt_address_create_student"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_edittext_comment_news"
-                    android:text=""
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:singleLine="true"
-                    android:hint="Địa chỉ" />
-
-
-            </LinearLayout>
+            </RelativeLayout>
 
         </ScrollView>
 

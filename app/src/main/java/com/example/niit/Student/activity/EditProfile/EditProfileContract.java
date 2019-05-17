@@ -1,9 +1,8 @@
-package com.example.niit.Manager.activity.CreateStudent;
+package com.example.niit.Student.activity.EditProfile;
 
-import com.example.niit.Manager.activity.CreateStudent.entities.CreateAccountStudent;
 import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 
-public interface CreatedStudentContract {
+public interface EditProfileContract {
     interface View {
         void showCreateStudentSuccess();
         void showCreateStudentFalse();

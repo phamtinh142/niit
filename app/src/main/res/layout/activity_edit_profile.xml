@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/color_white"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Manager.activity.CreateStudent.CreatedStudentActivity">
+
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="@color/colorBottomNavigation">-->
+
+            <!--<ImageButton-->
+                <!--android:id="@+id/ibtn_back_create_account"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@null"-->
+                <!--android:src="@drawable/ic_back" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:text="Tạo tài khoản"-->
+                <!--android:textColor="@color/color_White"-->
+                <!--android:textSize="18sp"-->
+                <!--android:textStyle="bold" />-->
+
+            <!--<TextView-->
+                <!--android:gravity="center"-->
+                <!--android:id="@+id/btn_create_account"-->
+                <!--android:layout_marginEnd="7dp"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:textSize="15sp"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:text="Tạo"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent" />-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                        <!--android:id="@+id/img_avata_create_student"-->
+                        <!--android:src="@drawable/img_not_found"-->
+                        <!--android:layout_width="70dp"-->
+                        <!--android:layout_height="70dp" />-->
+
+                    <!--<LinearLayout-->
+                        <!--android:background="@color/color_white"-->
+                        <!--android:id="@+id/layout_add_avata_account"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="horizontal"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="20dp">-->
+
+                        <!--<ImageView-->
+                            <!--android:clickable="false"-->
+                            <!--android:src="@drawable/ic_add_image"-->
+                            <!--android:layout_width="20dp"-->
+                            <!--android:layout_height="20dp" />-->
+
+                        <!--<TextView-->
+                            <!--android:textSize="12sp"-->
+                            <!--android:id="@+id/label_choose_image"-->
+                            <!--android:clickable="false"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:layout_marginStart="5dp"-->
+                            <!--android:text="Thêm Ảnh"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
+
+                    <!--</LinearLayout>-->
+
+                <!--</LinearLayout>-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_id_create_student"-->
+                    <!--android:paddingStart="8dp"-->
+                    <!--android:paddingEnd="8dp"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:background="@drawable/bg_edittext_comment_news"-->
+                    <!--android:text=""-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="45dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:hint="ID"-->
+                    <!--android:inputType="textCapCharacters"/>-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_name_create_student"-->
+                    <!--android:paddingStart="8dp"-->
+                    <!--android:paddingEnd="8dp"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:background="@drawable/bg_edittext_comment_news"-->
+                    <!--android:text=""-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="45dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:hint="Họ và tên" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_email_create_student"-->
+                    <!--android:paddingStart="8dp"-->
+                    <!--android:paddingEnd="8dp"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:background="@drawable/bg_edittext_comment_news"-->
+                    <!--android:text=""-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="45dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:hint="Email" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_password_create_student"-->
+                    <!--android:paddingStart="8dp"-->
+                    <!--android:paddingEnd="8dp"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:background="@drawable/bg_edittext_comment_news"-->
+                    <!--android:text=""-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="45dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:hint="Mật khẩu" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_confirm_create_student"-->
+                    <!--android:paddingStart="8dp"-->
+                    <!--android:paddingEnd="8dp"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:background="@drawable/bg_edittext_comment_news"-->
+                    <!--android:text=""-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="45dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:hint="Nhập lại mật khẩu" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:weightSum="9"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                    <!--<EditText-->
+                        <!--android:id="@+id/edt_age_create_student"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:paddingStart="8dp"-->
+                        <!--android:paddingEnd="8dp"-->
+                        <!--android:layout_marginStart="10dp"-->
+                        <!--android:layout_marginEnd="10dp"-->
+
+                        <!--android:background="@drawable/bg_edittext_comment_news"-->
+                        <!--android:text=""-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:hint="Tuổi"-->
+                        <!--android:inputType="number"/>-->
+
+                    <!--<EditText-->
+                        <!--android:id="@+id/edt_class_create_student"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:paddingStart="8dp"-->
+                        <!--android:paddingEnd="8dp"-->
+                        <!--android:layout_marginStart="10dp"-->
+                        <!--android:layout_marginEnd="10dp"-->
+                        <!--android:background="@drawable/bg_edittext_comment_news"-->
+                        <!--android:text=""-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:hint="Lớp"-->
+                        <!--android:inputType="textCapCharacters"/>-->
+
+                    <!--<EditText-->
+                        <!--android:id="@+id/edt_sex_create_student"-->
+                        <!--android:layout_weight="3"-->
+                        <!--android:paddingStart="8dp"-->
+                        <!--android:paddingEnd="8dp"-->
+                        <!--android:layout_marginStart="10dp"-->
+                        <!--android:layout_marginEnd="10dp"-->
+                        <!--android:background="@drawable/bg_edittext_comment_news"-->
+                        <!--android:text=""-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:hint="Giới tính" />-->
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:weightSum="10"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="16dp">-->
+
+                    <!--<TextView-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:layout_weight="5"-->
+                        <!--android:id="@+id/txt_date_create_student"-->
+                        <!--android:paddingStart="8dp"-->
+                        <!--android:paddingEnd="8dp"-->
+                        <!--android:layout_marginStart="10dp"-->
+                        <!--android:layout_marginEnd="10dp"-->
+                        <!--android:background="@drawable/bg_edittext_comment_news"-->
+                        <!--android:text=""-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:hint="Ngày sinh" />-->
+
+                    <!--<EditText-->
+                        <!--android:layout_weight="5"-->
+                        <!--android:id="@+id/edt_phone_create_student"-->
+                        <!--android:paddingStart="8dp"-->
+                        <!--android:paddingEnd="8dp"-->
+                        <!--android:layout_marginStart="10dp"-->
+                        <!--android:layout_marginEnd="10dp"-->
+                        <!--android:background="@drawable/bg_edittext_comment_news"-->
+                        <!--android:text=""-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="45dp"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:hint="Số điện thoại"-->
+                        <!--android:inputType="number"/>-->
+
+                <!--</LinearLayout>-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_address_create_student"-->
+                    <!--android:paddingStart="8dp"-->
+                    <!--android:paddingEnd="8dp"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:background="@drawable/bg_edittext_comment_news"-->
+                    <!--android:text=""-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="45dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:hint="Địa chỉ" />-->
+
+
+            <!--</LinearLayout>-->
+
+        <!--</ScrollView>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/layout_progress_bar"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical"-->
+        <!--android:background="@color/color_gray_opacity"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ProgressBar-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp" />-->
+
+    <!--</LinearLayout>-->
+
+</RelativeLayout>
