@@ -21,7 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Student.activity.EditProfile.EditProfileActivity"></activity>
+        <activity android:name=".Manager.activity.SubjectManage.SubjectManageActivity"></activity>
+        <activity android:name=".Manager.activity.InfoStudent.InfoStudentActivity" />
+        <activity android:name=".Student.activity.EditProfile.EditProfileActivity" />
         <activity android:name=".Student.activity.Schelude.ScheludeActivity" />
         <activity android:name=".Manager.activity.ScheludeManage.ScheludeManageActivity" />
         <activity android:name=".Manager.activity.StudentManage.StudentManageActivity" />

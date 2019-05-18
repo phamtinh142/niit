@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Manager.activity.SubjectManage.SubjectManageActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorBottomNavigation">
+
+        <ImageButton
+            android:id="@+id/ibtn_back_create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Quản lí môn học"
+            android:textColor="@color/color_White"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edt_id_subject"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:hint="Mã môn học"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_edittext_comment_news"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <EditText
+            android:id="@+id/edt_name_subject"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:hint="Tên môn học"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_edittext_comment_news"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <Button
+            android:id="@+id/btn_create_subject"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/color_white"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="Tạo môn học"
+            android:background="@color/colorBottomNavigation"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/color_gray"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_subjects"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
