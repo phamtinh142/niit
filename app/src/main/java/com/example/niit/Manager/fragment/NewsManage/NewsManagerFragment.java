@@ -1,12 +1,14 @@
 package com.example.niit.Manager.fragment.NewsManage;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,9 @@ import com.example.niit.Manager.fragment.NewsManage.dialog.CreatedNewsManageDial
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
+import com.example.niit.Student.activity.CommentNews.CommentNewsActivity;
 import com.example.niit.adapter.ClassAdapter;
+import com.example.niit.listener.ItemNewsListener;
 import com.example.niit.model.News;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +40,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NewsManagerFragment extends Fragment implements ClassAdapter.ClassesListener {
+public class NewsManagerFragment extends Fragment implements ClassAdapter.ClassesListener, ItemNewsListener {
 
     @BindView(R.id.recyclerView_news_manager)
     RecyclerView recyclerViewNewsList;
@@ -112,7 +116,7 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
         newsList = new ArrayList<>();
         recyclerViewNewsList.setHasFixedSize(true);
         recyclerViewNewsList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        newsManageAdapter = new NewsManageAdapter(getActivity(), newsList);
+        newsManageAdapter = new NewsManageAdapter(getActivity(), newsList, this);
         recyclerViewNewsList.setAdapter(newsManageAdapter);
 
         stringList = new ArrayList<>();
@@ -198,5 +202,17 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
         btn_choose_classes.setChecked(false);
 
         getData();
+    }
+
+    @Override
+    public void onClickDetailNews(int position) {
+        Intent intent = new Intent(getActivity(), CommentNewsActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("classes", newsList.get(position).getClasses());
+        bundle.putString("idNews", newsList.get(position).getIdNews());
+        bundle.putString("idUser", newsList.get(position).getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

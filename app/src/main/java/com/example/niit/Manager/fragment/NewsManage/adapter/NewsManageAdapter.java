@@ -1,8 +1,6 @@
 package com.example.niit.Manager.fragment.NewsManage.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.niit.R;
 import com.example.niit.Share.FormatTime;
-import com.example.niit.Student.activity.CommentNews.CommentNewsActivity;
+import com.example.niit.listener.ItemNewsListener;
 import com.example.niit.model.News;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,10 +31,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<News> newsList;
+    private ItemNewsListener itemNewsListener;
 
-    public NewsManageAdapter(Context context, List<News> newsList) {
+    public NewsManageAdapter(Context context, List<News> newsList, ItemNewsListener itemNewsListener) {
         this.context = context;
         this.newsList = newsList;
+        this.itemNewsListener = itemNewsListener;
     }
 
     @NonNull
@@ -52,6 +52,8 @@ public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         final NewsManageViewHolder holder = (NewsManageViewHolder) viewHolder;
+
+        holder.position = i;
 
         final News news = newsList.get(i);
 
@@ -126,13 +128,7 @@ public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CommentNewsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("classes", news.getClasses());
-                bundle.putString("idNews", news.getIdNews());
-                bundle.putString("idUser", news.getId());
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                itemNewsListener.onClickDetailNews(holder.position);
             }
         });
 
@@ -151,6 +147,7 @@ public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     class NewsManageViewHolder extends RecyclerView.ViewHolder {
+        int position;
         @BindView(R.id.img_avatar_row_user_news)
         CircleImageView imgAvatar;
         @BindView(R.id.txt_username_row_news)

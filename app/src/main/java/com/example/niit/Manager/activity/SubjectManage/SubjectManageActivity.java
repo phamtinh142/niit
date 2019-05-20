@@ -65,12 +65,7 @@ public class SubjectManageActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Subjects subjects = dataSnapshot.getValue(Subjects.class);
 
-                for (Subjects subjects1 : subjectsList) {
-                    if (subjects1.getId().equals(subjects.getId())) {
-                        subjectsList.remove(subjects1);
-                        subjectsList.add(subjects);
-                    }
-                }
+                subjectsList.add(subjects);
                 subjectManageAdapter.notifyDataSetChanged();
             }
 

@@ -37,7 +37,9 @@
             android:orientation="vertical"
             android:paddingTop="30dp">
 
-            <Button
+            <CheckBox
+                android:textSize="17sp"
+                android:button="@null"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_edittext_comment_news"
                 android:id="@+id/edt_class_student_login"
@@ -50,7 +52,7 @@
             <EditText
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_edittext_comment_news"
-                android:text="R173005000020"
+                android:text="R173005000019"
                 android:id="@+id/edt_id_student_login"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
@@ -60,7 +62,7 @@
                 android:inputType="textEmailAddress" />
 
             <EditText
-                android:text="nam123"
+                android:text="tinh123"
                 android:background="@drawable/bg_edittext_comment_news"
                 android:id="@+id/edt_password_student_login"
                 android:layout_width="fill_parent"

@@ -8,40 +8,61 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.niit.Login.LoginActivity;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
+import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.activity.HocphiActivity;
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-    private View view;
-    Button btnhocphi;
+    @BindView(R.id.img_profile_avatar)
+    CircleImageView img_profile_avatar;
+    @BindView(R.id.txt_username_profile)
+    TextView txt_username_profile;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
+    String userName;
+    String avatar;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        ButterKnife.bind(this, view);
 
-        btnhocphi = view.findViewById(R.id.btnhocphi);
-
-        btnhocphi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharePrefer.getInstance().clear();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
-        });
+        getData();
 
         return view;
+    }
+
+    private void getData() {
+        userName = SharePrefer.getInstance().get(StringFinal.USERNAME, String.class);
+        avatar = SharePrefer.getInstance().get(StringFinal.AVATAR, String.class);
+        if (avatar.isEmpty()) {
+            img_profile_avatar.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
+        } else {
+            Picasso.get().load(avatar)
+                    .error(getResources().getDrawable(R.drawable.img_not_found))
+                    .into(img_profile_avatar);
+        }
+        txt_username_profile.setText(userName);
+    }
+
+    @OnClick(R.id.btn_logout_manager)
+    public void onClickLogout() {
+        SharePrefer.getInstance().clear();
+        startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
 }

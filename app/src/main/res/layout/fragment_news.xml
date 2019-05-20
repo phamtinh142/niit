@@ -25,6 +25,50 @@
 
     </LinearLayout>
 
+    <RadioGroup
+        android:background="@color/color_white"
+        android:id="@+id/rdo_group_bet"
+        android:weightSum="201"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <RadioButton
+            android:checked="true"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:button="@null"
+            android:id="@+id/rdo_common_news"
+            android:textColor="@drawable/changetext_rdo"
+            android:background="@null"
+            android:text="Bảng tin chung"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="100"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_gravity="center_vertical"
+            android:background="@color/color_History"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_width="0.5dp" />
+
+        <RadioButton
+            android:textStyle="bold"
+            android:gravity="center"
+            android:button="@null"
+            android:id="@+id/rdo_class_news"
+            android:textColor="@drawable/changetext_rdo"
+            android:background="@null"
+            android:text="Bảng tin"
+            android:layout_weight="100"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </RadioGroup>
+
     <LinearLayout
         android:padding="5dp"
         android:gravity="center"

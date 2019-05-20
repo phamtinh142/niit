@@ -24,9 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ManageStudentFragment extends Fragment {
     @BindView(R.id.img_profile_avatar)
     CircleImageView img_profile_avatar;
@@ -85,11 +82,6 @@ public class ManageStudentFragment extends Fragment {
     @OnClick(R.id.rtl_subject)
     public void onClickSubjectManage() {
         startActivity(new Intent(getActivity(), SubjectManageActivity.class));
-    }
-
-    @OnClick(R.id.rtl_schelude_manage)
-    public void onClickSemManage() {
-        startActivity(new Intent(getActivity(), ScheludeManageActivity.class));
     }
 
 }

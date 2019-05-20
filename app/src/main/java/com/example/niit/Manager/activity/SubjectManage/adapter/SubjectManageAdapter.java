@@ -96,6 +96,7 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
                                                     Toast.makeText(context, "Sửa thành công !", Toast.LENGTH_SHORT).show();
                                                     subjectsList.remove(hodler.position);
                                                     dialog.dismiss();
+                                                    notifyDataSetChanged();
                                                 } else {
                                                     Toast.makeText(context, "Sửa thất bại, thử lại !", Toast.LENGTH_SHORT).show();
                                                 }

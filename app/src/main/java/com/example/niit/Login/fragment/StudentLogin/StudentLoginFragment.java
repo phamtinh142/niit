@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.niit.Login.LoginActivity;
 import com.example.niit.Login.entities.Login;
+import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
@@ -38,6 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class StudentLoginFragment extends Fragment implements ClassAdapter.ClassesListener {
@@ -47,7 +50,7 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
     @BindView(R.id.edt_password_student_login)
     EditText edt_password_login;
     @BindView(R.id.edt_class_student_login)
-    Button edt_classlogin;
+    CheckBox edt_classlogin;
     @BindView(R.id.recyclerView_class)
     RecyclerView recyclerViewClass;
     @BindView(R.id.layout_classes)
@@ -66,6 +69,7 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
         ButterKnife.bind(this, view);
 
         init();
+
         getClassSchool();
 
         return view;
@@ -79,8 +83,11 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
 
                 Log.d("ktClasses", "onChildAdded: " + classes);
 
-                stringList.add(classes);
-                classAdapter.notifyDataSetChanged();
+                if (!classes.equals("ALL")) {
+                    stringList.add(classes);
+                    classAdapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override
@@ -105,9 +112,13 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
         });
     }
 
-    @OnClick(R.id.edt_class_student_login)
-    public void onClickClasses() {
-        layout_classes.setVisibility(View.VISIBLE);
+    @OnCheckedChanged(R.id.edt_class_student_login)
+    public void onCheckClasses(boolean checked) {
+        if (checked) {
+            layout_classes.setVisibility(View.VISIBLE);
+        } else {
+            layout_classes.setVisibility(View.GONE);
+        }
     }
 
     private void init() {
@@ -141,7 +152,7 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
 
     }
 
-    private void login(final String id, final String password, String classes) {
+    private void login(final String id, final String password, final String classes) {
         databaseReference.child("account").child(classes).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -150,7 +161,7 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
                     Login login = dataSnapshot.child(id).getValue(Login.class);
 
                     if (login.getPassword().equals(password)) {
-                        getInforUser(id);
+                        getInforUser(id, classes);
                     } else {
                         Toast.makeText(getActivity(), "Mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                     }
@@ -166,38 +177,29 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
         });
     }
 
-    private void getInforUser(final String id) {
+    private void getInforUser(final String id, String classes) {
 
-        databaseReference.child("Student").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("student").child(classes).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                Student student = dataSnapshot.child(id).getValue(Student.class);
-//
-//                Log.d("ktloginStudent", "----------------------------");
-//                Log.d("ktloginStudent", "onDataChange: " + student.getAddress());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getAvatar());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getAge());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getBithday());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getClassUser());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getEmail());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getId());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getName());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getPhone());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getSex());
-//                Log.d("ktloginStudent", "onDataChange: " + student.getType_account());
+                CreatedStudent createdStudent = dataSnapshot.child(id).getValue(CreatedStudent.class);
 
-//                SharePrefer.getInstance().put(StringFinal.ID, student.getId());
-//                SharePrefer.getInstance().put(StringFinal.ADDRESS, student.getAddress());
-//                SharePrefer.getInstance().put(StringFinal.USER_NAME, student.getName());
-//                SharePrefer.getInstance().put(StringFinal.AGE, student.getAge());
-//                SharePrefer.getInstance().put(StringFinal.EMAIL, student.getEmail());
-//                SharePrefer.getInstance().put(StringFinal.IMAGE, student.getAvatar());
-//                SharePrefer.getInstance().put(StringFinal.PHONE, student.getPhone());
-//                SharePrefer.getInstance().put(StringFinal.SEX, student.getSex());
-//                SharePrefer.getInstance().put(StringFinal.TYPE, student.getType_account());
-//
-//                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(getActivity(), MainActivity.class));
+                SharePrefer.getInstance().put(StringFinal.ID, createdStudent.getId());
+                SharePrefer.getInstance().put(StringFinal.AGE, createdStudent.getAge());
+                SharePrefer.getInstance().put(StringFinal.CLASSES, createdStudent.getClassUser());
+                SharePrefer.getInstance().put(StringFinal.EMAIL, createdStudent.getEmail());
+                SharePrefer.getInstance().put(StringFinal.ADDRESS, createdStudent.getAddress());
+                SharePrefer.getInstance().put(StringFinal.AVATAR, createdStudent.getAvatar());
+                SharePrefer.getInstance().put(StringFinal.USERNAME, createdStudent.getName());
+                SharePrefer.getInstance().put(StringFinal.PHONE, createdStudent.getPhone());
+                SharePrefer.getInstance().put(StringFinal.SEX, createdStudent.getSex());
+                SharePrefer.getInstance().put(StringFinal.BIRTHDAY, createdStudent.getBithday());
+                SharePrefer.getInstance().put(StringFinal.TYPE, createdStudent.getType_account());
+
+                Toast.makeText(getContext(), "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(getActivity(), MainActivity.class));
+
             }
 
             @Override
@@ -212,5 +214,6 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
     public void onClickItemClasses(String classes) {
         edt_classlogin.setText(classes);
         layout_classes.setVisibility(View.GONE);
+        edt_classlogin.setChecked(false);
     }
 }
