@@ -21,7 +21,6 @@ import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.activity.CommentNews.CommentNewsActivity;
-import com.example.niit.Student.fragment.News.adapter.NewsAdapter;
 import com.example.niit.Student.fragment.News.dialog.AddNewsDialog;
 import com.example.niit.listener.ItemNewsListener;
 import com.example.niit.model.News;
@@ -89,10 +88,10 @@ public class NewsFragment extends Fragment implements ItemNewsListener {
         Log.d("ktimage", "init: " + image);
 
         if (image.equals("")) {
-            img_avata_news.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.img_not_found));
+            img_avata_news.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.avatar_default));
         } else {
             Picasso.get().load(image)
-                    .error(getActivity().getResources().getDrawable(R.drawable.img_not_found))
+                    .error(getActivity().getResources().getDrawable(R.drawable.avatar_default))
                     .into(img_avata_news);
         }
 

@@ -115,9 +115,15 @@ public class CommentNewsActivity extends AppCompatActivity {
         if (comment.equals("")) {
             edtCommentNewsDetail.requestFocus();
         } else {
-
-            SendComment sendComment = new SendComment(id, comment, createAtTime, type_account);
-
+            SendComment sendComment = null;
+            
+            if (type_account == 0) {
+                sendComment = new SendComment(id, comment, createAtTime, type_account);
+            } else if (type_account == 1){
+                String classes = SharePrefer.getInstance().get(StringFinal.CLASSES, String.class);
+                sendComment = new SendComment(id, comment, createAtTime, type_account, classes);
+            }
+            
             databaseReference.child("news").child(classes).child(idNews).child("comment").push().setValue(sendComment, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {

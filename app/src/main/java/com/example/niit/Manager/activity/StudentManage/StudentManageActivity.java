@@ -1,5 +1,6 @@
 package com.example.niit.Manager.activity.StudentManage;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,12 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
+import com.example.niit.Manager.activity.InfoStudent.InfoStudentActivity;
 import com.example.niit.Manager.activity.StudentManage.adapter.StudentManageAdapter;
 import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
 import com.example.niit.adapter.ClassAdapter;
+import com.example.niit.listener.AccountListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 
-public class StudentManageActivity extends AppCompatActivity implements ClassAdapter.ClassesListener {
+public class StudentManageActivity extends AppCompatActivity implements ClassAdapter.ClassesListener, AccountListener {
     @BindView(R.id.recyclerView_student_manage)
     RecyclerView recyclerViewStudentList;
     @BindView(R.id.btn_choose_classes)
@@ -105,7 +108,7 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
         createdStudentList = new ArrayList<>();
         recyclerViewStudentList.setHasFixedSize(true);
         recyclerViewStudentList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        studentManageAdapter = new StudentManageAdapter(this, createdStudentList);
+        studentManageAdapter = new StudentManageAdapter(this, createdStudentList, this);
         recyclerViewStudentList.setAdapter(studentManageAdapter);
 
         stringList = new ArrayList<>();
@@ -172,5 +175,18 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
 
         Classes = classes;
         getData();
+    }
+
+    @Override
+    public void onClickAccount(int position) {
+        Intent intent = new Intent(this, InfoStudentActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("id", createdStudentList.get(position).getId());
+        bundle.putString("class", createdStudentList.get(position).getClassUser());
+        bundle.putInt("type_account", createdStudentList.get(position).getType_account());
+        bundle.putString("name", createdStudentList.get(position).getName());
+        bundle.putString("avatar", createdStudentList.get(position).getAvatar());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

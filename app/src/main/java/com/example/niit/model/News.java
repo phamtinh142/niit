@@ -21,6 +21,8 @@ public class News {
     private int type_account;
     @SerializedName("classes")
     private String classes;
+    @SerializedName("classUser")
+    private String classUser;
 
     private String idNews;
 
@@ -39,6 +41,16 @@ public class News {
         this.image_news = image_news;
         this.type_account = type_account;
         this.classes = classes;
+    }
+
+    public News(String id, String content_news, String create_time, String image_news, int type_account, String classes, String classUser) {
+        this.id = id;
+        this.content_news = content_news;
+        this.create_time = create_time;
+        this.image_news = image_news;
+        this.type_account = type_account;
+        this.classes = classes;
+        this.classUser = classUser;
     }
 
     public News() {
@@ -91,5 +103,13 @@ public class News {
 
     public void setType_account(int type_account) {
         this.type_account = type_account;
+    }
+
+    public String getClassUser() {
+        return classUser;
+    }
+
+    public void setClassUser(String classUser) {
+        this.classUser = classUser;
     }
 }

@@ -2,15 +2,19 @@ package com.example.niit.Student.activity.CommentNews;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.R;
 import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.TimestampUtils;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,23 +49,28 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         final CommentNewsViewHolder holder = (CommentNewsViewHolder) viewHolder;
 
-        SendComment comment = commentList.get(i);
+        final SendComment comment = commentList.get(i);
 
         if (comment.getType_account() == 0) {
-            databaseReference.child("manager").child(comment.getId()).addValueEventListener(
-                    new ValueEventListener() {
+            databaseReference.child("manager").child(comment.getId()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String avatar = dataSnapshot.child("avatar").getValue().toString();
-                            String username = dataSnapshot.child("name").getValue().toString();
+                            if (dataSnapshot.hasChild("avatar")) {
+                                String avatar = dataSnapshot.child("avatar").getValue().toString();
 
-                            if (avatar.equals("")) {
-                                holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.img_not_found));
+                                if (avatar.equals("")) {
+                                    holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.avatar_default));
+                                } else {
+                                    Picasso.get().load(avatar)
+                                            .error(context.getResources().getDrawable(R.drawable.avatar_default))
+                                            .into(holder.imgAvata);
+                                }
+
                             } else {
-                                Picasso.get().load(avatar)
-                                        .error(context.getResources().getDrawable(R.drawable.img_not_found))
-                                        .into(holder.imgAvata);
+                                holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.avatar_default));
                             }
+
+                            String username = dataSnapshot.child("name").getValue().toString();
 
                             holder.txtUsername.setText(username);
 
@@ -74,20 +83,26 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     });
 
         } else {
-            databaseReference.child("student").child(comment.getId()).addValueEventListener(
+            databaseReference.child("student").child(comment.getClasses()).child(comment.getId()).addValueEventListener(
                     new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String avatar = dataSnapshot.child("avatar").getValue().toString();
-                            String username = dataSnapshot.child("name").getValue().toString();
+                            if (dataSnapshot.hasChild("avatar")) {
+                                String avatar = dataSnapshot.child("avatar").getValue().toString();
 
-                            if (avatar.equals("")) {
-                                holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.img_not_found));
+                                if (avatar.equals("")) {
+                                    holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.avatar_default));
+                                } else {
+                                    Picasso.get().load(avatar)
+                                            .error(context.getResources().getDrawable(R.drawable.avatar_default))
+                                            .into(holder.imgAvata);
+                                }
+
                             } else {
-                                Picasso.get().load(avatar)
-                                        .error(context.getResources().getDrawable(R.drawable.img_not_found))
-                                        .into(holder.imgAvata);
+                                holder.imgAvata.setImageDrawable(context.getResources().getDrawable(R.drawable.avatar_default));
                             }
+
+                            String username = dataSnapshot.child("name").getValue().toString();
 
                             holder.txtUsername.setText(username);
                         }
@@ -104,13 +119,13 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         String time;
         long timeBegin = comment.getCreateAtTime();
         long timeNow = GetTimeSystem.getMili();
-        long timeHeader = (timeNow -timeBegin)/60000;
-        if (timeHeader > 180){
-            time = timeHeader/60 + " giờ trước";
+        long timeHeader = (timeNow -timeBegin) / 60000;
+        if (timeHeader > 24 * 60) {
+            time = (timeHeader / (24 * 60)) + " ngày trước";
         } else if (timeHeader >= 60){
-            time = timeHeader/60 + " giờ " + timeHeader%60 + " phút trước";
-        }else if (timeHeader >= 0){
-            time = timeHeader%60 + " phút trước";
+            time = timeHeader / 60 + " giờ " + timeHeader % 60 + " phút trước";
+        } else if (timeHeader > 0){
+            time = timeHeader % 60 + " phút trước";
         } else {
             time = "Vừa xong";
         }

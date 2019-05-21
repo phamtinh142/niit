@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Student.activity.Contract.ContractActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorBottomNavigation">
+
+        <ImageButton
+            android:id="@+id/ibtn_back_create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:src="@drawable/ic_back"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Danh bạ"
+            android:textColor="@color/color_White"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RadioGroup
+        android:background="@color/color_white"
+        android:id="@+id/rdo_group_bet"
+        android:weightSum="201"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <RadioButton
+            android:checked="true"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:button="@null"
+            android:id="@+id/rdo_classes"
+            android:textColor="@drawable/changetext_rdo"
+            android:background="@null"
+            android:text="Lớp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="100"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_gravity="center_vertical"
+            android:background="@color/color_History"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_width="0.5dp" />
+
+        <RadioButton
+            android:textStyle="bold"
+            android:gravity="center"
+            android:button="@null"
+            android:id="@+id/rdo_manager"
+            android:textColor="@drawable/changetext_rdo"
+            android:background="@null"
+            android:text="Quản lí"
+            android:layout_weight="100"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </RadioGroup>
+
+    <EditText
+        android:gravity="center_vertical"
+        android:id="@+id/edt_search_name"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_edittext_comment_news"
+        android:text=""
+        android:layout_width="fill_parent"
+        android:layout_height="38dp"
+        android:singleLine="true"
+        android:hint="Tìm kiếm"
+        android:drawableStart="@drawable/ic_search_black_24dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_contract"
+        android:background="@color/color_white"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.Manager.activity.InfoStudent.InfoStudentActivity;
 import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
+import com.example.niit.listener.AccountListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -25,10 +26,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<CreatedStudent> createdStudentList;
+    private AccountListener accountListener;
 
-    public StudentManageAdapter(Context context, List<CreatedStudent> createdStudentList) {
+    public StudentManageAdapter(Context context, List<CreatedStudent> createdStudentList, AccountListener accountListener) {
         this.context = context;
         this.createdStudentList = createdStudentList;
+        this.accountListener = accountListener;
     }
 
     @NonNull
@@ -40,7 +43,9 @@ public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        StudentManageViewHolder holder = (StudentManageViewHolder) viewHolder;
+        final StudentManageViewHolder holder = (StudentManageViewHolder) viewHolder;
+
+        holder.position = i;
 
         final CreatedStudent createdStudent = createdStudentList.get(i);
 
@@ -58,15 +63,7 @@ public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, InfoStudentActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("id", createdStudent.getId());
-                bundle.putString("class", createdStudent.getClassUser());
-                bundle.putInt("type_account", createdStudent.getType_account());
-                bundle.putString("name", createdStudent.getName());
-                bundle.putString("avatar", createdStudent.getAvatar());
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                accountListener.onClickAccount(holder.position);
             }
         });
     }
@@ -84,6 +81,7 @@ public class StudentManageAdapter extends RecyclerView.Adapter<RecyclerView.View
         CircleImageView img_row_student;
         @BindView(R.id.txt_name_row_student)
         TextView txt_name_row_student;
+        int position;
 
         StudentManageViewHolder(@NonNull View itemView) {
             super(itemView);
