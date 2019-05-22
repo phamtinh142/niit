@@ -92,26 +92,31 @@ public class MessagesFragment extends Fragment {
     }
 
     private void getMessageList(String chatID) {
-        databaseReference.child("chats").child(chatID).addChildEventListener(new ChildEventListener() {
+        databaseReference.child("chats").child(chatID).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                CreateChatUID createChatUID = new CreateChatUID();
 
+                String lastMessage = dataSnapshot.child("lastMessage").getValue(String.class);
 
-            }
+                List<CreateChatUID.memberUser> memberUserList = new ArrayList<>();
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                for(DataSnapshot userSnapshot : dataSnapshot.child("memberList").getChildren()) {
+                    String userID = userSnapshot.child("id").getValue(String.class);
+                    String classes = userSnapshot.child("classes").getValue(String.class);
+                    int typeAccount = userSnapshot.child("typeAccount").getValue(Integer.class);
 
-            }
+                    CreateChatUID.memberUser memberUser = new CreateChatUID.memberUser(userID, typeAccount, classes);
+                    memberUserList.add(memberUser);
+                }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                createChatUID.setLastMessage(lastMessage);
 
-            }
+                createChatUID.setMemberList(memberUserList);
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                createChatUIDList.add(createChatUID);
 
+                messageListAdapter.notifyDataSetChanged();
             }
 
             @Override

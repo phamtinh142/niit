@@ -54,6 +54,7 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
     DatabaseReference databaseReference;
 
     String userID;
+    int typeAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
         ButterKnife.bind(this);
 
         userID = SharePrefer.getInstance().get(StringFinal.ID, String.class);
+        typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
 
         init();
 
@@ -180,8 +182,27 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
         final long time = GetTimeSystem.getMili();
         final String friendID = studentList.get(position).getId();
 
-        CreateChatUID.memberUser userMember = new CreateChatUID.memberUser(userID, typeAccount);
-        CreateChatUID.memberUser friendMember = new CreateChatUID.memberUser(studentList.get(position).getId(), studentList.get(position).getType_account());
+        CreateChatUID.memberUser userMember = null;
+        if (typeAccount == 0) {
+            userMember = new CreateChatUID.memberUser(userID, typeAccount);
+        } else if (typeAccount == 1) {
+            String classes = SharePrefer.getInstance().get(StringFinal.CLASSES, String.class);
+            userMember = new CreateChatUID.memberUser(userID, typeAccount, classes);
+        }
+
+        CreateChatUID.memberUser friendMember = null;
+        if (studentList.get(position).getType_account() == 0) {
+            friendMember = new CreateChatUID.memberUser(
+                    studentList.get(position).getId(),
+                    studentList.get(position).getType_account());
+        } else if (studentList.get(position).getType_account() == 1) {
+            friendMember = new CreateChatUID.memberUser(
+                    studentList.get(position).getId(),
+                    studentList.get(position).getType_account(),
+                    studentList.get(position).getClassUser());
+        }
+
+
         List<CreateChatUID.memberUser> memberList = new ArrayList<>();
         memberList.add(userMember);
         memberList.add(friendMember);
