@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Student.activity.Contract.ContractActivity"></activity>
+        <activity android:name=".Student.activity.MessageDetail.MessageDetailActivity"></activity>
+        <activity android:name=".Student.activity.Contract.ContractActivity" />
         <activity android:name=".Manager.activity.SubjectManage.SubjectManageActivity" />
         <activity android:name=".Manager.activity.InfoStudent.InfoStudentActivity" />
         <activity android:name=".Student.activity.EditProfile.EditProfileActivity" />
@@ -39,7 +40,6 @@
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Manager.activity.ManagerActivity" />
         <activity android:name=".Student.activity.CommentNews.CommentNewsActivity" />
-        <activity android:name=".Student.activity.MessageDetailActivity" />
         <activity android:name=".Student.activity.HocphiActivity" />
         <activity android:name=".Student.activity.MainStudent.MainActivity" />
     </application>

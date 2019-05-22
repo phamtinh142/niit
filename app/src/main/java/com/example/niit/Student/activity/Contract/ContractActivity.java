@@ -1,5 +1,6 @@
 package com.example.niit.Student.activity.Contract;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,13 +13,17 @@ import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.Manager.activity.StudentManage.adapter.StudentManageAdapter;
 import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
+import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
+import com.example.niit.Student.activity.MessageDetail.MessageDetailActivity;
+import com.example.niit.Student.activity.MessageDetail.entites.CreateChatUID;
 import com.example.niit.listener.AccountListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -48,11 +53,16 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
     StudentManageAdapter studentManageAdapter;
     DatabaseReference databaseReference;
 
+    String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract);
         ButterKnife.bind(this);
+
+        userID = SharePrefer.getInstance().get(StringFinal.ID, String.class);
+
         init();
 
         getStudentList();
@@ -129,8 +139,11 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 CreatedStudent createdStudent = dataSnapshot.getValue(CreatedStudent.class);
 
-                studentList.add(createdStudent);
-                studentManageAdapter.notifyDataSetChanged();
+                if (!createdStudent.getId().equals(userID)) {
+                    studentList.add(createdStudent);
+                    studentManageAdapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override
@@ -157,6 +170,29 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
 
     @Override
     public void onClickAccount(int position) {
+//        startActivity(new Intent(this, MessageDetailActivity.class));
+//        finish();
+
+//        Toast.makeText(this, studentList.get(position).getId(), Toast.LENGTH_SHORT).show();
+
+        int typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
+
+        final long time = GetTimeSystem.getMili();
+        final String friendID = studentList.get(position).getId();
+
+        CreateChatUID.memberUser userMember = new CreateChatUID.memberUser(userID, typeAccount);
+        CreateChatUID.memberUser friendMember = new CreateChatUID.memberUser(studentList.get(position).getId(), studentList.get(position).getType_account());
+        List<CreateChatUID.memberUser> memberList = new ArrayList<>();
+        memberList.add(userMember);
+        memberList.add(friendMember);
+
+        CreateChatUID createChatUID = new CreateChatUID();
+        createChatUID.setMemberList(memberList);
+
+        databaseReference.child("chats").child(String.valueOf(time)).setValue(createChatUID);
+        databaseReference.child("userChats").child(userID).push().setValue(String.valueOf(time));
+        databaseReference.child("userChats").child(friendID).push().setValue(String.valueOf(time));
+
 
     }
 
