@@ -1,6 +1,8 @@
 package com.example.niit.Student.fragment.Message.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
+import com.example.niit.Student.activity.MessageDetail.MessageDetailActivity;
 import com.example.niit.Student.activity.MessageDetail.entites.CreateChatUID;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,7 +51,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         final MessageListViewHolder holder = (MessageListViewHolder) viewHolder;
 
-        CreateChatUID createChatUID = createChatUIDList.get(i);
+        final CreateChatUID createChatUID = createChatUIDList.get(i);
 
         List<CreateChatUID.memberUser> memberUserList = createChatUID.getMemberList();
 
@@ -119,6 +122,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         holder.txt_last_message_sent.setText(createChatUID.getLastMessage());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MessageDetailActivity.class);
+                intent.putExtra("chatID", createChatUID.getChatID());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

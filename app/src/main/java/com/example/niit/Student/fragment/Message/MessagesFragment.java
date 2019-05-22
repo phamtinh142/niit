@@ -91,7 +91,7 @@ public class MessagesFragment extends Fragment {
         });
     }
 
-    private void getMessageList(String chatID) {
+    private void getMessageList(final String chatID) {
         databaseReference.child("chats").child(chatID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -109,6 +109,8 @@ public class MessagesFragment extends Fragment {
                     CreateChatUID.memberUser memberUser = new CreateChatUID.memberUser(userID, typeAccount, classes);
                     memberUserList.add(memberUser);
                 }
+
+                createChatUID.setChatID(chatID);
 
                 createChatUID.setLastMessage(lastMessage);
 

@@ -13,6 +13,16 @@ public class CreateChatUID {
     @Expose
     private String lastMessage;
 
+    private String chatID;
+
+    public String getChatID() {
+        return chatID;
+    }
+
+    public void setChatID(String chatID) {
+        this.chatID = chatID;
+    }
+
     public CreateChatUID(List<memberUser> memberList, String lastMessage) {
         this.memberList = memberList;
         this.lastMessage = lastMessage;
