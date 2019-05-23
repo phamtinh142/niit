@@ -25,9 +25,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,6 +89,10 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
     RecyclerView recyclerView_class;
     @BindView(R.id.btn_choose_classes)
     CheckBox btn_choose_classes;
+    @BindView(R.id.rdo_group_class)
+    RadioGroup rdo_group_class;
+    @BindView(R.id.rdo_class_news)
+    RadioButton rdo_class_news;
 
     private String imageNews = "";
 
@@ -104,6 +111,9 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
     List<String> stringList;
     ClassAdapter classAdapter;
 
+    String classes;
+
+    int typeAccount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,12 +127,27 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
         View view = inflater.inflate(R.layout.dialog_add_news_manage, container, false);
         ButterKnife.bind(this, view);
         init();
+        typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
+
+        optionLayout();
 
         getClasses();
 
         askPermissions();
 
         return view;
+    }
+
+    private void optionLayout() {
+        if (typeAccount == 0) {
+            btn_choose_classes.setVisibility(View.VISIBLE);
+            rdo_group_class.setVisibility(View.GONE);
+        } else if (typeAccount == 1) {
+            rdo_group_class.setVisibility(View.VISIBLE);
+            btn_choose_classes.setVisibility(View.GONE);
+            classes = SharePrefer.getInstance().get(StringFinal.CLASSES, String.class);
+            rdo_class_news.setText("Bảng tin lớp " + classes);
+        }
     }
 
     private void getClasses() {
@@ -167,6 +192,26 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
         recyclerView_class.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         classAdapter = new ClassAdapter(getActivity(), stringList, this);
         recyclerView_class.setAdapter(classAdapter);
+    }
+
+    @OnCheckedChanged({R.id.rdo_common_news, R.id.rdo_class_news})
+    public void onCheckedCreateOption(CompoundButton button, boolean checked) {
+        if (checked) {
+            switch (button.getId()) {
+                case R.id.rdo_common_news:
+                    news = "ALL";
+
+                    Toast.makeText(getActivity(), news, Toast.LENGTH_SHORT).show();
+
+                    break;
+                case R.id.rdo_class_news:
+                    news = classes;
+
+                    Toast.makeText(getActivity(), news, Toast.LENGTH_SHORT).show();
+
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.btn_back_add_news_manage)
@@ -437,6 +482,9 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
             news = classes;
         }
         btn_choose_classes.setText(classes);
+
+        Toast.makeText(getActivity(), news, Toast.LENGTH_SHORT).show();
+
         layout_classes.setVisibility(View.GONE);
         btn_choose_classes.setChecked(false);
     }

@@ -30,4 +30,38 @@
 
     </RelativeLayout>
 
+    <CheckBox
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@color/color_History"
+        android:id="@+id/ckb_choose_classes"
+        android:drawableEnd="@drawable/change_icon_arrow_drop_black"
+        android:button="@null"
+        android:text="Manager"
+        android:layout_below="@+id/layout_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_account"
+        android:layout_below="@+id/ckb_choose_classes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:background="@color/color_white"
+        android:elevation="5dp"
+        android:visibility="gone"
+        android:id="@+id/layout_choose_classes"
+        android:layout_below="@+id/ckb_choose_classes"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

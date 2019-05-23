@@ -77,7 +77,6 @@
 
                 <ScrollView
                     android:layout_toEndOf="@+id/rrthu2"
-                    android:layout_marginTop="10dp"
                     android:id="@+id/scrollView1"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -134,7 +133,6 @@
 
                 <ScrollView
                     android:layout_toEndOf="@+id/rrthu3"
-                    android:layout_marginTop="10dp"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
@@ -189,7 +187,6 @@
 
                 <ScrollView
                     android:layout_toEndOf="@+id/rrthu4"
-                    android:layout_marginTop="10dp"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
@@ -245,7 +242,6 @@
 
                 <ScrollView
                     android:layout_toEndOf="@+id/rrthu5"
-                    android:layout_marginTop="10dp"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
@@ -301,7 +297,6 @@
 
                 <ScrollView
                     android:layout_toEndOf="@+id/rrthu6"
-                    android:layout_marginTop="10dp"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
@@ -357,7 +352,6 @@
 
                 <ScrollView
                     android:layout_toEndOf="@+id/rrthu7"
-                    android:layout_marginTop="10dp"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
@@ -375,7 +369,9 @@
                 </ScrollView>
 
             </RelativeLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

@@ -88,6 +88,7 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
     @OnCheckedChanged({R.id.rdo_classes, R.id.rdo_manager})
     public void onCheckedContract(CompoundButton button, boolean checked) {
         if (checked) {
+            searchList.clear();
             studentList.clear();
             studentManageAdapter.notifyDataSetChanged();
 

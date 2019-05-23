@@ -8,13 +8,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.niit.Manager.activity.ContactManage.ContactManageActivity;
+import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
+import com.example.niit.Manager.activity.StudentManage.adapter.StudentManageAdapter;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
@@ -37,12 +42,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class MessagesFragment extends Fragment {
+public class MessagesFragment extends Fragment implements TextWatcher {
     @BindView(R.id.recyclerView_message)
     RecyclerView recyclerView_message;
+    @BindView(R.id.edt_search_name)
+    EditText edt_search_name;
 
     DatabaseReference databaseReference;
     List<CreateChatUID> createChatUIDList;
+    List<CreateChatUID> searchChatUID;
     MessageListAdapter messageListAdapter;
 
     String userID;
@@ -55,6 +63,8 @@ public class MessagesFragment extends Fragment {
         userID = SharePrefer.getInstance().get(StringFinal.ID, String.class);
         typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
         init();
+
+        edt_search_name.addTextChangedListener(this);
 
         return view;
     }
@@ -137,6 +147,7 @@ public class MessagesFragment extends Fragment {
     private void init() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        searchChatUID = new ArrayList<>();
         createChatUIDList = new ArrayList<>();
         recyclerView_message.setHasFixedSize(true);
         recyclerView_message.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -167,5 +178,36 @@ public class MessagesFragment extends Fragment {
 
         messageListAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+//        s.toString().toLowerCase();
+//        searchChatUID.clear();
+//
+//
+//        for (CreateChatUID createChatUID : createChatUIDList) {
+//            if (createChatUID.get().toLowerCase().contains(s.toString())) {
+//                searchChatUID.add(createdStudent);
+//            }
+//        }
+//
+//        messageListAdapter = new MessageListAdapter(getActivity(), searchChatUID, databaseReference);
+//        recyclerView_message.setAdapter(messageListAdapter);
+//
+//        if (s.toString().equals("")){
+//            messageListAdapter = new MessageListAdapter(getActivity(), createChatUIDList, databaseReference);
+//            recyclerView_message.setAdapter(messageListAdapter);
+//        }
     }
 }

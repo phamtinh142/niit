@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.niit.Login.LoginActivity;
@@ -15,6 +16,7 @@ import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.activity.HocphiActivity;
+import com.example.niit.Student.activity.Schelude.ScheludeActivity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -63,6 +65,11 @@ public class ProfileFragment extends Fragment {
     public void onClickLogout() {
         SharePrefer.getInstance().clear();
         startActivity(new Intent(getActivity(), LoginActivity.class));
+    }
+
+    @OnClick(R.id.rtl_schelude)
+    public void onClickSchelude() {
+        startActivity(new Intent(getActivity(), ScheludeActivity.class));
     }
 
 }

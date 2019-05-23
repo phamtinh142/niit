@@ -65,7 +65,7 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/rtl_student_manage"
+            android:id="@+id/rtl_schelude"
             android:background="@drawable/custom_border_bottom_layout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/color_gray"
-                android:text="Quản lí sinh viên"
+                android:text="Thời khóa biểu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

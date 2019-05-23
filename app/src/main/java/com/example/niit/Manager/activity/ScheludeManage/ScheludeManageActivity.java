@@ -78,16 +78,12 @@ public class ScheludeManageActivity extends AppCompatActivity implements ClassAd
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 String classes = dataSnapshot.getValue(String.class);
 
-                Log.d("adadada", "onChildAdded: " + classes);
-
-                stringList.add(classes);
-
-                for (String st : stringList) {
-                    if (st.equals("ALL"))
-                        stringList.remove(st);
+                if (!classes.equals("ALL")) {
+                    stringList.add(classes);
+                    classAdapter.notifyDataSetChanged();
                 }
 
-                classAdapter.notifyDataSetChanged();
+
             }
 
             @Override

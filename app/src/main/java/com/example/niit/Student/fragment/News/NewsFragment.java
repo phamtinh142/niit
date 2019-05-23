@@ -17,11 +17,11 @@ import android.widget.RadioButton;
 
 
 import com.example.niit.Manager.fragment.NewsManage.adapter.NewsManageAdapter;
+import com.example.niit.Manager.fragment.NewsManage.dialog.CreatedNewsManageDialog;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.activity.CommentNews.CommentNewsActivity;
-import com.example.niit.Student.fragment.News.dialog.AddNewsDialog;
 import com.example.niit.listener.ItemNewsListener;
 import com.example.niit.model.News;
 import com.google.firebase.database.ChildEventListener;
@@ -75,8 +75,8 @@ public class NewsFragment extends Fragment implements ItemNewsListener {
 
     @OnClick(R.id.txt_add_news)
     public void onClickAddNews() {
-        AddNewsDialog addNewsDialog = new AddNewsDialog();
-        addNewsDialog.show(getFragmentManager(), "addnews");
+        CreatedNewsManageDialog createdNewsManageDialog = new CreatedNewsManageDialog();
+        createdNewsManageDialog.show(getFragmentManager(), "addNewsManage");
     }
 
     private void init() {
