@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:background="@color/color_History"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Student.fragment.News.NewsFragment">
+    tools:context=".Manager.fragment.News.NewsFragment">
 
-    <LinearLayout
-        android:gravity="center"
-        android:orientation="horizontal"
+    <RelativeLayout
+        android:id="@+id/layout_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorBottomNavigation">
 
         <TextView
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:text="Tin tức"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Tin tức"
+            android:textColor="@color/color_White"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    </LinearLayout>
+        <CheckBox
+            android:button="@null"
+            android:gravity="center"
+            android:id="@+id/btn_choose_classes"
+            android:layout_marginEnd="7dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColorHint="@color/color_white"
+            android:textColor="@android:color/white"
+            android:text="Chung"
+            android:drawableEnd="@drawable/change_icon_arrow_drop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
 
     <RadioGroup
+        android:layout_below="@+id/layout_tool_bar"
         android:background="@color/color_white"
-        android:id="@+id/rdo_group_bet"
+        android:id="@+id/rdo_group_class"
         android:weightSum="201"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -70,6 +87,9 @@
     </RadioGroup>
 
     <LinearLayout
+        android:background="@color/color_History"
+        android:layout_below="@+id/rdo_group_class"
+        android:id="@+id/layout_create_news"
         android:padding="5dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -77,7 +97,6 @@
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-
             android:id="@+id/img_avata_news"
             android:src="@drawable/img_not_found"
             android:layout_width="45dp"
@@ -94,21 +113,40 @@
             android:background="@drawable/bg_radio_button_fragment_all_store"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat,RtlSymmetry" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_below="@+id/layout_create_news"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView_news"
+            android:id="@+id/recyclerView_news_manager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
+        android:background="@color/color_white"
+        android:visibility="gone"
+        android:id="@+id/layout_classes"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="56dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_class"
+            android:elevation="4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
     </LinearLayout>
 
 
-
-</LinearLayout>
+</RelativeLayout>

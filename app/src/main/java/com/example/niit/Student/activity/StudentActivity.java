@@ -1,4 +1,4 @@
-package com.example.niit.Student.activity.MainStudent;
+package com.example.niit.Student.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;
@@ -11,12 +11,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.niit.Manager.fragment.News.NewsFragment;
 import com.example.niit.R;
 import com.example.niit.Student.fragment.Message.MessagesFragment;
-import com.example.niit.Student.fragment.News.NewsFragment;
 import com.example.niit.Student.fragment.Profile.ProfileFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class StudentActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationViewMainActivity;
 
     boolean doubleBackToExitPressedOnce = false;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_student);
         initView();
 
         loadFragment(new NewsFragment());

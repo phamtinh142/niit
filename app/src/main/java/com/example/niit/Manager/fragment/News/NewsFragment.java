@@ -1,4 +1,4 @@
-package com.example.niit.Manager.fragment.NewsManage;
+package com.example.niit.Manager.fragment.News;
 
 
 import android.content.Intent;
@@ -8,15 +8,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import com.example.niit.Manager.fragment.NewsManage.adapter.NewsManageAdapter;
-import com.example.niit.Manager.fragment.NewsManage.dialog.CreatedNewsManageDialog;
+import com.example.niit.Manager.fragment.News.adapter.NewsAdapter;
+import com.example.niit.Manager.fragment.News.dialog.CreatedNewsDialog;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
@@ -40,7 +42,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NewsManagerFragment extends Fragment implements ClassAdapter.ClassesListener, ItemNewsListener {
+public class NewsFragment extends Fragment implements ClassAdapter.ClassesListener, ItemNewsListener {
 
     @BindView(R.id.recyclerView_news_manager)
     RecyclerView recyclerViewNewsList;
@@ -52,30 +54,71 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
     CheckBox btn_choose_classes;
     @BindView(R.id.img_avata_news)
     CircleImageView img_avata_news;
+    @BindView(R.id.rdo_group_class)
+    RadioGroup rdo_group_class;
+    @BindView(R.id.rdo_class_news)
+    RadioButton rdo_class_news;
 
     List<String> stringList;
     ClassAdapter classAdapter;
 
     private DatabaseReference databaseReference;
 
-    NewsManageAdapter newsManageAdapter;
+    NewsAdapter newsAdapter;
 
     List<News> newsList;
 
     String news = "ALL";
 
+    String classes;
+
+    int typeAccount;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_manager, container, false);
+        View view = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, view);
         init();
+
+        typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
+
+        optionNews();
 
         getClasses();
 
         getData();
 
         return view;
+    }
+
+    private void optionNews() {
+        if (typeAccount == 0) {
+            btn_choose_classes.setVisibility(View.VISIBLE);
+            rdo_group_class.setVisibility(View.GONE);
+        } else if (typeAccount == 1) {
+            btn_choose_classes.setVisibility(View.GONE);
+            rdo_group_class.setVisibility(View.VISIBLE);
+            classes = SharePrefer.getInstance().get(StringFinal.CLASSES, String.class);
+            rdo_class_news.setText("Bảng tin  " + classes);
+        }
+    }
+
+    @OnCheckedChanged({R.id.rdo_common_news, R.id.rdo_class_news})
+    public void onCheckedOptionNews(CompoundButton button, boolean checked) {
+        if (checked) {
+            newsList.clear();
+            newsAdapter.notifyDataSetChanged();
+            switch (button.getId()) {
+                case R.id.rdo_common_news:
+                    news = "ALL";
+                    break;
+                case R.id.rdo_class_news:
+                    news = classes;
+                    break;
+            }
+            getData();
+        }
     }
 
     private void getClasses() {
@@ -116,8 +159,8 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
         newsList = new ArrayList<>();
         recyclerViewNewsList.setHasFixedSize(true);
         recyclerViewNewsList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        newsManageAdapter = new NewsManageAdapter(getActivity(), newsList, this);
-        recyclerViewNewsList.setAdapter(newsManageAdapter);
+        newsAdapter = new NewsAdapter(getActivity(), newsList, this);
+        recyclerViewNewsList.setAdapter(newsAdapter);
 
         stringList = new ArrayList<>();
         recyclerView_class.setHasFixedSize(true);
@@ -126,9 +169,12 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
         recyclerView_class.setAdapter(classAdapter);
 
         String avatar = SharePrefer.getInstance().get(StringFinal.AVATAR, String.class);
-        Picasso.get().load(avatar)
-                .error(getResources().getDrawable(R.drawable.img_not_found))
-                .into(img_avata_news);
+
+        if (!avatar.equals("")) {
+            Picasso.get().load(avatar)
+                    .error(getResources().getDrawable(R.drawable.img_not_found))
+                    .into(img_avata_news);
+        }
 
     }
 
@@ -143,8 +189,8 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
 
     @OnClick(R.id.txt_add_news)
     public void onClickAddNews() {
-        CreatedNewsManageDialog createdNewsManageDialog = new CreatedNewsManageDialog();
-        createdNewsManageDialog.show(getFragmentManager(), "addNewsManage");
+        CreatedNewsDialog createdNewsDialog = new CreatedNewsDialog();
+        createdNewsDialog.show(getFragmentManager(), "addNewsManage");
 
     }
 
@@ -161,7 +207,7 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
                     newsList.add(0, news);
                 }
 
-                newsManageAdapter.notifyDataSetChanged();
+                newsAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -189,7 +235,7 @@ public class NewsManagerFragment extends Fragment implements ClassAdapter.Classe
     @Override
     public void onClickItemClasses(String classes) {
         newsList.clear();
-        newsManageAdapter.notifyDataSetChanged();
+        newsAdapter.notifyDataSetChanged();
 
         if (classes.equals("Chung")) {
             news = "ALL";

@@ -12,21 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.niit.Login.LoginActivity;
 import com.example.niit.Login.entities.Login;
 import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
-import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
-import com.example.niit.Student.InfoUser.User;
-import com.example.niit.Student.activity.MainStudent.MainActivity;
+import com.example.niit.Student.activity.StudentActivity;
 import com.example.niit.adapter.ClassAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -198,7 +194,7 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
 
                 Toast.makeText(getContext(), "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                startActivity(new Intent(getActivity(), StudentActivity.class));
 
             }
 

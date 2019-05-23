@@ -42,7 +42,7 @@
         <activity android:name=".Manager.activity.ManagerActivity" />
         <activity android:name=".Student.activity.CommentNews.CommentNewsActivity" />
         <activity android:name=".Student.activity.HocphiActivity" />
-        <activity android:name=".Student.activity.MainStudent.MainActivity" />
+        <activity android:name=".Student.activity.StudentActivity" />
     </application>
 
 </manifest>

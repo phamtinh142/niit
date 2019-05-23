@@ -8,11 +8,10 @@ import android.os.Bundle;
 
 import com.example.niit.Manager.activity.CreateStudent.entities.CreatedStudent;
 import com.example.niit.Manager.activity.ManagerActivity;
-import com.example.niit.Manager.activity.StudentManage.entites.Student;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
-import com.example.niit.Student.activity.MainStudent.MainActivity;
+import com.example.niit.Student.activity.StudentActivity;
 import com.example.niit.model.Manager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -92,7 +91,7 @@ public class StartActivity extends AppCompatActivity {
                     SharePrefer.getInstance().put(StringFinal.BIRTHDAY, createdStudent.getBithday());
                     SharePrefer.getInstance().put(StringFinal.TYPE, createdStudent.getType_account());
 
-                    startActivity(new Intent(StartActivity.this, MainActivity.class));
+                    startActivity(new Intent(StartActivity.this, StudentActivity.class));
                 }
 
                 @Override

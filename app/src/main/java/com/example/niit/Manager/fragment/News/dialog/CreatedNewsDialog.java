@@ -1,4 +1,4 @@
-package com.example.niit.Manager.fragment.NewsManage.dialog;
+package com.example.niit.Manager.fragment.News.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -69,7 +69,7 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class CreatedNewsManageDialog extends DialogFragment implements ClassAdapter.ClassesListener {
+public class CreatedNewsDialog extends DialogFragment implements ClassAdapter.ClassesListener {
 
     String news = "ALL";
 
@@ -124,7 +124,7 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_news_manage, container, false);
+        View view = inflater.inflate(R.layout.dialog_created_news, container, false);
         ButterKnife.bind(this, view);
         init();
         typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
@@ -200,15 +200,9 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
             switch (button.getId()) {
                 case R.id.rdo_common_news:
                     news = "ALL";
-
-                    Toast.makeText(getActivity(), news, Toast.LENGTH_SHORT).show();
-
                     break;
                 case R.id.rdo_class_news:
                     news = classes;
-
-                    Toast.makeText(getActivity(), news, Toast.LENGTH_SHORT).show();
-
                     break;
             }
         }
@@ -282,13 +276,16 @@ public class CreatedNewsManageDialog extends DialogFragment implements ClassAdap
     }
 
     private void uploadNews() {
-
         News news = new News();
         news.setId(SharePrefer.getInstance().get(StringFinal.ID, String.class));
         news.setContent_news(txt_content_add_news_manage.getText().toString().trim());
         news.setCreate_time(GetTimeSystem.getTime());
         news.setImage_news(imageNews);
-        news.setType_account(0);
+        news.setType_account(typeAccount);
+        news.setClasses(this.news);
+        if (typeAccount == 1) {
+            news.setClassUser(classes);
+        }
 
         databaseReference.child("news").child(this.news).push().setValue(news, new DatabaseReference.CompletionListener() {
             @Override

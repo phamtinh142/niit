@@ -12,8 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.niit.Manager.fragment.ManageStudent.ManageStudentFragment;
-import com.example.niit.Manager.fragment.MessageManage.MessageManageFragment;
-import com.example.niit.Manager.fragment.NewsManage.NewsManagerFragment;
+import com.example.niit.Manager.fragment.News.NewsFragment;
 import com.example.niit.R;
 import com.example.niit.Student.fragment.Message.MessagesFragment;
 
@@ -32,7 +31,7 @@ public class ManagerActivity extends AppCompatActivity implements BottomNavigati
         setContentView(R.layout.activity_manager);
         ButterKnife.bind(this);
 
-        loadFragment(new NewsManagerFragment());
+        loadFragment(new NewsFragment());
         navManager.setOnNavigationItemSelectedListener(this);
 
 
@@ -67,7 +66,7 @@ public class ManagerActivity extends AppCompatActivity implements BottomNavigati
         Fragment fragment;
         switch (menuItem.getItemId()) {
             case R.id.bottom_navigation_news:
-                fragment = new NewsManagerFragment();
+                fragment = new NewsFragment();
                 loadFragment(fragment);
                 break;
             case R.id.bottom_navigation_message:

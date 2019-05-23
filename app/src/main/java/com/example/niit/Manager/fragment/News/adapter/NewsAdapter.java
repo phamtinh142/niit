@@ -1,4 +1,4 @@
-package com.example.niit.Manager.fragment.NewsManage.adapter;
+package com.example.niit.Manager.fragment.News.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,11 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.niit.R;
 import com.example.niit.Share.FormatTime;
@@ -34,12 +31,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NewsManageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<News> newsList;
     private ItemNewsListener itemNewsListener;
 
-    public NewsManageAdapter(Context context, List<News> newsList, ItemNewsListener itemNewsListener) {
+    public NewsAdapter(Context context, List<News> newsList, ItemNewsListener itemNewsListener) {
         this.context = context;
         this.newsList = newsList;
         this.itemNewsListener = itemNewsListener;
