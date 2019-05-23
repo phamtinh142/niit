@@ -15,6 +15,7 @@ import com.example.niit.Manager.fragment.ManageStudent.ManageStudentFragment;
 import com.example.niit.Manager.fragment.MessageManage.MessageManageFragment;
 import com.example.niit.Manager.fragment.NewsManage.NewsManagerFragment;
 import com.example.niit.R;
+import com.example.niit.Student.fragment.Message.MessagesFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +71,7 @@ public class ManagerActivity extends AppCompatActivity implements BottomNavigati
                 loadFragment(fragment);
                 break;
             case R.id.bottom_navigation_message:
-                fragment = new MessageManageFragment();
+                fragment = new MessagesFragment();
                 loadFragment(fragment);
                 break;
             case R.id.bottom_navigation_profile:

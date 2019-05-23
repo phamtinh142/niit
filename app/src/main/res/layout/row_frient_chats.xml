@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:padding="10dp"
+<RelativeLayout
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/layout_friend"
+        android:visibility="gone"
+        android:layout_alignParentStart="true"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -14,21 +20,22 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_avata_message"
             android:src="@drawable/img_not_found"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
 
         <LinearLayout
             android:gravity="center_vertical"
             android:padding="8dp"
-            android:background="@drawable/bg_esdittext_friend_sent"
+            android:background="@drawable/bg_edittext_friend_sent"
             android:orientation="vertical"
             android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="40dp">
+            android:minHeight="35dp"
+            android:minWidth="35dp">
 
             <TextView
-                android:id="@+id/txt_message"
+                android:id="@+id/txt_message_friend"
                 android:textColor="@color/color_Black"
                 android:text="Tình hình là được nghỉ à, vui nhỉ"
                 android:layout_width="wrap_content"
@@ -38,4 +45,33 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_user"
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@drawable/bg_edittext_user_sent"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="35dp"
+            android:minWidth="35dp">
+
+            <TextView
+                android:id="@+id/txt_message_you"
+                android:textColor="@color/color_white"
+                android:text="Tình hình là được nghỉ à, vui nhỉ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

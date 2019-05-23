@@ -3,11 +3,12 @@
 
     <item android:state_checked="false">
         <shape>
-            <solid android:color="@color/color_History"/>
+
+            <solid android:color="@color/colorBottomNavigation"/>
             <corners
+                android:topLeftRadius="15dp"
                 android:bottomLeftRadius="15dp"
-                android:bottomRightRadius="15dp"
-                android:topRightRadius="15dp"/>
+                android:bottomRightRadius="15dp" />
         </shape>
     </item>
 

@@ -3,7 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorBottomNavigation">#1561AD</color>
+    <color name="colorBottomNavigation">#0084FF</color>
 
     <color name="color_black_opacity">#b1000000</color>
     <color name="color_gray_opacity">#656F6C6C</color>

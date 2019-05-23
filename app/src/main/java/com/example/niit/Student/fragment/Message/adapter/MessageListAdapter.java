@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.niit.R;
+import com.example.niit.Share.FormatTime;
+import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.activity.MessageDetail.MessageDetailActivity;
@@ -21,7 +25,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,7 +129,29 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         }
 
-        holder.txt_last_message_sent.setText(createChatUID.getLastMessage());
+        if (createChatUID.getLastMessage() != null) {
+            CreateChatUID.LastMessage lastMessage = createChatUID.getLastMessage();
+
+            holder.txt_last_message_sent.setMaxLines(1);
+            holder.txt_last_message_sent.setEllipsize(TextUtils.TruncateAt.END);
+            if (lastMessage.getSentBy().equals(usernID)) {
+                holder.txt_last_message_sent.setText("Bạn: " + lastMessage.getMessage());
+            } else {
+                holder.txt_last_message_sent.setText(lastMessage.getMessage());
+            }
+
+            if (lastMessage.getCreateTime() > 0) {
+                long createtime = lastMessage.getCreateTime();
+                Date date = new Date(createtime);
+                DateFormat formatter = new SimpleDateFormat("HH:mm");
+                formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+                String dateFormatted = formatter.format(date);
+
+                holder.txt_time_create.setText(dateFormatted);
+            }
+
+        }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +177,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView txt_username_message;
         @BindView(R.id.txt_last_message_sent)
         TextView txt_last_message_sent;
+        @BindView(R.id.txt_time_create)
+        TextView txt_time_create;
 
         MessageListViewHolder(@NonNull View itemView) {
             super(itemView);

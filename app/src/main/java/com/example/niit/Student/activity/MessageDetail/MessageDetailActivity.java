@@ -15,6 +15,7 @@ import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.Student.activity.MessageDetail.adapter.ChatDetailAdapter;
+import com.example.niit.Student.activity.MessageDetail.entites.CreateChatUID;
 import com.example.niit.Student.activity.MessageDetail.entities.Chats;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -64,6 +65,8 @@ public class MessageDetailActivity extends AppCompatActivity {
                 chatsList.add(chats);
 
                 chatDetailAdapter.notifyDataSetChanged();
+
+                recyclerView_chat.scrollToPosition(chatsList.size() - 1);
             }
 
             @Override
@@ -133,6 +136,13 @@ public class MessageDetailActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            CreateChatUID.LastMessage lastMessage = new CreateChatUID.LastMessage();
+            lastMessage.setCreateTime(createTime);
+            lastMessage.setMessage(message);
+            lastMessage.setSentBy(userID);
+
+            databaseReference.child("chats").child(chatID).child("lastMessage").setValue(lastMessage);
 
         }
     }

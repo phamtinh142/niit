@@ -13,22 +13,21 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorBottomNavigation">
 
-        <ImageButton
-            android:id="@+id/ibtn_back_create_account"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:src="@drawable/ic_back"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Danh bạ"
-            android:textColor="@color/color_White"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <EditText
+            android:gravity="center_vertical"
+            android:id="@+id/edt_search_name"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_edittext_comment_news"
+            android:text=""
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:singleLine="true"
+            android:hint="Tìm kiếm"
+            android:drawableStart="@drawable/ic_search_black_24dp"/>
 
     </RelativeLayout>
 
@@ -76,26 +75,9 @@
 
     </RadioGroup>
 
-    <EditText
-        android:gravity="center_vertical"
-        android:id="@+id/edt_search_name"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bg_edittext_comment_news"
-        android:text=""
-        android:layout_width="fill_parent"
-        android:layout_height="38dp"
-        android:singleLine="true"
-        android:hint="Tìm kiếm"
-        android:drawableStart="@drawable/ic_search_black_24dp"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_contract"
         android:background="@color/color_white"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

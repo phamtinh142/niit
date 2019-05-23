@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Manager.activity.ContactManage.ContactManageActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorBottomNavigation">
+
+        <EditText
+            android:gravity="center_vertical"
+            android:id="@+id/edt_search_name"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_edittext_comment_news"
+            android:text=""
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:singleLine="true"
+            android:hint="Tìm kiếm"
+            android:drawableStart="@drawable/ic_search_black_24dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

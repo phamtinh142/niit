@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.niit.Manager.activity.ContactManage.ContactManageActivity;
 import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
@@ -45,16 +46,15 @@ public class MessagesFragment extends Fragment {
     MessageListAdapter messageListAdapter;
 
     String userID;
+    int typeAccount;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messages, container, false);
         ButterKnife.bind(this, view);
         userID = SharePrefer.getInstance().get(StringFinal.ID, String.class);
+        typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
         init();
-
-        getListChatID();
-
 
         return view;
     }
@@ -97,10 +97,18 @@ public class MessagesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 CreateChatUID createChatUID = new CreateChatUID();
 
-                String lastMessage = dataSnapshot.child("lastMessage").getValue(String.class);
+                if (dataSnapshot.hasChild("lastMessage")) {
+                    CreateChatUID.LastMessage lastMessage = new CreateChatUID.LastMessage();
+                    String messageLast = dataSnapshot.child("lastMessage").child("message").getValue(String.class);
+                    String senByLastMessage = dataSnapshot.child("lastMessage").child("sentBy").getValue(String.class);
+                    long createTime = dataSnapshot.child("lastMessage").child("createTime").getValue(Long.class);
+                    lastMessage.setSentBy(senByLastMessage);
+                    lastMessage.setCreateTime(createTime);
+                    lastMessage.setMessage(messageLast);
+                    createChatUID.setLastMessage(lastMessage);
+                }
 
                 List<CreateChatUID.memberUser> memberUserList = new ArrayList<>();
-
                 for(DataSnapshot userSnapshot : dataSnapshot.child("memberList").getChildren()) {
                     String userID = userSnapshot.child("id").getValue(String.class);
                     String classes = userSnapshot.child("classes").getValue(String.class);
@@ -111,8 +119,6 @@ public class MessagesFragment extends Fragment {
                 }
 
                 createChatUID.setChatID(chatID);
-
-                createChatUID.setLastMessage(lastMessage);
 
                 createChatUID.setMemberList(memberUserList);
 
@@ -141,8 +147,25 @@ public class MessagesFragment extends Fragment {
 
     @OnClick(R.id.floating_button)
     public void onClickAddMessage() {
-        Intent intent = new Intent(getActivity(), ContractActivity.class);
-        startActivity(intent);
+        if (typeAccount == 1) {
+            Intent intent = new Intent(getActivity(), ContractActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), ContactManageActivity.class);
+            startActivity(intent);
+        }
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        createChatUIDList.clear();
+
+        getListChatID();
+
+        messageListAdapter.notifyDataSetChanged();
+
+    }
 }

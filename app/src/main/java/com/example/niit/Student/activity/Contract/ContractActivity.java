@@ -172,10 +172,6 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
 
     @Override
     public void onClickAccount(int position) {
-//        startActivity(new Intent(this, MessageDetailActivity.class));
-//        finish();
-
-//        Toast.makeText(this, studentList.get(position).getId(), Toast.LENGTH_SHORT).show();
 
         int typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
 
@@ -207,14 +203,24 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
         memberList.add(userMember);
         memberList.add(friendMember);
 
+        CreateChatUID.LastMessage lastMessage = new CreateChatUID.LastMessage();
+        lastMessage.setMessage("");
+        lastMessage.setCreateTime(0);
+        lastMessage.setSentBy("");
+
+
         CreateChatUID createChatUID = new CreateChatUID();
         createChatUID.setMemberList(memberList);
+        createChatUID.setLastMessage(lastMessage);
 
         databaseReference.child("chats").child(String.valueOf(time)).setValue(createChatUID);
         databaseReference.child("userChats").child(userID).push().setValue(String.valueOf(time));
         databaseReference.child("userChats").child(friendID).push().setValue(String.valueOf(time));
 
-
+        Intent intent = new Intent(this, MessageDetailActivity.class);
+        intent.putExtra("chatID", String.valueOf(time));
+        startActivity(intent);
+        finish();
     }
 
     @Override
