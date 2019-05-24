@@ -21,28 +21,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Manager.activity.ContactManage.ContactManageActivity"></activity>
-        <activity android:name=".Student.activity.MessageDetail.MessageDetailActivity" />
-        <activity android:name=".Student.activity.Contract.ContractActivity" />
-        <activity android:name=".Manager.activity.SubjectManage.SubjectManageActivity" />
-        <activity android:name=".Manager.activity.InfoStudent.InfoStudentActivity" />
-        <activity android:name=".Student.activity.EditProfile.EditProfileActivity" />
-        <activity android:name=".Student.activity.Schelude.ScheludeActivity" />
-        <activity android:name=".Manager.activity.ScheludeManage.ScheludeManageActivity" />
-        <activity android:name=".Manager.activity.StudentManage.StudentManageActivity" />
-        <activity android:name=".Manager.activity.CreateStudent.CreatedStudentActivity" />
-        <activity android:name=".Login.StartActivity">
+        <activity android:name=".activity.ContactManageActivity"></activity>
+        <activity android:name=".activity.MessageDetailActivity" />
+        <activity android:name=".activity.ContractActivity" />
+        <activity android:name=".activity.SubjectManageActivity" />
+        <activity android:name=".activity.InfoStudentActivity" />
+        <activity android:name=".activity.EditProfileActivity" />
+        <activity android:name=".activity.ScheludeActivity" />
+        <activity android:name=".activity.ScheludeManageActivity" />
+        <activity android:name=".activity.StudentManageActivity" />
+        <activity android:name=".activity.CreatedStudentActivity" />
+        <activity android:name=".activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Manager.activity.ManagerActivity" />
-        <activity android:name=".Student.activity.CommentNews.CommentNewsActivity" />
-        <activity android:name=".Student.activity.HocphiActivity" />
-        <activity android:name=".Student.activity.StudentActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.ManagerActivity" />
+        <activity android:name=".activity.CommentNewsActivity" />
+        <activity android:name=".activity.HocphiActivity" />
+        <activity android:name=".activity.StudentActivity" />
     </application>
 
 </manifest>

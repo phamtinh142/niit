@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Manager.activity.ContactManage.ContactManageActivity">
+    tools:context=".activity.ContactManageActivity">
 
     <RelativeLayout
         android:id="@+id/layout_tool_bar"

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Manager.activity.ScheludeManage.ScheludeManageActivity">
+    tools:context=".activity.ScheludeManageActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -82,12 +82,12 @@
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
 
-                    <EditText
+                    <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/edt_thu2_schelude_manage"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:gravity="center_vertical"
-                        android:hint="Nhập nội dung"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -137,12 +137,12 @@
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
 
-                    <EditText
+                    <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/edt_thu3_schelude_manage"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:gravity="center_vertical"
-                        android:hint="Nhập nội dung"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -191,12 +191,12 @@
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
 
-                    <EditText
+                    <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/edt_thu4_schelude_manage"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:gravity="center_vertical"
-                        android:hint="Nhập nội dung"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -246,12 +246,12 @@
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
 
-                    <EditText
+                    <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/edt_thu5_schelude_manage"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:gravity="center_vertical"
-                        android:hint="Nhập nội dung"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -301,12 +301,12 @@
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
 
-                    <EditText
+                    <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/edt_thu6_schelude_manage"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:gravity="center_vertical"
-                        android:hint="Nhập nội dung"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -356,12 +356,12 @@
                     android:layout_height="fill_parent"
                     tools:ignore="UselessParent">
 
-                    <EditText
+                    <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/edt_thu7_schelude_manage"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:gravity="center_vertical"
-                        android:hint="Nhập nội dung"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

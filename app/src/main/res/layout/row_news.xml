@@ -85,6 +85,7 @@
             android:layout_weight="100">
 
             <CheckBox
+                android:checked="false"
                 android:id="@+id/btn_like_row_news"
                 android:paddingEnd="15dp"
                 android:paddingStart="15dp"
