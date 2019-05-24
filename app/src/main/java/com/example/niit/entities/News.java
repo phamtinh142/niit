@@ -3,6 +3,8 @@ package com.example.niit.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class News {
     @SerializedName("id")
     @Expose
@@ -23,6 +25,9 @@ public class News {
     private String classes;
     @SerializedName("classUser")
     private String classUser;
+    @SerializedName("like")
+    @Expose
+    private List<String> likeList;
 
     private String idNews;
 
@@ -34,16 +39,17 @@ public class News {
         this.idNews = idNews;
     }
 
-    public News(String id, String content_news, String create_time, String image_news, int type_account, String classes) {
+    public News(String id, String content_news, String create_time, String image_news, int type_account, String classes, List<String> likeList) {
         this.id = id;
         this.content_news = content_news;
         this.create_time = create_time;
         this.image_news = image_news;
         this.type_account = type_account;
         this.classes = classes;
+        this.likeList = likeList;
     }
 
-    public News(String id, String content_news, String create_time, String image_news, int type_account, String classes, String classUser) {
+    public News(String id, String content_news, String create_time, String image_news, int type_account, String classes, String classUser, List<String> likeList) {
         this.id = id;
         this.content_news = content_news;
         this.create_time = create_time;
@@ -51,10 +57,19 @@ public class News {
         this.type_account = type_account;
         this.classes = classes;
         this.classUser = classUser;
+        this.likeList = likeList;
     }
 
     public News() {
 
+    }
+
+    public List<String> getLikeList() {
+        return likeList;
+    }
+
+    public void setLikeList(List<String> likeList) {
+        this.likeList = likeList;
     }
 
     public String getClasses() {

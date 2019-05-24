@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,11 +38,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<News> newsList;
     private ItemNewsListener itemNewsListener;
+    private String idUser;
 
     public NewsAdapter(Context context, List<News> newsList, ItemNewsListener itemNewsListener) {
         this.context = context;
         this.newsList = newsList;
         this.itemNewsListener = itemNewsListener;
+        idUser = SharePrefer.getInstance().get(StringFinal.ID, String.class);
     }
 
     @NonNull
@@ -126,7 +129,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         String date = FormatTime.formattedDate(news.getCreate_time());
         String time = FormatTime.formattedTimeMinute(news.getCreate_time());
-        String createAtTime = "Đăng vào lúc " + time + " " + date;
+        String createAtTime =  date + " lúc " + time;
         holder.txtDate.setText(createAtTime);
 
         if (!news.getImage_news().equals("")) {
@@ -154,41 +157,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         });
 
-        final String idUser = SharePrefer.getInstance().get(StringFinal.ID, String.class);
+        holder.btnLike.setChecked(false);
 
-        databaseReference.child("news").child(news.getClasses()).child(news.getIdNews()).child("like").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String userID = dataSnapshot.getValue(String.class);
-
-                if (idUser.equals(userID)) {
-                    holder.idLike = dataSnapshot.getKey();
+        if (news.getLikeList() != null) {
+            for (String user : news.getLikeList()) {
+                if (idUser.equals(user)) {
                     holder.btnLike.setChecked(true);
                 } else {
                     holder.btnLike.setChecked(false);
                 }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("ktlike", "onChildChanged: ");
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("ktlike", "onChildRemoved: ");
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        }
 
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +176,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     String userID = SharePrefer.getInstance().get(StringFinal.ID, String.class);
                     databaseReference.child("news").child(news.getClasses())
                             .child(news.getIdNews()).child("like")
-                            .child(userID).setValue(userID, new DatabaseReference.CompletionListener() {
+                            .child(idUser).setValue(userID, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                             if (databaseError != null) {
@@ -205,10 +184,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             }
                         }
                     });
+                    Toast.makeText(context, "thick", Toast.LENGTH_SHORT).show();
                 } else {
                     databaseReference.child("news").child(news.getClasses())
                             .child(news.getIdNews()).child("like")
-                            .child(holder.idLike).removeValue(new DatabaseReference.CompletionListener() {
+                            .child(idUser).removeValue(new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                             if (databaseError != null) {
@@ -216,6 +196,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             }
                         }
                     });
+                    Toast.makeText(context, "bo thick", Toast.LENGTH_SHORT).show();
                 }
             }
         });

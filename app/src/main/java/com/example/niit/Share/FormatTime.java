@@ -26,7 +26,10 @@ public class FormatTime {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(mili);
 
-        return new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
+        String Date = new SimpleDateFormat("dd").format(calendar.getTime());
+        String Month = new SimpleDateFormat("MM").format(calendar.getTime());
+
+        return Date + " tháng " + Month;
     }
 
     @SuppressLint("SimpleDateFormat")

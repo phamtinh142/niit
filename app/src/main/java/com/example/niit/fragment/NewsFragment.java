@@ -209,6 +209,18 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
                 News news = dataSnapshot.getValue(News.class);
                 news.setIdNews(dataSnapshot.getKey());
 
+                List<String> likeList = new ArrayList<>();
+
+                for (DataSnapshot postSnapshot: dataSnapshot.child("like").getChildren()) {
+                    String userLike = postSnapshot.getValue(String.class);
+                    likeList.add(userLike);
+                }
+
+                if (likeList.size() > 0) {
+                    Log.d("ktlistlike", "onBindViewHolder: " + likeList.size());
+                    news.setLikeList(likeList);
+                }
+
                 if (newsList.size() == 0) {
                     newsList.add(news);
                 } else {
