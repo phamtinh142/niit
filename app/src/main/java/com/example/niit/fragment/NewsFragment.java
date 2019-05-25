@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +72,7 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
 
     List<News> newsList;
 
-    String news = "ALL";
+    String newsOption = "ALL";
 
     String classes;
 
@@ -91,6 +90,8 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
         optionNews();
 
         getClasses();
+
+        getData();
 
         return view;
     }
@@ -114,10 +115,10 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
             newsAdapter.notifyDataSetChanged();
             switch (button.getId()) {
                 case R.id.rdo_common_news:
-                    news = "ALL";
+                    newsOption = "ALL";
                     break;
                 case R.id.rdo_class_news:
-                    news = classes;
+                    newsOption = classes;
                     break;
             }
             getData();
@@ -203,28 +204,34 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
 
 
     private void getData() {
-        databaseReference.child("news").child(news).addChildEventListener(new ChildEventListener() {
+        databaseReference.child("news").child(newsOption).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 News news = dataSnapshot.getValue(News.class);
                 news.setIdNews(dataSnapshot.getKey());
 
                 List<String> likeList = new ArrayList<>();
-
-                for (DataSnapshot postSnapshot: dataSnapshot.child("like").getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.child("like").getChildren()) {
                     String userLike = postSnapshot.getValue(String.class);
                     likeList.add(userLike);
                 }
+                news.setCountLike(likeList.size());
+                news.setLikeList(likeList);
 
-                if (likeList.size() > 0) {
-                    Log.d("ktlistlike", "onBindViewHolder: " + likeList.size());
-                    news.setLikeList(likeList);
+
+                List<String> commentList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.child("comment").getChildren()) {
+                    String idComment = snapshot.getKey();
+                    commentList.add(idComment);
                 }
+                news.setCountComment(commentList.size());
 
-                if (newsList.size() == 0) {
-                    newsList.add(news);
-                } else {
-                    newsList.add(0, news);
+                if (newsOption.equals(news.getClasses())) {
+                    if (newsList.size() == 0) {
+                        newsList.add(news);
+                    } else {
+                        newsList.add(0, news);
+                    }
                 }
 
                 newsAdapter.notifyDataSetChanged();
@@ -232,12 +239,50 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("ktyuyuy", "onChildChanged: ");
+                News news = dataSnapshot.getValue(News.class);
+                news.setIdNews(dataSnapshot.getKey());
+
+                List<String> likeList = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.child("like").getChildren()) {
+                    String userLike = postSnapshot.getValue(String.class);
+                    likeList.add(userLike);
+                }
+                news.setCountLike(likeList.size());
+                news.setLikeList(likeList);
+
+
+                List<String> commentList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.child("comment").getChildren()) {
+                    String idComment = snapshot.getKey();
+                    commentList.add(idComment);
+                }
+                news.setCountComment(commentList.size());
+
+
+                for (int i = 0; i < newsList.size(); i++) {
+                    if (newsList.get(i).getIdNews().equals(news.getIdNews())) {
+                        newsList.remove(i);
+                        newsList.add(i, news);
+                        newsAdapter.notifyItemChanged(i);
+                        break;
+                    }
+                }
+                newsAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                News news = dataSnapshot.getValue(News.class);
+                news.setIdNews(dataSnapshot.getKey());
 
+                for (int i = 0; i < newsList.size(); i++) {
+                    if (newsList.get(i).getIdNews().equals(news.getIdNews())) {
+                        newsList.remove(i);
+                        newsAdapter.notifyItemChanged(i);
+                        break;
+                    }
+                }
+                newsAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -258,9 +303,9 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
         newsAdapter.notifyDataSetChanged();
 
         if (classes.equals("Chung")) {
-            news = "ALL";
+            newsOption = "ALL";
         } else {
-            news = classes;
+            newsOption = classes;
         }
 
         btn_choose_classes.setText(classes);
@@ -280,15 +325,6 @@ public class NewsFragment extends Fragment implements ClassAdapter.ClassesListen
         bundle.putString("idUser", newsList.get(position).getId());
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        newsList.clear();
-        newsAdapter.notifyDataSetChanged();
-        getData();
     }
 
     @Override

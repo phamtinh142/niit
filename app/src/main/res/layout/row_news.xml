@@ -9,114 +9,148 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_avatar_row_user_news"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_not_found"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/txt_username_row_news"
-                android:textSize="15sp"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:text="Phạm Xuân Tình"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/txt_time_row_news"
-                android:layout_marginTop="4dp"
-                android:text="14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-    
-    <LinearLayout
+        android:id="@+id/layout_content_news"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:textColor="@color/color_Black"
-            android:padding="10dp"
-            android:id="@+id/txt_content_row_news"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/img_content_new"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_not_found"
-            android:layout_width="match_parent"
-            android:layout_height="260dp" />
-        
-    </LinearLayout>
-
-    <RelativeLayout
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:layout_gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
-            android:layout_alignParentStart="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_marginStart="5dp"
-                android:src="@drawable/ic_mood_blue_24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_avatar_row_user_news"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_not_found"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
 
-            <TextView
-                android:text="1"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_username_row_news"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:text="Phạm Xuân Tình"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/txt_time_row_news"
+                    android:layout_marginTop="4dp"
+                    android:text="14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_alignParentEnd="true"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="1"
-                android:layout_width="wrap_content"
+                android:textColor="@color/color_Black"
+                android:padding="10dp"
+                android:id="@+id/txt_content_row_news"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_marginStart="5dp"
-                android:text="bình luận"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/img_content_new"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_not_found"
+                android:layout_width="match_parent"
+                android:layout_height="260dp" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/layout_view_like"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_mood_blue_24dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp" />
+
+                <TextView
+                    android:textSize="11sp"
+                    android:id="@+id/txt_you_like"
+                    android:layout_marginStart="2dp"
+                    android:text="Bạn và"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:textSize="11sp"
+                    android:id="@+id/txt_count_like"
+                    android:text=" 100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:textSize="11sp"
+                    android:id="@+id/txt_other_like"
+                    android:text=" người khác "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_view_comment"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="11sp"
+                    android:id="@+id/txt_count_comment"
+                    android:text="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:textSize="11sp"
+                    android:layout_marginStart="5dp"
+                    android:text="bình luận"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <View
         android:background="@color/color_gray"
@@ -137,8 +171,8 @@
             <CheckBox
                 android:checked="false"
                 android:id="@+id/btn_like_row_news"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
+                android:paddingEnd="30dp"
+                android:paddingStart="30dp"
                 android:textColor="@drawable/change_color_text_checkbox_like"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -158,8 +192,8 @@
 
             <CheckBox
                 android:id="@+id/btn_comment_news"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
+                android:paddingEnd="30dp"
+                android:paddingStart="30dp"
                 android:textColor="@color/color_text_default"
                 android:textSize="16sp"
                 android:textStyle="bold"

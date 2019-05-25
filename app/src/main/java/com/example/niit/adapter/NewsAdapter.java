@@ -1,5 +1,6 @@
 package com.example.niit.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +57,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return new NewsManageViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -143,7 +146,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         holder.txtContent.setText(news.getContent_news());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.layout_content_news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemNewsListener.onClickDetailNews(holder.position);
@@ -156,18 +159,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 itemNewsListener.onClickDetailNews(holder.position);
             }
         });
-
-        holder.btnLike.setChecked(false);
-
-        if (news.getLikeList() != null) {
-            for (String user : news.getLikeList()) {
-                if (idUser.equals(user)) {
-                    holder.btnLike.setChecked(true);
-                } else {
-                    holder.btnLike.setChecked(false);
-                }
-            }
-        }
 
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +175,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             }
                         }
                     });
-                    Toast.makeText(context, "thick", Toast.LENGTH_SHORT).show();
                 } else {
                     databaseReference.child("news").child(news.getClasses())
                             .child(news.getIdNews()).child("like")
@@ -196,10 +186,40 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             }
                         }
                     });
-                    Toast.makeText(context, "bo thick", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        holder.btnLike.setChecked(false);
+
+
+        if (news.getCountComment() > 0) {
+            holder.layout_view_comment.setVisibility(View.VISIBLE);
+            holder.txt_count_comment.setText(String.valueOf(news.getCountComment()));
+        } else {
+            holder.layout_view_comment.setVisibility(View.INVISIBLE);
+        }
+
+        if (news.getCountLike() > 0) {
+            holder.layout_view_like.setVisibility(View.VISIBLE);
+
+            if (news.getLikeList().contains(idUser)) {
+                holder.btnLike.setChecked(true);
+
+                holder.txt_you_like.setVisibility(View.VISIBLE);
+                holder.txt_other_like.setVisibility(View.VISIBLE);
+                holder.txt_count_like.setText(" " + (news.getCountLike() - 1));
+            } else {
+                holder.btnLike.setChecked(false);
+
+                holder.txt_you_like.setVisibility(View.GONE);
+                holder.txt_other_like.setVisibility(View.GONE);
+                holder.txt_count_like.setText(" " + news.getCountLike());
+            }
+
+        } else {
+            holder.layout_view_like.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -210,8 +230,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     class NewsManageViewHolder extends RecyclerView.ViewHolder {
-        String idLike;
         int position;
+        @BindView(R.id.layout_content_news)
+        LinearLayout layout_content_news;
         @BindView(R.id.img_avatar_row_user_news)
         CircleImageView imgAvatar;
         @BindView(R.id.txt_username_row_news)
@@ -226,6 +247,19 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CheckBox btnComment;
         @BindView(R.id.img_content_new)
         ImageView img_content_new;
+        @BindView(R.id.layout_view_like)
+        LinearLayout layout_view_like;
+        @BindView(R.id.txt_count_like)
+        TextView txt_count_like;
+        @BindView(R.id.layout_view_comment)
+        LinearLayout layout_view_comment;
+        @BindView(R.id.txt_count_comment)
+        TextView txt_count_comment;
+        @BindView(R.id.txt_you_like)
+        TextView txt_you_like;
+        @BindView(R.id.txt_other_like)
+        TextView txt_other_like;
+
         NewsManageViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.niit.R;
@@ -35,6 +36,8 @@ public class MessageDetailActivity extends AppCompatActivity {
     EditText edt_message;
     @BindView(R.id.recyclerView_chat)
     RecyclerView recyclerView_chat;
+    @BindView(R.id.btn_open_icon)
+    ImageView btn_open_icon;
 
     DatabaseReference databaseReference;
 
@@ -99,6 +102,11 @@ public class MessageDetailActivity extends AppCompatActivity {
         recyclerView_chat.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         chatDetailAdapter = new ChatDetailAdapter(this, chatsList, databaseReference);
         recyclerView_chat.setAdapter(chatDetailAdapter);
+    }
+
+    @OnClick(R.id.btn_open_icon)
+    public void onClickIcon() {
+
     }
 
     @OnClick(R.id.btn_send_message)

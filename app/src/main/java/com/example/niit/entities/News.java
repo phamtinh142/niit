@@ -29,7 +29,25 @@ public class News {
     @Expose
     private List<String> likeList;
 
+    private int countLike;
+    private int countComment;
     private String idNews;
+
+    public int getCountLike() {
+        return countLike;
+    }
+
+    public void setCountLike(int countLike) {
+        this.countLike = countLike;
+    }
+
+    public int getCountComment() {
+        return countComment;
+    }
+
+    public void setCountComment(int countComment) {
+        this.countComment = countComment;
+    }
 
     public String getIdNews() {
         return idNews;

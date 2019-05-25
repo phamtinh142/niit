@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Tin tức"
+            android:text="Bảng tin"
             android:textColor="@color/color_White"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:textColor="@android:color/white"
             android:text="Chung"
             android:drawableEnd="@drawable/change_icon_arrow_drop"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="match_parent" />
 
     </RelativeLayout>
@@ -136,15 +136,15 @@
         android:background="@color/color_white"
         android:visibility="gone"
         android:id="@+id/layout_classes"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
+        android:layout_width="87dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="56dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView_class"
             android:elevation="4dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
