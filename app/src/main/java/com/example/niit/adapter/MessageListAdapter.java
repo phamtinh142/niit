@@ -30,6 +30,7 @@ import java.util.TimeZone;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
 public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
@@ -172,7 +173,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @BindView(R.id.txt_username_message)
         TextView txt_username_message;
         @BindView(R.id.txt_last_message_sent)
-        TextView txt_last_message_sent;
+        EmojiconTextView txt_last_message_sent;
         @BindView(R.id.txt_time_create)
         TextView txt_time_create;
 

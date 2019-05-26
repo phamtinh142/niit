@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/layout_comment"
     android:background="@color/color_white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -77,7 +78,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+
     <RelativeLayout
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:gravity="center_vertical"
         android:background="@color/color_white"
         android:layout_alignParentBottom="true"
@@ -87,16 +91,21 @@
         android:layout_height="wrap_content"
         android:minHeight="55dp">
 
+        <ImageView
+            android:id="@+id/btn_open_icon"
+            android:src="@drawable/ic_open_icon_chat_blue_24dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
-        <EditText
+        <hani.momanii.supernova_emoji_library.Helper.EmojiconEditText
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/btn_open_icon"
             android:paddingHorizontal="8dp"
             android:paddingVertical="5dp"
             android:textSize="15sp"
             android:gravity="center_vertical"
             android:hint="Viết bình luân..."
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/btn_send_comment_news_detail"
+            android:layout_toStartOf="@+id/btn_send_message"
             android:id="@+id/edt_comment_news_detail"
             android:background="@drawable/bg_edittext_comment_news"
             android:layout_width="match_parent"
@@ -105,13 +114,12 @@
             tools:ignore="UnusedAttribute" />
 
         <ImageView
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
             android:layout_alignParentEnd="true"
             android:id="@+id/btn_send_comment_news_detail"
             android:src="@drawable/ic_send"
             android:layout_width="40dp"
             android:layout_height="40dp" />
-
 
     </RelativeLayout>
 

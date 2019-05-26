@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.devs.readmoreoption.ReadMoreOption;
 import com.example.niit.R;
 import com.example.niit.Share.FormatTime;
 import com.example.niit.Share.SharePrefer;
@@ -41,12 +42,21 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<News> newsList;
     private ItemNewsListener itemNewsListener;
     private String idUser;
+    private ReadMoreOption readMoreOption;
 
     public NewsAdapter(Context context, List<News> newsList, ItemNewsListener itemNewsListener) {
         this.context = context;
         this.newsList = newsList;
         this.itemNewsListener = itemNewsListener;
         idUser = SharePrefer.getInstance().get(StringFinal.ID, String.class);
+        readMoreOption = new ReadMoreOption.Builder(context)
+                .textLength(300)
+                .moreLabel("Xem thêm")
+                .lessLabel("Thu gọn")
+                .moreLabelColor(context.getResources().getColor(R.color.color_text_default))
+                .lessLabelColor(context.getResources().getColor(R.color.color_text_default))
+                .labelUnderLine(true)
+                .build();
     }
 
     @NonNull
@@ -64,9 +74,12 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         final NewsManageViewHolder holder = (NewsManageViewHolder) viewHolder;
 
+
         holder.position = i;
 
         final News news = newsList.get(i);
+
+        readMoreOption.addReadMoreTo(holder.txtContent, news.getContent_news());
 
         if (news.getType_account() == 0) {
             databaseReference.child("manager").child(news.getId()).addValueEventListener(
@@ -144,7 +157,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else {
             holder.img_content_new.setVisibility(View.GONE);
         }
-        holder.txtContent.setText(news.getContent_news());
+
 
         holder.layout_content_news.setOnClickListener(new View.OnClickListener() {
             @Override

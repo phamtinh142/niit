@@ -71,7 +71,6 @@ public class MessagesFragment extends Fragment implements TextWatcher {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 String chatID = dataSnapshot.getValue(String.class);
-                Log.d("khkhkh", "onChildAdded: " + chatID);
                 getMessageList(chatID);
             }
 

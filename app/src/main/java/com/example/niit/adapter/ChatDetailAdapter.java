@@ -24,6 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
 public class ChatDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
@@ -128,9 +129,9 @@ public class ChatDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.img_avata_message)
         CircleImageView img_avata_message;
         @BindView(R.id.txt_message_friend)
-        TextView txt_message_friend;
+        EmojiconTextView txt_message_friend;
         @BindView(R.id.txt_message_you)
-        TextView txt_message_you;
+        EmojiconTextView txt_message_you;
         @BindView(R.id.layout_friend)
         LinearLayout layout_friend;
         @BindView(R.id.layout_user)

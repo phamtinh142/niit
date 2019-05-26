@@ -23,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
 public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
@@ -147,7 +148,7 @@ public class CommentNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @BindView(R.id.txt_username_comment_news)
         TextView txtUsername;
         @BindView(R.id.txt_content_comment_news)
-        TextView txtContent;
+        EmojiconTextView txtContent;
         @BindView(R.id.txt_create_at_time_comment_news)
         TextView txtCreateAtTime;
         CommentNewsViewHolder(@NonNull View itemView) {

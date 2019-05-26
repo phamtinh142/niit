@@ -38,10 +38,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 
 public class CommentNewsActivity extends AppCompatActivity {
     @BindView(R.id.edt_comment_news_detail)
-    EditText edtCommentNewsDetail;
+    EmojiconEditText edtCommentNewsDetail;
     @BindView(R.id.recyclerView_comment_news)
     RecyclerView recyclerViewCommentNews;
 
@@ -55,6 +57,10 @@ public class CommentNewsActivity extends AppCompatActivity {
     TextView txt_other_like;
     @BindView(R.id.img_detail_like)
     ImageView img_detail_like;
+    @BindView(R.id.btn_open_icon)
+    ImageView btn_open_icon;
+
+    EmojIconActions emojIconActions;
 
     DatabaseReference databaseReference;
 
@@ -160,6 +166,10 @@ public class CommentNewsActivity extends AppCompatActivity {
 
     private void init() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        emojIconActions = new EmojIconActions(this, findViewById(R.id.layout_comment), edtCommentNewsDetail, btn_open_icon);
+        emojIconActions.ShowEmojIcon();
+
         commentList = new ArrayList<>();
         recyclerViewCommentNews.setHasFixedSize(true);
         recyclerViewCommentNews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.niit.entities.CreatedStudent;
 import com.example.niit.adapter.StudentManageAdapter;
@@ -174,9 +175,40 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
 
     @Override
     public void onClickAccount(final int position) {
-        int typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
+        final String frientID = studentList.get(position).getId();
 
-        final long time = GetTimeSystem.getMili();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("chatMessages").exists()) {
+                    if (dataSnapshot.child("chatMessages").child(userID + frientID).exists()) {
+                        Intent intent = new Intent(ContractActivity.this, MessageDetailActivity.class);
+                        intent.putExtra("chatID", userID + frientID);
+                        startActivity(intent);
+                        finish();
+                    } else if (dataSnapshot.child("chatMessages").child(frientID + userID).exists()){
+                        Intent intent = new Intent(ContractActivity.this, MessageDetailActivity.class);
+                        intent.putExtra("chatID", frientID + userID);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        createChatRoom(position);
+                    }
+                } else {
+                    createChatRoom(position);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void createChatRoom(int position) {
         final String friendID = studentList.get(position).getId();
 
         CreateChatUID.memberUser userMember = null;
@@ -214,15 +246,14 @@ public class ContractActivity extends AppCompatActivity implements AccountListen
         createChatUID.setMemberList(memberList);
         createChatUID.setLastMessage(lastMessage);
 
-        databaseReference.child("chats").child(String.valueOf(time)).setValue(createChatUID);
-        databaseReference.child("userChats").child(userID).push().setValue(String.valueOf(time));
-        databaseReference.child("userChats").child(friendID).push().setValue(String.valueOf(time));
+        databaseReference.child("chats").child(userID + friendID).setValue(createChatUID);
+        databaseReference.child("userChats").child(userID).push().setValue(userID + friendID);
+        databaseReference.child("userChats").child(friendID).push().setValue(userID + friendID);
 
         Intent intent = new Intent(this, MessageDetailActivity.class);
-        intent.putExtra("chatID", String.valueOf(time));
+        intent.putExtra("chatID", userID + friendID);
         startActivity(intent);
         finish();
-
     }
 
 
