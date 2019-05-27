@@ -34,6 +34,7 @@ import com.example.niit.R;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.activity.ScheludeActivity;
+import com.example.niit.activity.ScoreActivity;
 import com.example.niit.activity.UpdatePasswordActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -137,6 +138,11 @@ public class ProfileFragment extends Fragment {
     @OnClick(R.id.img_profile_avatar)
     public void onClickUpdateProfile() {
         startActivityForResult(getPickImageChooserIntent(), IMAGE_RESULT);
+    }
+
+    @OnClick(R.id.rtl_score)
+    public void onClickMyScore () {
+        startActivity(new Intent(getActivity(), ScoreActivity.class));
     }
 
     @OnClick(R.id.rtl_update_password)

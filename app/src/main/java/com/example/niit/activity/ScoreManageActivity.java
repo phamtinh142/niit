@@ -16,7 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.niit.R;
+import com.example.niit.adapter.ScoreAdapter;
 import com.example.niit.adapter.SubjectAdapter;
+import com.example.niit.entities.Score;
 import com.example.niit.entities.Subjects;
 import com.example.niit.listener.ChooseSubjectListener;
 import com.google.firebase.database.ChildEventListener;
@@ -31,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 
 public class ScoreManageActivity extends AppCompatActivity implements ChooseSubjectListener {
     @BindView(R.id.btn_choose_subject)
@@ -45,12 +48,19 @@ public class ScoreManageActivity extends AppCompatActivity implements ChooseSubj
     LinearLayout layout_subject;
     @BindView(R.id.recyclerView_subject)
     RecyclerView recyclerView_subject;
+    @BindView(R.id.recyclerView_score)
+    RecyclerView recyclerView_score;
 
     List<Subjects> subjectsList;
     SubjectAdapter subjectAdapter;
 
+    List<Score> scoreList;
+    ScoreAdapter scoreAdapter;
+
     String classesUser;
     String idUser;
+
+    String idSubject = "";
 
     DatabaseReference databaseReference;
 
@@ -63,6 +73,63 @@ public class ScoreManageActivity extends AppCompatActivity implements ChooseSubj
         init();
 
         getSubject();
+
+        getScore();
+    }
+
+    private void getScore() {
+        databaseReference.child("score").child(classesUser).child(idUser).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Score score = dataSnapshot.getValue(Score.class);
+
+                Log.d("KTscore", "-------------------------------------");
+                Log.d("KTscore", "getIdSubject: " + score.getIdSubject());
+                Log.d("KTscore", "getPracticingScore: " + score.getPracticingScore());
+                Log.d("KTscore", "getTheoryScore: " + score.getTheoryScore());
+
+                scoreList.add(score);
+
+                scoreAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Score score = dataSnapshot.getValue(Score.class);
+
+                for (int i = 0; i < scoreList.size(); i++) {
+                    if (scoreList.get(i).getIdSubject().equals(score.getIdSubject())) {
+                        scoreList.remove(i);
+                        scoreList.add(i, score);
+                        scoreAdapter.notifyItemChanged(i);
+                    }
+                }
+                scoreAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Score score = dataSnapshot.getValue(Score.class);
+
+                for (int i = 0; i < scoreList.size(); i++) {
+                    if (scoreList.get(i).getIdSubject().equals(score.getIdSubject())) {
+                        scoreList.remove(i);
+                        scoreAdapter.notifyItemChanged(i);
+                    }
+                }
+                scoreAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void getSubject() {
@@ -109,6 +176,12 @@ public class ScoreManageActivity extends AppCompatActivity implements ChooseSubj
         recyclerView_subject.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         subjectAdapter = new SubjectAdapter(this, subjectsList, this);
         recyclerView_subject.setAdapter(subjectAdapter);
+
+        scoreList = new ArrayList<>();
+        recyclerView_score.setHasFixedSize(true);
+        recyclerView_score.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        scoreAdapter = new ScoreAdapter(this, scoreList, databaseReference);
+        recyclerView_score.setAdapter(scoreAdapter);
     }
 
     private void getDataBundle() {
@@ -130,7 +203,41 @@ public class ScoreManageActivity extends AppCompatActivity implements ChooseSubj
     }
 
     @Override
-    public void onSubject(String idSubject) {
-        Toast.makeText(this, idSubject, Toast.LENGTH_SHORT).show();
+    public void onSubject(Subjects subjects) {
+        this.idSubject = subjects.getId();
+        btn_choose_subject.setText(subjects.getSubject());
+        btn_choose_subject.setChecked(false);
+        layout_subject.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.btn_create_subject)
+    public void onClickCreateSubject() {
+        final String practicing = edt_practicing_score.getText().toString().trim();
+        final String theory = edt_theory_score.getText().toString().trim();
+
+        if (idSubject.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn môn học !", Toast.LENGTH_SHORT).show();
+            layout_subject.setVisibility(View.VISIBLE);
+        } else if (practicing.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập điểm lí thuyết !", Toast.LENGTH_SHORT).show();
+            edt_practicing_score.requestFocus();
+        } else if (theory.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập điểm thực hành", Toast.LENGTH_SHORT).show();
+        } else {
+            Score score = new Score();
+            score.setIdSubject(idSubject);
+            score.setPracticingScore(practicing);
+            score.setTheoryScore(theory);
+            databaseReference.child("score").child(classesUser).child(idUser).child(idSubject).setValue(score, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                    if (databaseError == null) {
+                        Toast.makeText(ScoreManageActivity.this, "Tạo thành công !", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ScoreManageActivity.this, "Tạo thất bại !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 }

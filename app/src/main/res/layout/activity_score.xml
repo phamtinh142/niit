@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ScoreActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorBottomNavigation">
+
+        <ImageButton
+            android:id="@+id/ibtn_back_create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Điểm thi"
+            android:textColor="@color/color_White"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:weightSum="6"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <TextView
+            android:paddingStart="5dp"
+            android:textSize="15sp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Môn học"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textSize="15sp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:text="Điểm lí thuyết"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textSize="15sp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:text="Điểm thực hành"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_score"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

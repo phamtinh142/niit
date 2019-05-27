@@ -48,7 +48,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseSubjectListener.onSubject(subjects.getId());
+                chooseSubjectListener.onSubject(subjects);
             }
         });
 

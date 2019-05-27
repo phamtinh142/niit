@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Quản lí môn học"
+            android:text="Quản lí điểm thi"
             android:textColor="@color/color_White"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -48,12 +48,14 @@
             android:button="@null"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="Manager"
+            android:hint="Môn học"
+            android:textColorHint="@color/color_black"
             android:layout_width="match_parent"
             android:layout_height="45dp" />
 
 
         <EditText
+            android:inputType="number"
             android:layout_below="@+id/btn_choose_subject"
             android:id="@+id/edt_practicing_score"
             android:paddingEnd="8dp"
@@ -65,6 +67,7 @@
             android:layout_height="45dp" />
 
         <EditText
+            android:inputType="number"
             android:layout_below="@+id/edt_practicing_score"
             android:id="@+id/edt_theory_score"
             android:paddingEnd="8dp"
@@ -115,7 +118,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:weightSum="5"
+        android:weightSum="6"
         android:layout_width="match_parent"
         android:layout_height="35dp">
 
@@ -124,8 +127,8 @@
             android:textSize="15sp"
             android:textColor="@color/color_black"
             android:textStyle="bold"
-            android:gravity="center_vertical"
-            android:text="Mã môn học"
+            android:gravity="center"
+            android:text="Môn học"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
@@ -134,16 +137,26 @@
             android:textSize="15sp"
             android:textColor="@color/color_black"
             android:textStyle="bold"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:layout_weight="2"
-            android:text="Tên môn học"
+            android:text="Điểm lí thuyết"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textSize="15sp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:text="Điểm thực hành"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_subjects"
+        android:id="@+id/recyclerView_score"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
