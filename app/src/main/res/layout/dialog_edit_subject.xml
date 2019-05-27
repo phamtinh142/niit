@@ -4,8 +4,9 @@
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:gravity="center">
 
     <EditText
         android:id="@+id/edt_subject"
@@ -17,19 +18,24 @@
         android:layout_height="45dp" />
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <Button
+            android:background="@drawable/bg_button_blue"
             android:id="@+id/btn_edit"
             android:text="Sửa"
+            android:textColor="@color/color_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bg_button_red"
+            android:textColor="@color/color_white"
             android:id="@+id/btn_cancel"
             android:text="Hủy"
             android:layout_width="wrap_content"

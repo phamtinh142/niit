@@ -11,6 +11,8 @@ public class Subjects {
     @Expose
     private String subject;
 
+    private String keySubject;
+
     public Subjects(String id, String subject) {
         this.id = id;
         this.subject = subject;
@@ -18,6 +20,14 @@ public class Subjects {
 
     public Subjects() {
 
+    }
+
+    public String getKeySubject() {
+        return keySubject;
+    }
+
+    public void setKeySubject(String keySubject) {
+        this.keySubject = keySubject;
     }
 
     public String getId() {

@@ -54,6 +54,8 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         hodler.position = i;
 
+        hodler.txt_id_subject.setText(subject.getId());
+
         hodler.txt_subject.setText(subject.getSubject());
 
         hodler.img_popup.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +94,7 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
                                             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                                                 if (databaseError == null) {
                                                     Toast.makeText(context, "Sửa thành công !", Toast.LENGTH_SHORT).show();
-                                                    subjectsList.remove(hodler.position);
                                                     dialog.dismiss();
-                                                    notifyDataSetChanged();
                                                 } else {
                                                     Toast.makeText(context, "Sửa thất bại, thử lại !", Toast.LENGTH_SHORT).show();
                                                 }
@@ -121,9 +121,11 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
                                         databaseReference.child("subjects").child(subject.getId()).removeValue(new DatabaseReference.CompletionListener() {
                                             @Override
                                             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                                                Toast.makeText(context, "Xóa thành công !", Toast.LENGTH_SHORT).show();
-                                                subjectsList.remove(hodler.position);
-                                                notifyDataSetChanged();
+                                                if (databaseError == null) {
+                                                    Toast.makeText(context, "Xóa thành công !", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(context, "Xóa thất bại !", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
                                         });
                                     }
@@ -156,6 +158,8 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
         TextView txt_subject;
         @BindView(R.id.img_popup)
         ImageView img_popup;
+        @BindView(R.id.txt_id_subject)
+        TextView txt_id_subject;
         int position;
 
         public SubjectManageViewHodler(@NonNull View itemView) {

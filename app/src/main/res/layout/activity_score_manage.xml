@@ -31,59 +31,94 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_button"
+            android:id="@+id/btn_choose_subject"
+            android:drawableEnd="@drawable/change_icon_arrow_drop_black"
+            android:button="@null"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Manager"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+
         <EditText
-            android:id="@+id/edt_id_subject"
-            android:paddingStart="8dp"
+            android:layout_below="@+id/btn_choose_subject"
+            android:id="@+id/edt_practicing_score"
             android:paddingEnd="8dp"
-            android:hint="Mã môn học"
+            android:paddingStart="8dp"
+            android:hint="Điểm lí thuyết"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext_comment_news"
             android:layout_width="match_parent"
             android:layout_height="45dp" />
 
         <EditText
-            android:id="@+id/edt_name_subject"
+            android:layout_below="@+id/edt_practicing_score"
+            android:id="@+id/edt_theory_score"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:hint="Tên môn học"
+            android:hint="Điểm thực hành"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext_comment_news"
             android:layout_width="match_parent"
             android:layout_height="45dp" />
 
         <Button
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/edt_theory_score"
             android:id="@+id/btn_create_subject"
             android:layout_marginBottom="8dp"
             android:textColor="@color/color_white"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="Tạo môn học"
+            android:text="Tạo điểm"
             android:background="@drawable/bg_button_blue"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_subject"
+            android:visibility="gone"
+            android:elevation="5dp"
+            android:layout_below="@+id/btn_choose_subject"
+            android:background="@color/colorBottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_subject"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <View
         android:background="@color/color_gray"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>
-    
+
     <LinearLayout
         android:orientation="horizontal"
         android:weightSum="5"
         android:layout_width="match_parent"
         android:layout_height="35dp">
-        
+
         <TextView
             android:paddingStart="5dp"
             android:textSize="15sp"
@@ -104,7 +139,7 @@
             android:text="Tên môn học"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
-        
+
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

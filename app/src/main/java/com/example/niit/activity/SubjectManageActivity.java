@@ -18,9 +18,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.security.auth.Subject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,8 +58,9 @@ public class SubjectManageActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Subjects subjects = dataSnapshot.getValue(Subjects.class);
+                subjects.setKeySubject(dataSnapshot.getKey());
 
-                subjectsList.add(subjects);
+                subjectsList.add(0, subjects);
                 subjectManageAdapter.notifyDataSetChanged();
 
             }
@@ -64,15 +68,31 @@ public class SubjectManageActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Subjects subjects = dataSnapshot.getValue(Subjects.class);
+                subjects.setKeySubject(dataSnapshot.getKey());
 
-                subjectsList.add(subjects);
+                for (int i = 0; i < subjectsList.size(); i++) {
+                    if (subjectsList.get(i).getKeySubject().equals(subjects.getKeySubject())) {
+                        subjectsList.remove(i);
+                        subjectsList.add(i, subjects);
+                        subjectManageAdapter.notifyItemChanged(i);
+                    }
+                }
                 subjectManageAdapter.notifyDataSetChanged();
+
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("fjfjfjfjf", "onChildRemoved: " + dataSnapshot.toString());
+                Subjects subjects = dataSnapshot.getValue(Subjects.class);
+                subjects.setKeySubject(dataSnapshot.getKey());
 
+                for (int i = 0; i < subjectsList.size(); i++) {
+                    if (subjectsList.get(i).getKeySubject().equals(subjects.getKeySubject())) {
+                        subjectsList.remove(i);
+                        subjectManageAdapter.notifyItemChanged(i);
+                    }
+                }
+                subjectManageAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -100,28 +120,72 @@ public class SubjectManageActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_create_subject)
     public void onClickCreateSubject() {
-        String id = edt_id_subject.getText().toString().trim();
-        String object = edt_name_subject.getText().toString().trim();
+        final String id = edt_id_subject.getText().toString().trim();
+        final String object = edt_name_subject.getText().toString().trim();
 
         if (id.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập mã môn học !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng nhập mã môn học !", Toast.LENGTH_LONG).show();
             edt_id_subject.requestFocus();
         } else if (object.isEmpty()){
-            Toast.makeText(this, "Vui lòng nhập môn học !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng nhập môn học !", Toast.LENGTH_LONG).show();
             edt_name_subject.requestFocus();
         } else {
-            Subjects subjects = new Subjects(id, object);
+            final Subjects subjects = new Subjects(id, object);
 
-            databaseReference.child("subjects").child(id).setValue(subjects, new DatabaseReference.CompletionListener() {
+            databaseReference.addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                    if (databaseError == null) {
-                        Toast.makeText(SubjectManageActivity.this, "Tạo thành công !", Toast.LENGTH_SHORT).show();
-                        edt_id_subject.setText("");
-                        edt_name_subject.setText("");
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if (dataSnapshot.child("subjects").exists()) {
+                        if (dataSnapshot.child("subjects").child(id).exists()) {
+                            Toast.makeText(SubjectManageActivity.this, "ID môn học đã tồn tại, vui lòng chọn id khác", Toast.LENGTH_LONG).show();
+                        } else {
+                            databaseReference.child("subjects").child(id).setValue(subjects, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                    if (databaseError == null) {
+                                        Toast.makeText(SubjectManageActivity.this, "Tạo thành công !", Toast.LENGTH_LONG).show();
+                                        edt_id_subject.setText("");
+                                        edt_name_subject.setText("");
+                                    } else {
+                                        Toast.makeText(SubjectManageActivity.this, "Tạo thất bại, thử lại !", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                        }
                     } else {
-                        Toast.makeText(SubjectManageActivity.this, "Tạo thất bại, thử lại !", Toast.LENGTH_SHORT).show();
+                        databaseReference.child("subjects").child(id).setValue(subjects, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                if (databaseError == null) {
+                                    Toast.makeText(SubjectManageActivity.this, "Tạo thành công !", Toast.LENGTH_LONG).show();
+                                    edt_id_subject.setText("");
+                                    edt_name_subject.setText("");
+                                } else {
+                                    Toast.makeText(SubjectManageActivity.this, "Tạo thất bại, thử lại !", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
                     }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
             });
         }

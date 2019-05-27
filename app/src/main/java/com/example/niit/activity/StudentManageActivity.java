@@ -13,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.example.niit.entities.CreatedStudent;
-import com.example.niit.activity.InfoStudentActivity;
 import com.example.niit.adapter.StudentManageAdapter;
 import com.example.niit.R;
 import com.example.niit.adapter.ClassAdapter;
@@ -38,8 +37,8 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
     CheckBox btn_choose_classes;
     @BindView(R.id.recyclerView_class)
     RecyclerView recyclerView_class;
-    @BindView(R.id.layout_classes)
-    LinearLayout layout_classes;
+    @BindView(R.id.layout_choose_classes)
+    LinearLayout layout_choose_classes;
 
     List<String> stringList;
     ClassAdapter classAdapter;
@@ -49,7 +48,7 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
 
     private DatabaseReference databaseReference;
 
-    String Classes = "CP13";
+    String Classes = "CP15";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +119,9 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
     @OnCheckedChanged(R.id.btn_choose_classes)
     public void onCheckedChooseClass(boolean checked) {
         if (checked) {
-            layout_classes.setVisibility(View.VISIBLE);
+            layout_choose_classes.setVisibility(View.VISIBLE);
         } else {
-            layout_classes.setVisibility(View.GONE);
+            layout_choose_classes.setVisibility(View.GONE);
         }
     }
 
@@ -169,7 +168,7 @@ public class StudentManageActivity extends AppCompatActivity implements ClassAda
         studentManageAdapter.notifyDataSetChanged();
 
         btn_choose_classes.setText(classes);
-        layout_classes.setVisibility(View.GONE);
+        layout_choose_classes.setVisibility(View.GONE);
         btn_choose_classes.setChecked(false);
 
         Classes = classes;

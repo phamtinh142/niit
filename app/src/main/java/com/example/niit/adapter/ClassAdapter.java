@@ -76,7 +76,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     class ClassViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.txt_class)
+        @BindView(R.id.txt_string)
         TextView txt_class;
 
         ClassViewHolder(@NonNull View itemView) {

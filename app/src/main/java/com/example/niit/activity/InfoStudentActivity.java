@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class InfoStudentActivity extends AppCompatActivity {
@@ -55,5 +56,15 @@ public class InfoStudentActivity extends AppCompatActivity {
             userName = bundle.getString("name", "");
             avatar = bundle.getString("avatar", "");
         }
+    }
+
+    @OnClick(R.id.rtl_test_score)
+    public void onClickScoreStudent() {
+        Intent intent = new Intent(this, ScoreManageActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("classes", classes);
+        bundle.putString("userID", id);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

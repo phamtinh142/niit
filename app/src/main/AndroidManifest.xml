@@ -21,7 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.TuitionActivity"></activity>
+        <activity android:name=".activity.ScoreManageActivity"></activity>
+        <activity android:name=".activity.UpdatePasswordActivity" />
+        <activity android:name=".activity.EditInfoStudentActivity" />
+        <activity android:name=".activity.TuitionActivity" />
         <activity android:name=".activity.ContactManageActivity" />
         <activity android:name=".activity.MessageDetailActivity" />
         <activity android:name=".activity.ContractActivity" />

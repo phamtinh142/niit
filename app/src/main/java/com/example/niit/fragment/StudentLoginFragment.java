@@ -180,6 +180,18 @@ public class StudentLoginFragment extends Fragment implements ClassAdapter.Class
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 CreatedStudent createdStudent = dataSnapshot.child(id).getValue(CreatedStudent.class);
 
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getType_account());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getSex());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getPhone());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getEmail());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getName());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getClassUser());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getBithday());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getAvatar());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getAge());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getAddress());
+//                Log.d("ktlogin", "onDataChange: " + createdStudent.getId());
+
                 SharePrefer.getInstance().put(StringFinal.ID, createdStudent.getId());
                 SharePrefer.getInstance().put(StringFinal.AGE, createdStudent.getAge());
                 SharePrefer.getInstance().put(StringFinal.CLASSES, createdStudent.getClassUser());

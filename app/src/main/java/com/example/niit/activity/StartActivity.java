@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.niit.entities.CreatedStudent;
 import com.example.niit.R;
@@ -29,11 +30,12 @@ public class StartActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        final String id = SharePrefer.getInstance().get(StringFinal.ID, String.class);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                String id = SharePrefer.getInstance().get(StringFinal.ID, String.class);
+
+                Log.d("ktStart", "id: " + id);
                 if (id.equals("")) {
                     startActivity(new Intent(StartActivity.this, LoginActivity.class));
                 } else {
@@ -47,19 +49,30 @@ public class StartActivity extends AppCompatActivity {
     private void getInforUser(final String id) {
         int type = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
 
+        Log.d("ktStart", "type: " + type);
+
         if (type == 0) {
-            databaseReference.child("manager").addValueEventListener(new ValueEventListener() {
+            databaseReference.child("manager").child(id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Manager manager = dataSnapshot.child(id).getValue(Manager.class);
-                    SharePrefer.getInstance().put(StringFinal.ADDRESS, manager.getAddress());
-                    SharePrefer.getInstance().put(StringFinal.AVATAR, manager.getAvatar());
-                    SharePrefer.getInstance().put(StringFinal.EMAIL, manager.getEmail());
-                    SharePrefer.getInstance().put(StringFinal.ID, manager.getId());
-                    SharePrefer.getInstance().put(StringFinal.USERNAME, manager.getName());
-                    SharePrefer.getInstance().put(StringFinal.PHONE, manager.getPhone());
-                    SharePrefer.getInstance().put(StringFinal.TYPE, manager.getType());
-                    SharePrefer.getInstance().put(StringFinal.SEX, manager.getSex());
+
+                    String address = dataSnapshot.child("address").getValue(String.class);
+                    String avatar = dataSnapshot.child("avatar").getValue(String.class);
+                    String email = dataSnapshot.child("email").getValue(String.class);
+                    String id = dataSnapshot.child("id").getValue(String.class);
+                    String name = dataSnapshot.child("name").getValue(String.class);
+                    String phone = dataSnapshot.child("phone").getValue(String.class);
+                    String sex = dataSnapshot.child("sex").getValue(String.class);
+                    int type_account = dataSnapshot.child("type").getValue(Integer.class);
+
+                    SharePrefer.getInstance().put(StringFinal.ADDRESS, address);
+                    SharePrefer.getInstance().put(StringFinal.AVATAR, avatar);
+                    SharePrefer.getInstance().put(StringFinal.EMAIL, email);
+                    SharePrefer.getInstance().put(StringFinal.ID, id);
+                    SharePrefer.getInstance().put(StringFinal.USERNAME, name);
+                    SharePrefer.getInstance().put(StringFinal.PHONE, phone);
+                    SharePrefer.getInstance().put(StringFinal.TYPE, type_account);
+                    SharePrefer.getInstance().put(StringFinal.SEX, sex);
 
                     startActivity(new Intent(StartActivity.this, ManagerActivity.class));
                 }
@@ -69,25 +82,49 @@ public class StartActivity extends AppCompatActivity {
 
                 }
             });
-        } else {
-            String classes = SharePrefer.getInstance().get(StringFinal.CLASSES, String.class);
+        } else if (type == 1){
+            final String classes = SharePrefer.getInstance().get(StringFinal.CLASSES, String.class);
 
-            databaseReference.child("student").child(classes).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("student").child(classes).child(id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    CreatedStudent createdStudent = dataSnapshot.child(id).getValue(CreatedStudent.class);
 
-                    SharePrefer.getInstance().put(StringFinal.ID, createdStudent.getId());
-                    SharePrefer.getInstance().put(StringFinal.AGE, createdStudent.getAge());
-                    SharePrefer.getInstance().put(StringFinal.CLASSES, createdStudent.getClassUser());
-                    SharePrefer.getInstance().put(StringFinal.EMAIL, createdStudent.getEmail());
-                    SharePrefer.getInstance().put(StringFinal.ADDRESS, createdStudent.getAddress());
-                    SharePrefer.getInstance().put(StringFinal.AVATAR, createdStudent.getAvatar());
-                    SharePrefer.getInstance().put(StringFinal.USERNAME, createdStudent.getName());
-                    SharePrefer.getInstance().put(StringFinal.PHONE, createdStudent.getPhone());
-                    SharePrefer.getInstance().put(StringFinal.SEX, createdStudent.getSex());
-                    SharePrefer.getInstance().put(StringFinal.BIRTHDAY, createdStudent.getBithday());
-                    SharePrefer.getInstance().put(StringFinal.TYPE, createdStudent.getType_account());
+//                    Log.d("startApp", "address: " + dataSnapshot.child("address").getValue());
+//                    Log.d("startApp", "age: " + dataSnapshot.child("age").getValue());
+//                    Log.d("startApp", "avatar: " + dataSnapshot.child("avatar").getValue());
+//                    Log.d("startApp", "bithday: " + dataSnapshot.child("bithday").getValue());
+//                    Log.d("startApp", "classUser: " + dataSnapshot.child("classUser").getValue());
+//                    Log.d("startApp", "email: " + dataSnapshot.child("email").getValue());
+//                    Log.d("startApp", "id: " + dataSnapshot.child("id").getValue());
+//                    Log.d("startApp", "name: " + dataSnapshot.child("name").getValue());
+//                    Log.d("startApp", "phone: " + dataSnapshot.child("phone").getValue());
+//                    Log.d("startApp", "sex: " + dataSnapshot.child("sex").getValue());
+//                    Log.d("startApp", "type_account: " + dataSnapshot.child("type_account").getValue());
+
+                    String address = dataSnapshot.child("address").getValue(String.class);
+                    String age = dataSnapshot.child("age").getValue(String.class);
+                    String avatar = dataSnapshot.child("avatar").getValue(String.class);
+                    String bithday = dataSnapshot.child("bithday").getValue(String.class);
+                    String classUser = dataSnapshot.child("classUser").getValue(String.class);
+                    String email = dataSnapshot.child("email").getValue(String.class);
+                    String id = dataSnapshot.child("id").getValue(String.class);
+                    String name = dataSnapshot.child("name").getValue(String.class);
+                    String phone = dataSnapshot.child("phone").getValue(String.class);
+                    String sex = dataSnapshot.child("sex").getValue(String.class);
+                    int type_account = dataSnapshot.child("type_account").getValue(Integer.class);
+
+
+                    SharePrefer.getInstance().put(StringFinal.ID, id);
+                    SharePrefer.getInstance().put(StringFinal.AGE, age);
+                    SharePrefer.getInstance().put(StringFinal.CLASSES, classUser);
+                    SharePrefer.getInstance().put(StringFinal.EMAIL, email);
+                    SharePrefer.getInstance().put(StringFinal.ADDRESS, address);
+                    SharePrefer.getInstance().put(StringFinal.AVATAR, avatar);
+                    SharePrefer.getInstance().put(StringFinal.USERNAME, name);
+                    SharePrefer.getInstance().put(StringFinal.PHONE, phone);
+                    SharePrefer.getInstance().put(StringFinal.SEX, sex);
+                    SharePrefer.getInstance().put(StringFinal.BIRTHDAY, bithday);
+                    SharePrefer.getInstance().put(StringFinal.TYPE, type_account);
 
                     startActivity(new Intent(StartActivity.this, StudentActivity.class));
                 }

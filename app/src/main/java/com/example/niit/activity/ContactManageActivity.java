@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import com.example.niit.entities.CreatedStudent;
 import com.example.niit.adapter.StudentManageAdapter;
 import com.example.niit.R;
-import com.example.niit.Share.GetTimeSystem;
 import com.example.niit.Share.SharePrefer;
 import com.example.niit.Share.StringFinal;
 import com.example.niit.entities.CreateChatUID;
@@ -29,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ import butterknife.OnCheckedChanged;
 
 public class ContactManageActivity extends AppCompatActivity implements ClassAdapter.ClassesListener,
         AccountListener, TextWatcher {
-    @BindView(R.id.ckb_choose_classes)
+    @BindView(R.id.btn_choose_classes)
     CheckBox ckb_choose_classes;
     @BindView(R.id.layout_choose_classes)
     LinearLayout layout_choose_classes;
@@ -59,6 +59,7 @@ public class ContactManageActivity extends AppCompatActivity implements ClassAda
 
     String classes;
     String userID;
+    int typeAccount;
 
     DatabaseReference databaseReference;
 
@@ -69,6 +70,7 @@ public class ContactManageActivity extends AppCompatActivity implements ClassAda
         ButterKnife.bind(this);
         init();
 
+        typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
         userID = SharePrefer.getInstance().get(StringFinal.ID, String.class);
         classes = ckb_choose_classes.getText().toString().trim();
 
@@ -198,7 +200,7 @@ public class ContactManageActivity extends AppCompatActivity implements ClassAda
 
     }
 
-    @OnCheckedChanged(R.id.ckb_choose_classes)
+    @OnCheckedChanged(R.id.btn_choose_classes)
     public void onCheckedChooseClasses(boolean checked) {
         if (checked) {
             layout_choose_classes.setVisibility(View.VISIBLE);
@@ -224,10 +226,41 @@ public class ContactManageActivity extends AppCompatActivity implements ClassAda
     }
 
     @Override
-    public void onClickAccount(int position) {
-        int typeAccount = SharePrefer.getInstance().get(StringFinal.TYPE, Integer.class);
+    public void onClickAccount(final int position) {
+        final String frientID = accountList.get(position).getId();
 
-        final long time = GetTimeSystem.getMili();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("chatMessages").exists()) {
+                    if (dataSnapshot.child("chatMessages").child(userID + frientID).exists()) {
+                        Intent intent = new Intent(ContactManageActivity.this, MessageDetailActivity.class);
+                        intent.putExtra("chatID", userID + frientID);
+                        startActivity(intent);
+                        finish();
+                    } else if (dataSnapshot.child("chatMessages").child(frientID + userID).exists()){
+                        Intent intent = new Intent(ContactManageActivity.this, MessageDetailActivity.class);
+                        intent.putExtra("chatID", frientID + userID);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        createChatRoom(position);
+                    }
+                } else {
+                    createChatRoom(position);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void createChatRoom(int position) {
         final String friendID = accountList.get(position).getId();
 
         CreateChatUID.memberUser userMember = null;
@@ -265,12 +298,12 @@ public class ContactManageActivity extends AppCompatActivity implements ClassAda
         createChatUID.setMemberList(memberList);
         createChatUID.setLastMessage(lastMessage);
 
-        databaseReference.child("chats").child(String.valueOf(time)).setValue(createChatUID);
-        databaseReference.child("userChats").child(userID).push().setValue(String.valueOf(time));
-        databaseReference.child("userChats").child(friendID).push().setValue(String.valueOf(time));
+        databaseReference.child("chats").child(userID + friendID).setValue(createChatUID);
+        databaseReference.child("userChats").child(userID).push().setValue(userID + friendID);
+        databaseReference.child("userChats").child(friendID).push().setValue(userID + friendID);
 
         Intent intent = new Intent(this, MessageDetailActivity.class);
-        intent.putExtra("chatID", String.valueOf(time));
+        intent.putExtra("chatID", userID + friendID);
         startActivity(intent);
         finish();
     }

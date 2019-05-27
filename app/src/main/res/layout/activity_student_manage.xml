@@ -23,26 +23,24 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <CheckBox
-            android:button="@null"
-            android:gravity="center"
-            android:id="@+id/btn_choose_classes"
-            android:layout_marginEnd="7dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColorHint="@color/color_white"
-            android:textColor="@android:color/white"
-            android:text="Chung"
-            android:drawableEnd="@drawable/change_icon_arrow_drop"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
     </RelativeLayout>
 
-    <LinearLayout
+    <CheckBox
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@color/color_History"
+        android:id="@+id/btn_choose_classes"
+        android:drawableEnd="@drawable/change_icon_arrow_drop_black"
+        android:button="@null"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="Manager"
         android:layout_below="@+id/layout_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:layout_below="@+id/btn_choose_classes"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,18 +53,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_alignParentEnd="true"
         android:background="@color/color_white"
+        android:elevation="5dp"
         android:visibility="gone"
-        android:id="@+id/layout_classes"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp">
+        android:id="@+id/layout_choose_classes"
+        android:layout_below="@+id/btn_choose_classes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView_class"
             android:elevation="4dp"
+            android:id="@+id/recyclerView_class"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
