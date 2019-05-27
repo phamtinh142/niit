@@ -58,6 +58,8 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         hodler.txt_subject.setText(subject.getSubject());
 
+        hodler.txt_number_session.setText(subject.getNumberSession());
+
         hodler.img_popup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,10 +74,12 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
                                 dialog.setContentView(R.layout.dialog_edit_subject);
 
                                 final EditText edt_subject = dialog.findViewById(R.id.edt_subject);
+                                final EditText edt_number_session = dialog.findViewById(R.id.edt_number_session);
                                 Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
                                 Button btn_edit = dialog.findViewById(R.id.btn_edit);
 
                                 edt_subject.setText(subject.getSubject());
+                                edt_number_session.setText(subject.getNumberSession());
 
                                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -88,7 +92,8 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
                                     @Override
                                     public void onClick(View v) {
                                         final String subjectString = edt_subject.getText().toString().trim();
-                                        final Subjects subjects = new Subjects(subject.getId(), subjectString);
+                                        final String numberSession = edt_number_session.getText().toString().trim();
+                                        final Subjects subjects = new Subjects(subject.getId(), subjectString, numberSession);
                                         databaseReference.child("subjects").child(subject.getId()).setValue(subjects, new DatabaseReference.CompletionListener() {
                                             @Override
                                             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
@@ -160,6 +165,8 @@ public class SubjectManageAdapter extends RecyclerView.Adapter<RecyclerView.View
         ImageView img_popup;
         @BindView(R.id.txt_id_subject)
         TextView txt_id_subject;
+        @BindView(R.id.txt_number_session)
+        TextView txt_number_session;
         int position;
 
         public SubjectManageViewHodler(@NonNull View itemView) {

@@ -127,6 +127,11 @@ public class ScheludeManageActivity extends AppCompatActivity implements ClassAd
         }
     }
 
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
+    }
+
     private void getData() {
         databaseReference.child("scheludes").child(Classes).addValueEventListener(new ValueEventListener() {
             @Override

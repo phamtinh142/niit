@@ -5,13 +5,14 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:weightSum="5"
+        android:weightSum="7"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <TextView
+            android:gravity="center"
             android:textSize="14sp"
             android:id="@+id/txt_id_subject"
             android:paddingStart="5dp"
@@ -22,13 +23,26 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:gravity="center"
             android:textSize="14sp"
-            android:layout_weight="2.5"
+            android:layout_weight="3"
             android:textColor="@color/color_text_default"
             android:textStyle="bold"
             android:layout_centerVertical="true"
             android:id="@+id/txt_subject"
             android:text="Quản lí hệ thống"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_weight="1.5"
+            android:textColor="@color/color_text_default"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:id="@+id/txt_number_session"
+            android:text="Số buổi"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 

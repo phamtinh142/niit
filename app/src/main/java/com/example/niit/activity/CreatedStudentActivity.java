@@ -122,6 +122,11 @@ public class CreatedStudentActivity extends AppCompatActivity implements ClassAd
         recyclerView_class.setAdapter(classAdapter);
     }
 
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
+    }
+
     @OnCheckedChanged(R.id.edt_classes_create_student)
     public void onCheckedClasses(boolean checked) {
         if (checked) {
@@ -129,11 +134,6 @@ public class CreatedStudentActivity extends AppCompatActivity implements ClassAd
         } else {
             layout_classes.setVisibility(View.GONE);
         }
-    }
-
-    @OnClick(R.id.ibtn_back_create_account)
-    public void onClickBackCreateAccount() {
-        finish();
     }
 
     @OnClick(R.id.btn_create_account)

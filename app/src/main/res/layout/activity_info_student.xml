@@ -93,61 +93,6 @@
 
         </RelativeLayout>
 
-
-        <RelativeLayout
-            android:id="@+id/rtl_tuition"
-            android:background="@drawable/custom_border_bottom_layout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <TextView
-                android:clickable="false"
-                android:layout_centerVertical="true"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/color_gray"
-                android:text="Học phí"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:clickable="false"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_child_exp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rtl_score_manage"
-            android:background="@drawable/custom_border_bottom_layout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <TextView
-                android:clickable="false"
-                android:layout_centerVertical="true"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/color_gray"
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:clickable="false"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_child_exp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/rtl_change_pasword"
             android:background="@drawable/custom_border_bottom_layout"
@@ -189,6 +134,33 @@
                 android:textStyle="bold"
                 android:textColor="@color/color_gray"
                 android:text="Xem thông tin học sinh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:clickable="false"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_child_exp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rtl_diligence_student"
+            android:background="@drawable/custom_border_bottom_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <TextView
+                android:clickable="false"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_gray"
+                android:text="Chuyên cần"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

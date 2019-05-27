@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,12 +17,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.security.auth.Subject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +30,8 @@ public class SubjectManageActivity extends AppCompatActivity {
     EditText edt_id_subject;
     @BindView(R.id.edt_name_subject)
     EditText edt_name_subject;
+    @BindView(R.id.edt_number_sesion)
+    EditText edt_number_sesion;
     @BindView(R.id.recyclerView_subjects)
     RecyclerView recyclerView_subjects;
 
@@ -118,10 +116,16 @@ public class SubjectManageActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
+    }
+
     @OnClick(R.id.btn_create_subject)
     public void onClickCreateSubject() {
         final String id = edt_id_subject.getText().toString().trim();
         final String object = edt_name_subject.getText().toString().trim();
+        final String numberSession = edt_number_sesion.getText().toString().trim();
 
         if (id.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập mã môn học !", Toast.LENGTH_LONG).show();
@@ -129,8 +133,10 @@ public class SubjectManageActivity extends AppCompatActivity {
         } else if (object.isEmpty()){
             Toast.makeText(this, "Vui lòng nhập môn học !", Toast.LENGTH_LONG).show();
             edt_name_subject.requestFocus();
+        } else if (numberSession.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập số buổi học !", Toast.LENGTH_SHORT).show();
         } else {
-            final Subjects subjects = new Subjects(id, object);
+            final Subjects subjects = new Subjects(id, object, numberSession);
 
             databaseReference.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -146,6 +152,7 @@ public class SubjectManageActivity extends AppCompatActivity {
                                         Toast.makeText(SubjectManageActivity.this, "Tạo thành công !", Toast.LENGTH_LONG).show();
                                         edt_id_subject.setText("");
                                         edt_name_subject.setText("");
+                                        edt_number_sesion.setText("");
                                     } else {
                                         Toast.makeText(SubjectManageActivity.this, "Tạo thất bại, thử lại !", Toast.LENGTH_LONG).show();
                                     }
@@ -160,6 +167,7 @@ public class SubjectManageActivity extends AppCompatActivity {
                                     Toast.makeText(SubjectManageActivity.this, "Tạo thành công !", Toast.LENGTH_LONG).show();
                                     edt_id_subject.setText("");
                                     edt_name_subject.setText("");
+                                    edt_number_sesion.setText("");
                                 } else {
                                     Toast.makeText(SubjectManageActivity.this, "Tạo thất bại, thử lại !", Toast.LENGTH_LONG).show();
                                 }

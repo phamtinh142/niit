@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -61,6 +62,8 @@ public class ScoreManageActivity extends AppCompatActivity implements ChooseSubj
     String idUser;
 
     String idSubject = "";
+
+    String testAgain = "1";
 
     DatabaseReference databaseReference;
 
@@ -193,6 +196,28 @@ public class ScoreManageActivity extends AppCompatActivity implements ChooseSubj
         }
     }
 
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
+    }
+
+    @OnCheckedChanged({R.id.ckb_again_1, R.id.ckb_again_2, R.id.ckb_again_3})
+    public void onCheckTestAgain(CompoundButton button, boolean checked) {
+        if (checked) {
+            switch (button.getId()) {
+                case R.id.ckb_again_1:
+                    testAgain = "1";
+                    break;
+                case R.id.ckb_again_2:
+                    testAgain = "2";
+                    break;
+                case R.id.ckb_again_3:
+                    testAgain = "3";
+                    break;
+            }
+        }
+    }
+
     @OnCheckedChanged(R.id.btn_choose_subject)
     public void onCheckedSubject(boolean checked) {
         if (checked) {
@@ -218,21 +243,30 @@ public class ScoreManageActivity extends AppCompatActivity implements ChooseSubj
         if (idSubject.isEmpty()) {
             Toast.makeText(this, "Vui lòng chọn môn học !", Toast.LENGTH_SHORT).show();
             layout_subject.setVisibility(View.VISIBLE);
-        } else if (practicing.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập điểm lí thuyết !", Toast.LENGTH_SHORT).show();
-            edt_practicing_score.requestFocus();
-        } else if (theory.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập điểm thực hành", Toast.LENGTH_SHORT).show();
         } else {
             Score score = new Score();
             score.setIdSubject(idSubject);
-            score.setPracticingScore(practicing);
-            score.setTheoryScore(theory);
-            databaseReference.child("score").child(classesUser).child(idUser).child(idSubject).setValue(score, new DatabaseReference.CompletionListener() {
+            if (practicing.isEmpty()) {
+                score.setPracticingScore("Trống");
+            } else {
+                score.setPracticingScore(practicing);
+            }
+
+            if (theory.isEmpty()) {
+                score.setTheoryScore("Trống");
+            } else {
+                score.setTheoryScore(theory);
+            }
+
+            score.setTestAgain(testAgain);
+
+            databaseReference.child("score").child(classesUser).child(idUser).child(idSubject + testAgain).setValue(score, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                     if (databaseError == null) {
                         Toast.makeText(ScoreManageActivity.this, "Tạo thành công !", Toast.LENGTH_SHORT).show();
+                        edt_practicing_score.setText("");
+                        edt_theory_score.setText("");
                     } else {
                         Toast.makeText(ScoreManageActivity.this, "Tạo thất bại !", Toast.LENGTH_SHORT).show();
                     }

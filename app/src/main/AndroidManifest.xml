@@ -21,17 +21,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ScoreActivity"></activity>
+        <activity android:name=".activity.InfoStudentManageActivity"></activity>
+        <activity android:name=".activity.DiligenceActivity" />
+        <activity android:name=".activity.DiligenceManageActivity" />
+        <activity android:name=".activity.ScoreActivity" />
         <activity android:name=".activity.ScoreManageActivity" />
         <activity android:name=".activity.UpdatePasswordActivity" />
         <activity android:name=".activity.EditInfoStudentActivity" />
-        <activity android:name=".activity.TuitionActivity" />
         <activity android:name=".activity.ContactManageActivity" />
         <activity android:name=".activity.MessageDetailActivity" />
         <activity android:name=".activity.ContractActivity" />
         <activity android:name=".activity.SubjectManageActivity" />
         <activity android:name=".activity.InfoStudentActivity" />
-        <activity android:name=".activity.EditProfileActivity" />
         <activity android:name=".activity.ScheludeActivity" />
         <activity android:name=".activity.ScheludeManageActivity" />
         <activity android:name=".activity.StudentManageActivity" />
@@ -46,7 +47,6 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ManagerActivity" />
         <activity android:name=".activity.CommentNewsActivity" />
-        <activity android:name=".activity.HocphiActivity" />
         <activity android:name=".activity.StudentActivity" />
     </application>
 

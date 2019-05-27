@@ -67,4 +67,38 @@ public class InfoStudentActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    @OnClick(R.id.rtl_change_pasword)
+    public void onCLickChangePassword() {
+        Intent intent = new Intent(this, UpdatePasswordActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("idUser", id);
+        bundle.putString("classUser", classes);
+        bundle.putInt("typeAccount", typeAccount);
+        bundle.putString("option", "admin");
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.rtl_diligence_student)
+    public void onClickDiligence() {
+        Intent intent = new Intent(this, DiligenceManageActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("idUser", id);
+        bundle.putString("classUser", classes);
+        bundle.putInt("typeAccount", typeAccount);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.rtl_info_student)
+    public void onClickInfoStudent() {
+        Intent intent = new Intent(this, InfoStudentManageActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("idUser", id);
+        bundle.putString("classUser", classes);
+        bundle.putInt("typeAccount", typeAccount);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }

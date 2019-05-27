@@ -10,16 +10,27 @@ public class Subjects {
     @SerializedName("subject")
     @Expose
     private String subject;
+    @SerializedName("numberSession")
+    private String numberSession;
 
     private String keySubject;
 
-    public Subjects(String id, String subject) {
+    public Subjects(String id, String subject, String numberSession) {
         this.id = id;
         this.subject = subject;
+        this.numberSession = numberSession;
     }
 
     public Subjects() {
 
+    }
+
+    public String getNumberSession() {
+        return numberSession;
+    }
+
+    public void setNumberSession(String numberSession) {
+        this.numberSession = numberSession;
     }
 
     public String getKeySubject() {

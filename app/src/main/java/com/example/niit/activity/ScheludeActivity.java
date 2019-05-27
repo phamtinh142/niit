@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ScheludeActivity extends AppCompatActivity {
     @BindView(R.id.edt_thu2_schelude_manage)
@@ -71,5 +72,10 @@ public class ScheludeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
     }
 }

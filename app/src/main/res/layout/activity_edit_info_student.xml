@@ -19,7 +19,7 @@
             android:background="@color/colorBottomNavigation">
 
             <ImageButton
-                android:id="@+id/ibtn_back_create_account"
+                android:id="@+id/ibtn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@null"

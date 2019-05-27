@@ -24,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ScoreActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView_score)
@@ -111,5 +112,10 @@ public class ScoreActivity extends AppCompatActivity {
         recyclerView_score.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));;
         scoreAdapter = new ScoreAdapter(this, scoreList, databaseReference);
         recyclerView_score.setAdapter(scoreAdapter);
+    }
+
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
     }
 }

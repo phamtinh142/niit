@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     String classUser;
     String idUser;
     int typeAccount;
+    String option;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,12 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_password);
         getDataBundle();
         ButterKnife.bind(this);
+
+        if (option.equals("local")) {
+            edt_old_password.setVisibility(View.VISIBLE);
+        } else if (option.equals("admin")){
+            edt_old_password.setVisibility(View.GONE);
+        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
@@ -50,7 +58,13 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             classUser = bundle.getString("classUser", "");
             idUser = bundle.getString("idUser", "");
             typeAccount = bundle.getInt("typeAccount", 0);
+            option = bundle.getString("option", "");
         }
+    }
+
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
     }
 
     @OnClick(R.id.btn_update_password)
@@ -59,55 +73,72 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         final String newPassword = edt_new_password.getText().toString().trim();
         String confirmNewPassword = edt_confirm_new_password.getText().toString().trim();
 
-        if (oldPassword.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập mật khẩu cũ !", Toast.LENGTH_SHORT).show();
-            edt_old_password.requestFocus();
-        } else if (newPassword.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập mật khẩu mới !", Toast.LENGTH_SHORT).show();
-            edt_new_password.requestFocus();
-        } else if (confirmNewPassword.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập lại mật khẩu !", Toast.LENGTH_SHORT).show();
-            edt_confirm_new_password.requestFocus();
-        } else if (!newPassword.equals(confirmNewPassword)){
-            Toast.makeText(this, "Mật khẩu không trùng khớp !", Toast.LENGTH_SHORT).show();
-            edt_confirm_new_password.requestFocus();
-        } else {
-            if (typeAccount == 0) {
-                databaseReference.child("account").child("manager").child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String password = dataSnapshot.child("password").getValue(String.class);
-                        if (oldPassword.equals(password)) {
-                            changePassword(newPassword);
-                        } else {
-                            Toast.makeText(UpdatePasswordActivity.this, "Mật khẩu cũ không đúng !", Toast.LENGTH_SHORT).show();
+        if (option.equals("local")) {
+            if (oldPassword.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập mật khẩu cũ !", Toast.LENGTH_SHORT).show();
+                edt_old_password.requestFocus();
+            } else if (newPassword.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập mật khẩu mới !", Toast.LENGTH_SHORT).show();
+                edt_new_password.requestFocus();
+            } else if (confirmNewPassword.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập lại mật khẩu !", Toast.LENGTH_SHORT).show();
+                edt_confirm_new_password.requestFocus();
+            } else if (!newPassword.equals(confirmNewPassword)){
+                Toast.makeText(this, "Mật khẩu không trùng khớp !", Toast.LENGTH_SHORT).show();
+                edt_confirm_new_password.requestFocus();
+            } else {
+                if (typeAccount == 0) {
+                    databaseReference.child("account").child("manager").child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String password = dataSnapshot.child("password").getValue(String.class);
+                            if (oldPassword.equals(password)) {
+                                changePassword(newPassword);
+                            } else {
+                                Toast.makeText(UpdatePasswordActivity.this, "Mật khẩu cũ không đúng !", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-            } else if (typeAccount == 1) {
-                databaseReference.child("account").child(classUser).child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String password = dataSnapshot.child("password").getValue(String.class);
-                        if (oldPassword.equals(password)) {
-                            changePassword(newPassword);
-                        } else {
-                            Toast.makeText(UpdatePasswordActivity.this, "Mật khẩu cũ không đúng !", Toast.LENGTH_SHORT).show();
                         }
-                    }
+                    });
+                } else if (typeAccount == 1) {
+                    databaseReference.child("account").child(classUser).child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String password = dataSnapshot.child("password").getValue(String.class);
+                            if (oldPassword.equals(password)) {
+                                changePassword(newPassword);
+                            } else {
+                                Toast.makeText(UpdatePasswordActivity.this, "Mật khẩu cũ không đúng !", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
+            }
+        } else if (option.equals("admin")) {
+            if (newPassword.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập mật khẩu mới !", Toast.LENGTH_SHORT).show();
+                edt_new_password.requestFocus();
+            } else if (confirmNewPassword.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập lại mật khẩu !", Toast.LENGTH_SHORT).show();
+                edt_confirm_new_password.requestFocus();
+            } else if (!newPassword.equals(confirmNewPassword)){
+                Toast.makeText(this, "Mật khẩu không trùng khớp !", Toast.LENGTH_SHORT).show();
+                edt_confirm_new_password.requestFocus();
+            } else {
+                changePassword(newPassword);
             }
         }
+
+
 
     }
 

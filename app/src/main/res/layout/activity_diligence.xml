@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ScoreActivity">
+    tools:context=".activity.DiligenceActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Điểm thi"
+            android:text="Chuyên cần"
             android:textColor="@color/color_White"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -32,9 +32,8 @@
     </RelativeLayout>
 
     <LinearLayout
-
         android:orientation="horizontal"
-        android:weightSum="7"
+        android:weightSum="6"
         android:layout_width="match_parent"
         android:layout_height="35dp">
 
@@ -50,40 +49,39 @@
             android:layout_height="match_parent" />
 
         <TextView
-            android:paddingStart="5dp"
             android:textSize="15sp"
             android:textColor="@color/color_black"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="Thi lần"
+            android:layout_weight="1.5"
+            android:text="Tổng buổi học"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textSize="15sp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="1.5"
+            android:text="Buổi nghỉ"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textSize="15sp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:gravity="center"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:textSize="15sp"
-            android:textColor="@color/color_black"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:text="Điểm LT"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:textSize="15sp"
-            android:textColor="@color/color_black"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:text="Điểm TH"
+            android:text="%"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_score"
+        android:id="@+id/recyclerView_diligence"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

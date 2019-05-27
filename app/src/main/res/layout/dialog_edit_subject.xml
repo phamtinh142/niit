@@ -9,7 +9,18 @@
     android:gravity="center">
 
     <EditText
+        android:hint="Tên môn học"
         android:id="@+id/edt_subject"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_edittext_comment_news"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <EditText
+        android:hint="Số buổi học"
+        android:id="@+id/edt_number_session"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:layout_marginTop="10dp"

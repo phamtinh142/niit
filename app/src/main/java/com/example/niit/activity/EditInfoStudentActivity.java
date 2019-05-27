@@ -100,6 +100,11 @@ public class EditInfoStudentActivity extends AppCompatActivity {
         });
     }
 
+    @OnClick(R.id.ibtn_back)
+    public void onClickBack() {
+        finish();
+    }
+
     @OnClick(R.id.txt_date_update_student)
     public void onClickChooseDate() {
         final Calendar calendar = Calendar.getInstance();

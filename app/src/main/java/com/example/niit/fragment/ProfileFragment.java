@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niit.Share.GetTimeSystem;
+import com.example.niit.activity.DiligenceActivity;
 import com.example.niit.activity.EditInfoStudentActivity;
 import com.example.niit.activity.LoginActivity;
 import com.example.niit.R;
@@ -36,6 +37,7 @@ import com.example.niit.Share.StringFinal;
 import com.example.niit.activity.ScheludeActivity;
 import com.example.niit.activity.ScoreActivity;
 import com.example.niit.activity.UpdatePasswordActivity;
+import com.example.niit.entities.Diligence;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -145,6 +147,11 @@ public class ProfileFragment extends Fragment {
         startActivity(new Intent(getActivity(), ScoreActivity.class));
     }
 
+    @OnClick(R.id.rtl_diligence)
+    public void onClickDiligence() {
+        startActivity(new Intent(getActivity(), DiligenceActivity.class));
+    }
+
     @OnClick(R.id.rtl_update_password)
     public void onClickUpdatePassword() {
         String UserID = SharePrefer.getInstance().get(StringFinal.ID, String.class);
@@ -156,6 +163,7 @@ public class ProfileFragment extends Fragment {
         bundle.putString("idUser", UserID);
         bundle.putString("classUser", classUser);
         bundle.putInt("typeAccount", typeAccount);
+        bundle.putString("option", "local");
         intent.putExtras(bundle);
         startActivity(intent);
 

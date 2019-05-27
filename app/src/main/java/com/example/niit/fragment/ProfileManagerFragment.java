@@ -154,6 +154,7 @@ public class ProfileManagerFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("idUser", idUser);
         bundle.putInt("typeAccount", typeAccount);
+        bundle.putString("option", "local");
         intent.putExtras(bundle);
         startActivity(intent);
     }
